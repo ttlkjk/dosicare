@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linac QA Hub Dashboard | DosiCare</title>
+    <link rel="stylesheet" href="dashboard.css?v=6.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Utility Menu Bar -->
+    <div class="utility-bar">
+        <div class="utility-left">
+            <span class="menu-icon">☰</span>
+            <div class="menu-items">
+                <span class="menu-item">파일 (File)</span>
+                <span class="menu-item">보기 (View)</span>
+                <span class="menu-item help-active">도움말 (Help)</span>
+            </div>
+        </div>
+        <div class="utility-right">
+            <span class="home-icon" onclick="goHome()">🏠</span>
+        </div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+        <button class="nav-btn daily" onclick="showSample('일간점검')">일간점검</button>
+        <button class="nav-btn monthly" onclick="showSample('월간점검')">월간점검</button>
+        <button class="nav-btn yearly" onclick="showSample('년간점검')">년간점검</button>
+        <button class="nav-btn" onclick="showSample('MyQA')">MyQA</button>
+        <button class="nav-btn" onclick="showSample('T_Log')">T_Log</button>
+        <button class="nav-btn" onclick="showSample('MPC')">MPC</button>
+        <button class="nav-btn" onclick="showSample('BC_Plus')">BC_Plus</button>
+        <button class="nav-btn" onclick="showSample('BeamCheck')">BeamCheck</button>
+        <button class="nav-btn" onclick="showSample('Field Analysis')">Field Analysis</button>
+        <button class="nav-btn" onclick="showSample('StarShot')">StarShot</button>
+        <button class="nav-btn" onclick="showSample('W_Lutz')">W_Lutz</button>
+        <button class="nav-btn" onclick="showSample('Picket Fence')">Picket Fence</button>
+        <button class="nav-btn" onclick="showSample('Output')">Output</button>
+        <button class="nav-btn" onclick="showSample('G_Angle')">G_Angle</button>
+        <button class="nav-btn" onclick="showSample('PDD')">PDD</button>
+        <button class="nav-btn" onclick="showSample('Profile')">Profile</button>
+        <button class="nav-btn" onclick="showSample('Gating')">Gating</button>
+        <button class="nav-btn study" onclick="showSample('Study')">Study</button>
+        <button class="nav-btn service" onclick="showSample('Service')">Service</button>
+    </nav>
+
+    <div class="dashboard-container" id="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <h2 id="home-link" style="cursor: pointer;" onclick="goHome()">Linac QA Hub</h2>
+            
+            <!-- HUB Sidebar Content -->
+
+            <!-- Default Home Sidebar Content -->
+            <div class="sidebar-content home-sidebar" id="home-sidebar">
+                <div class="hub-nav-list">
+                    <div class="hub-sidebar-item active" data-hub-target="hub-slide-1">
+                        <span class="nav-num">01.</span> 슬로건 및 핵심 가치
+                    </div>
+                    <div class="hub-sidebar-item" data-hub-target="hub-slide-2">
+                        <span class="nav-num">02.</span> 핵심 모듈 (관리 주기)
+                    </div>
+                    <div class="hub-sidebar-item" data-hub-target="hub-slide-3">
+                        <span class="nav-num">03.</span> 강력한 분석 도구
+                    </div>
+                    <div class="hub-sidebar-item" data-hub-target="hub-slide-4">
+                        <span class="nav-num">04.</span> 주요 가치 제안
+                    </div>
+                    <div class="hub-sidebar-item" data-hub-target="hub-slide-5">
+                        <span class="nav-num">05.</span> 표준 워크플로우
+                    </div>
+                    <div class="hub-sidebar-item" data-hub-target="hub-slide-6">
+                        <span class="nav-num">06.</span> 타겟 대상
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Removed HUB Category Sidebar (Now default) -->
+
+            <!-- MyQA Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="myqa-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('myqa_report_1.png', this)">
+                        <div class="file-meta">
+                            <span>myQA_Daily</span>
+                            <span>2023-11-27</span>
+                        </div>
+                        <span class="file-name">MyQA_Report_Default_2023-11-27.pdf</span>
+                        <span class="file-badge">PDF</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- T_Log Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="tlog-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('T_log_1.png', this)">
+                        <div class="file-meta">
+                            <span>T_Log</span>
+                            <span>2026-02-06</span>
+                        </div>
+                        <span class="file-name">72247259_Pelvis Arc re_CCW1_20260206133835.bin</span>
+                        <span class="file-badge">BIN</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MPC Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="mpc-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('MPC_1.png', this)">
+                        <div class="file-meta">
+                            <span>MPC_Log</span>
+                        </div>
+                        <span class="file-name">Load 6X Geometry Data</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                    <div class="file-item" onclick="showReport('MPC_2.png', this)">
+                        <div class="file-meta">
+                            <span>MPC_Log</span>
+                        </div>
+                        <span class="file-name">Load 6FFF Geometry Data</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                    <div class="file-item" onclick="showReport('MPC_3.png', this)">
+                        <div class="file-meta">
+                            <span>MPC_Log</span>
+                        </div>
+                        <span class="file-name">Load All Energy Data</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BC_Plus Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="bcplus-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('BC_Plus_1.png', this)">
+                        <div class="file-meta">
+                            <span>BC_Plus_Log</span>
+                        </div>
+                        <span class="file-name">6MV.csv</span>
+                        <span class="file-badge">CSV</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BeamCheck Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="beamcheck-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('BeamCheck_1.png', this)">
+                        <div class="file-meta">
+                            <span>BeamCheck_Log</span>
+                        </div>
+                        <span class="file-name">BeamCheck_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Field Analysis Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="fieldanalysis-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('Field Analysys_1.png', this)">
+                        <div class="file-meta">
+                            <span>Field Analysis_Log</span>
+                        </div>
+                        <span class="file-name">Field Analysis_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- StarShot Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="starshot-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('StarShot_1.png', this)">
+                        <div class="file-meta">
+                            <span>StarShot_Log</span>
+                        </div>
+                        <span class="file-name">StarShot_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- W_Lutz Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="wlutz-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('W_Lutz_1.png', this)">
+                        <div class="file-meta">
+                            <span>W_Lutz_Log</span>
+                        </div>
+                        <span class="file-name">W_Lutz_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Picket Fence Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="picketfence-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('Picket Fence_1.png', this)">
+                        <div class="file-meta">
+                            <span>Picket Fence_Log</span>
+                        </div>
+                        <span class="file-name">Picket Fence_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="output-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('Output_1.png', this)">
+                        <div class="file-meta">
+                            <span>Output_Log</span>
+                        </div>
+                        <span class="file-name">Output_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- G_Angle Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="gangle-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('G_Angle_1.png', this)">
+                        <div class="file-meta">
+                            <span>G_Angle_Log</span>
+                        </div>
+                        <span class="file-name">G_Angle_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PDD Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="pdd-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('PDD_1.png', this)">
+                        <div class="file-meta">
+                            <span>PDD_Log</span>
+                        </div>
+                        <span class="file-name">PDD_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="profile-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('Profile_1.png', this)">
+                        <div class="file-meta">
+                            <span>Profile_Log</span>
+                        </div>
+                        <span class="file-name">Profile_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gating Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="gating-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('Gating_1.png', this)">
+                        <div class="file-meta">
+                            <span>Gating_Log</span>
+                        </div>
+                        <span class="file-name">Gating_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Study Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="study-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('Study_1.png', this)">
+                        <div class="file-meta">
+                            <span>Study_Log</span>
+                        </div>
+                        <span class="file-name">Study_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="service-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('Service_1.png', this)">
+                        <div class="file-meta">
+                            <span>Service_Log</span>
+                        </div>
+                        <span class="file-name">Service_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily QA Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="daily-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('Daily_1.png', this)">
+                        <div class="file-meta">
+                            <span>Daily QA(일간점검)_Log</span>
+                        </div>
+                        <span class="file-name">Daily_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly QA Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="monthly-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('Monthly_1.png', this)">
+                        <div class="file-meta">
+                            <span>Monthly_Log</span>
+                        </div>
+                        <span class="file-name">Monthly_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Yearly QA Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="yearly-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('Yearly_1.png', this)">
+                        <div class="file-meta">
+                            <span>Yearly_Log</span>
+                        </div>
+                        <span class="file-name">Yearly_Report_20260301</span>
+                        <span class="file-badge">LOG</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="content-area">
+            <!-- Home Content (HUB Slides) -->
+            <div class="dashboard-home">
+                <div class="hub-main-dashboard">
+                    <!-- Slide 1: Slogan & Values (Full Image) -->
+                    <div class="hub-slide active" id="hub-slide-1">
+                        <div class="full-image-container">
+                            <img src="images/main.png" alt="Halcyon Central Hub" class="full-home-img">
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: Core Modules -->
+                    <div class="hub-slide" id="hub-slide-2">
+                        <h3><span class="icon-label">📅</span> 통합 QA 관리 시스템</h3>
+                        <div class="hub-content-grid">
+                            <div class="hub-text-content">
+                                <p>모든 주기적 품질 관리(QA) 작업을 하나의 통합 대시보드에서 관리하세요.</p>
+                                <ul class="hub-feature-list">
+                                    <li>일간 점검 (Daily) <span>Varian MPC와 연동하여 빔 데이터를 수초 내 자동 로드</span></li>
+                                    <li>월간 점검 (Monthly) <span>표준 가이드라인에 따른 Dosimetry 및 기계적 점검</span></li>
+                                    <li>연간 점검 (Yearly) <span>심층적인 연간 검증 항목의 체계적 기록 및 관리</span></li>
+                                <div class="module-info-wrap">
+                                    <h4 class="info-title">주요 도구별 핵심 기능</h4>
+                                    <div class="info-grid">
+                                        <div class="info-item"><span class="info-tag">MyQA</span>데이터 통합 및 트렌드 분석</div>
+                                        <div class="info-item"><span class="info-tag">T_Log</span>Treatment Log 기반 궤적 분석</div>
+                                        <div class="info-item"><span class="info-tag">MPC</span>장비 성능 및 기하학적 정확도 점검</div>
+                                        <div class="info-item"><span class="info-tag">BC_Plus</span>실시간 빔 상태 정밀 모니터링</div>
+                                        <div class="info-item"><span class="info-tag">BeamCheck</span>빔 센터링 및 대칭도 자동 분석</div>
+                                        <div class="info-item"><span class="info-tag">Field Analysis</span>조사면 해상도 및 공간 분포 확인</div>
+                                        <div class="info-item"><span class="info-tag">StarShot</span>회전축(Isocenter) 정밀 검증</div>
+                                        <div class="info-item"><span class="info-tag">W_Lutz</span>Winston-Lutz 기계적 정확도 평가</div>
+                                        <div class="info-item"><span class="info-tag">Picket Fence</span>MLC 이동성 및 위치 재현성 검사</div>
+                                        <div class="info-item"><span class="info-tag">Output</span>방사선 출력 및 에너지 안정성 측정</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hub-image-box video-box">
+                                <video autoplay loop muted playsinline class="hub-video">
+                                    <source src="images/drag.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div class="video-caption-box">
+                                    <p>PDF, 이미지, CSV 파일 등을 Drag & Drop하여 필요한 정보를 즉시 추출하고, 데이터베이스에 저장한 후 트렌드 분석까지 가능합니다. 또한, 필요한 정보를 일간, 월간, 연간 문서로 자동 전송하여 최종 문서를 자동 생성합니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: Analysis Tools -->
+                    <div class="hub-slide" id="hub-slide-3">
+                        <h3><span class="icon-label">🚀</span> 데이터 분석의 자동화</h3>
+                        <div class="hub-content-grid">
+                            <div class="hub-text-content">
+                                <p>수동 계산의 번거로움을 없애고, 물리 분석을 스마트하게 자동화합니다.</p>
+                                <ul class="hub-feature-list">
+                                    <li>MPC 데이터 연동 <span>MLC 리프별 오차 추이 및 빔 상태 정밀 분석</span></li>
+                                    <li>빔 데이터 분석 <span>평탄도(Flatness)와 대칭도(Symmetry) 즉시 계산</span></li>
+                                    <li>StarShot & 영상 분석 <span>Iso-center 및 Picket Fence 정확도 검증</span></li>
+                                    <li>회전축 QA <span>Winston-Lutz 도구로 갠트리/카우치 정밀 검증</span></li>
+                                </ul>
+                            </div>
+                            <div class="hub-image-box">
+                                <img src="images/linac_qa_hub_preview.png" alt="Analysis Tools">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4: Value Proposition -->
+                    <div class="hub-slide" id="hub-slide-4">
+                        <h3><span class="icon-label">🔄</span> 왜 Linac QA HUB인가?</h3>
+                        <div class="hub-content-grid">
+                            <div class="hub-text-content">
+                                <h4>완벽한 데이터 연동</h4>
+                                <p>Varian MPC, IBA MyQA Daily, PTW 등 모든 표준 장비의 데이터를 직접 가져오고 버튼 하나로 월간 점검표에 반영합니다.</p>
+                                <h4>통찰력 있는 시각화</h4>
+                                <p>Chart.js 기반의 대화형 차트를 통해 수년간의 장비 성능 변화를 추적하고 고장을 사전에 예방합니다.</p>
+                                <h4>업무 효율 극대화</h4>
+                                <p>다크 모드와 직관적인 UI, 통합 To-Do 리스트가 연구원과 물리사에게 최적의 환경을 제공합니다.</p>
+                            </div>
+                            <div class="hub-image-box">
+                                <img src="images/easy_machine_preview.png" alt="Value Prop">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 5: Workflow -->
+                    <div class="hub-slide" id="hub-slide-5">
+                        <h3><span class="icon-label">🛠️</span> 표준 워크플로우</h3>
+                        <div class="hub-content-grid">
+                            <div class="hub-text-content">
+                                <ul class="hub-feature-list" style="list-style: decimal; padding-left: 2rem;">
+                                    <li style="padding-left: 0.8rem; margin-bottom: 1.5rem;"><strong>장비 선택:</strong> 관리할 선형가속기 또는 Halcyon 장비를 선택합니다.</li>
+                                    <li style="padding-left: 0.8rem; margin-bottom: 1.5rem;"><strong>데이터 호출:</strong> QA 장비나 MPC 로그에서 원천 데이터를 로드합니다.</li>
+                                    <li style="padding-left: 0.8rem; margin-bottom: 1.5rem;"><strong>분석 및 검증:</strong> 자동 계산된 지표와 트렌드 상태를 확인합니다.</li>
+                                    <li style="padding-left: 0.8rem; margin-bottom: 1.5rem;"><strong>저장 및 리포트:</strong> 로컬 DB에 저장하고 전문 리포트를 출력합니다.</li>
+                                </ul>
+
+                                <div class="video-caption-box" style="margin-top: 2rem;">
+                                    <p style="margin-bottom: 1rem;">장비의 기능과 저장 위치를 선택하여 파일을 저장한 후, 해당 파일에서 필요한 데이터를 추출하는 작업이 가능합니다. 이는 병원에서 사용되는 장비의 종류와 요구 사항에 따라 유연하게 설정할 수 있습니다.</p>
+                                    <p>Eclipse Portal Dosimetry에서 사용하는 자동 스크립트 파일을 제공하여, 측정 데이터를 원클릭으로 지정된 폴더에 저장할 수 있습니다. 또한, DosiMachine 소프트웨어를 활용하여 모든 분석 작업을 수행할 수 있습니다.</p>
+                                </div>
+                            </div>
+                            <div class="hub-image-box">
+                                <img src="images/config.png" alt="Workflow">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 6: Targets -->
+                    <div class="hub-slide" id="hub-slide-6">
+                        <h3><span class="icon-label">👥</span> 타겟 대상</h3>
+                        <div class="target-grid">
+                            <div class="target-card">
+                                <h5>의학 물리사</h5>
+                                <p>데이터 입력 및 리포트 작성 시간을 획기적으로 줄이고 싶은 전문가</p>
+                            </div>
+                            <div class="target-card">
+                                <h5>QA 테크놀로지스트</h5>
+                                <p>빠르고 정확한 일간 점검과 결과 판독이 필요한 실무자</p>
+                            </div>
+                            <div class="target-card">
+                                <h5>관리자</h5>
+                                <p>장비 성능 추이와 QA 거버넌스를 중앙에서 관리하고 싶은 결정권자</p>
+                            </div>
+                        </div>
+
+                        <div class="hub-footer-visual">
+                            <img src="images/machine.png" alt="DosiMachine" class="footer-machine-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Removed HUB View Area (Now integrated into dashboard-home) -->
+
+            <!-- Sample Screen Placeholder -->
+            <div id="sample-screen" class="sample-screen">
+                <div id="sample-text">Sample View</div>
+            </div>
+
+            <!-- Report View Area -->
+            <div id="report-view" class="report-view">
+                <div class="report-frame">
+                    <img id="report-img" src="" alt="Report Content" class="report-image">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function showSample(name) {
+            console.log('Switching to sample:', name);
+            // Reset views
+            document.getElementById('content-area').classList.remove('active-report');
+            document.getElementById('content-area').classList.remove('active-view');
+            const sidebar = document.getElementById('sidebar');
+            ['active-myqa', 'active-tlog', 'active-mpc', 'active-bcplus', 'active-beamcheck', 'active-fieldanalysis', 'active-starshot', 'active-wlutz', 'active-picketfence', 'active-output', 'active-gangle', 'active-pdd', 'active-profile', 'active-gating', 'active-study', 'active-service', 'active-daily', 'active-monthly', 'active-yearly'].forEach(cls => sidebar.classList.remove(cls));
+            
+            // Remove active highlight from all files initially
+            document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
+
+            switch (name) {
+                case '일간점검':
+                    sidebar.classList.add('active-daily');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/Daily_main.png';
+                    break;
+                case '월간점검':
+                    sidebar.classList.add('active-monthly');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/Monthly_main.png';
+                    break;
+                case '년간점검':
+                    sidebar.classList.add('active-yearly');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/Yearly_main.png';
+                    break;
+                case 'MyQA':
+                    sidebar.classList.add('active-myqa');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/MyQA_main.png';
+                    break;
+                case 'T_Log':
+                    sidebar.classList.add('active-tlog');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/T_log_main.png';
+                    break;
+                case 'MPC':
+                    sidebar.classList.add('active-mpc');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/MPC_Main.png';
+                    break;
+                case 'BC_Plus':
+                    sidebar.classList.add('active-bcplus');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/BC_Plus_main.png';
+                    break;
+                case 'BeamCheck':
+                    sidebar.classList.add('active-beamcheck');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/BeamCheck_Main.png';
+                    break;
+                case 'Field Analysis':
+                    sidebar.classList.add('active-fieldanalysis');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/Field Analysys_main.png';
+                    break;
+                case 'StarShot':
+                    sidebar.classList.add('active-starshot');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/StarShot_Main.png';
+                    break;
+                case 'W_Lutz':
+                    sidebar.classList.add('active-wlutz');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/W_Lutz_main.png';
+                    break;
+                case 'Picket Fence':
+                    sidebar.classList.add('active-picketfence');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/Picket Fence_main.png';
+                    break;
+                case 'Output':
+                    sidebar.classList.add('active-output');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/Output_main.png';
+                    break;
+                case 'G_Angle':
+                    sidebar.classList.add('active-gangle');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/G_Angle_main.png';
+                    break;
+                case 'PDD':
+                    sidebar.classList.add('active-pdd');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/PDD_main.png';
+                    break;
+                case 'Profile':
+                    sidebar.classList.add('active-profile');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/Profile_main.png';
+                    break;
+                case 'Gating':
+                    sidebar.classList.add('active-gating');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/Gating_main.png';
+                    break;
+                case 'Study':
+                    sidebar.classList.add('active-study');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/Study_main.png';
+                    break;
+                case 'Service':
+                    sidebar.classList.add('active-service');
+                    document.getElementById('content-area').classList.add('active-report');
+                    document.getElementById('report-img').src = 'images/Service_main.png';
+                    break;
+                default:
+                    document.getElementById('content-area').classList.add('active-view');
+                    document.getElementById('sample-screen').style.display = 'flex';
+                    document.getElementById('sample-text').innerText = name + ' Sample Screen';
+                    break;
+            }
+        }
+
+        function showReport(imgName, element) {
+            document.getElementById('content-area').classList.remove('active-view');
+            document.getElementById('content-area').classList.add('active-report');
+            document.getElementById('report-img').src = 'images/' + imgName;
+            
+            // Highlight active file
+            document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
+            if (element) element.classList.add('active');
+        }
+
+        function goHome() {
+            document.getElementById('content-area').classList.remove('active-view');
+            document.getElementById('content-area').classList.remove('active-report');
+            const sidebar = document.getElementById('sidebar');
+            ['active-myqa', 'active-tlog', 'active-mpc', 'active-bcplus', 'active-beamcheck', 'active-fieldanalysis', 'active-starshot', 'active-wlutz', 'active-picketfence', 'active-output', 'active-gangle', 'active-pdd', 'active-profile', 'active-gating', 'active-study', 'active-service', 'active-daily', 'active-monthly', 'active-yearly'].forEach(cls => sidebar.classList.remove(cls));
+            document.getElementById('sample-screen').style.display = 'none';
+            
+            // Reset HUB slides to first one
+            document.querySelectorAll('.hub-sidebar-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.hub-slide').forEach(el => el.classList.remove('active'));
+            document.querySelector('.hub-sidebar-item[data-hub-target="hub-slide-1"]').classList.add('active');
+            document.getElementById('hub-slide-1').classList.add('active');
+        }
+
+        // Dashboard HUB Slide Switching
+        document.addEventListener('DOMContentLoaded', () => {
+            const hubItems = document.querySelectorAll('.hub-sidebar-item');
+            const hubSlides = document.querySelectorAll('.hub-slide');
+
+            hubItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const targetId = item.getAttribute('data-hub-target');
+                    
+                    hubItems.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+
+                    hubSlides.forEach(s => {
+                        s.classList.remove('active');
+                        if (s.id === targetId) s.classList.add('active');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

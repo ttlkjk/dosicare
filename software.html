@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Solutions | DosiCare</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav id="navbar" class="scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="DosiCare">
+                <div class="logo-separator"></div>
+                <img src="images/dosimachine_logo.png" alt="DosiMachine">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">홈</a>
+                <a href="software.html" class="active">소프트웨어</a>
+                <a href="services.html">서비스</a>
+                <a href="contact.html">고객지원</a>
+            </div>
+            <a href="contact.html" class="btn btn-primary">문의하기</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero" style="min-height: 50vh; padding-top: 8rem; padding-bottom: 4rem;">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 style="font-size: 3.5rem;">Software Solutions</h1>
+                    <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 0;">방사선 치료의 정밀도를 높이는 도지케어의 전문 소프트웨어 라인업입니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="easy-machine-detail" class="feature-section">
+            <div class="grid align-center">
+                <div class="hero-text">
+                    <h2 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 1rem; text-transform: uppercase;">Product 01</h2>
+                    <h1 style="font-size: 3rem; margin-bottom: 1rem;">Easy Machine</h1>
+                    <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">Version 2.9 FINAL</p>
+                    <p>방사선 치료 품질 관리(QA) 및 데이터 분석을 전문적으로 수행하는 통합 솔루션입니다.</p>
+                </div>
+                <div class="glass preview-box">
+                    <img src="images/easy_machine_preview.png" alt="Easy Machine Interface" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+            </div>
+        </section>
+
+        <section id="easy-features">
+            <div class="section-header">
+                <h3>Easy Machine 주요 기능</h3>
+                <p>워크플로우 최적화를 위한 핵심 도구들을 확인하세요.</p>
+            </div>
+            <div class="grid">
+                <div class="glass card">
+                    <div style="font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;">01
+                    </div>
+                    <h3 style="margin-bottom: 1rem; color: var(--secondary);">DICOM 데이터 시각화 및 분석</h3>
+                    <ul style="list-style: none; color: var(--text-secondary); font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.5rem;">• <b>다중 평면 시각화:</b> CT 이미지를 Transversal, Coronal, Sagittal 세
+                            가지 단면으로 확인하고 제어할 수 있습니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>RT 데이터 지원:</b> RT Plan, RT Structure Set(ROI), RT Dose
+                            데이터를 로드하여 이미지 위에 오버레이하고 분석합니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>실시간 프로파일(Real-time Profile):</b> 마우스 커서 위치에 따른
+                            수평(Crossline) 및 수직(Inline) 빔 프로파일을 실시간으로 계산하고 그래프로 보여줍니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>BEV(Beam's Eye View):</b> 치료 빔의 관점에서 본 영상을 렌더링하여 확인합니다.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass card">
+                    <div style="font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;">02
+                    </div>
+                    <h3 style="margin-bottom: 1rem; color: var(--secondary);">RT Workspace (통합 작업 공간)</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">방사선 치료 계획(Plan), 선량(Dose),
+                        구조물(Structure) 파일을 체계적으로 관리하고 브라우징할 수 있는 전용 워크스페이스를 제공합니다. 환자/검사/시리즈별로 데이터를 정리해 줍니다.</p>
+                </div>
+
+                <div class="glass card">
+                    <div style="font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;">03
+                    </div>
+                    <h3 style="margin-bottom: 1rem; color: var(--secondary);">주요 QA 분석 도구 (Pylinac 기반)</h3>
+                    <ul style="list-style: none; color: var(--text-secondary); font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.5rem;">• <b>Field Analysis:</b> 조사면의 평탄도(Flatness), 대칭도(Symmetry),
+                            반음영(Penumbra) 등을 분석합니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>Starshot Analysis:</b> 갠트리, 콜리메이터, 카우치 회전 중심(Isocenter)의
+                            정확성을 점검합니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>Picket Fence Analysis:</b> MLC(다엽 콜리메이터)의 위치 정확도를
+                            테스트합니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>Winston-Lutz Analysis:</b> EPID 영상을 이용해 매우 정밀하게 회전
+                            중심(Isocenter) 위치를 검증합니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>MLC Log Analysis:</b> 가속기에서 생성된 MLC 로그 파일(Dynalog,
+                            TrajLog)을 분석하여 MLC 성능을 평가합니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>Dosimetry Calibration:</b> TRS-398 및 TG-52 프로토콜에 따른 선량
+                            교정 기능을 지원합니다.</li>
+                    </ul>
+                </div>
+
+                <div class="glass card">
+                    <div style="font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;">04
+                    </div>
+                    <h3 style="margin-bottom: 1rem; color: var(--secondary);">전문 분석 및 유틸리티 도구</h3>
+                    <ul style="list-style: none; color: var(--text-secondary); font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.5rem;">• <b>3D EPID PDD Reconstruction:</b> EPID 영상을 기반으로 3D 선량 모델링
+                            및 심부선량(PDD)을 재구성합니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>Profile Comparison:</b> 여러 개의 프로파일 데이터를 로드하여 상호비교 분석할 수
+                            있습니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>Gantry Angle Cal:</b> 영상 내의 기하학적 정보를 바탕으로 갠트리 각도를 자동으로
+                            계산합니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>데이터 처리:</b> 데이터 노이즈 제거를 위한 Smoothing(Least Square 등) 기능과
+                            프로파일 데이터를 ASC/CSV 등의 범용 포맷으로 변환하는 기능을 제공합니다.</li>
+                    </ul>
+                </div>
+
+                <div class="glass card">
+                    <div style="font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;">05
+                    </div>
+                    <h3 style="margin-bottom: 1rem; color: var(--secondary);">측정 및 레포트 기능</h3>
+                    <ul style="list-style: none; color: var(--text-secondary); font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.5rem;">• <b>정밀 측정 도구:</b> 디지털 자(Ruler)와 각도기(Protractor) 기능을 통해 영상 내
+                            거리와 각도를 측정합니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>자동 PDF 레포트 생성:</b> 모든 분석 결과(프로파일, PDD, 각종 QA 테스트)를 전문적인
+                            양식의 PDF 리포트로 출력할 수 있습니다.</li>
+                    </ul>
+                </div>
+
+                <div class="glass card">
+                    <div style="font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;">06
+                    </div>
+                    <h3 style="margin-bottom: 1rem; color: var(--secondary);">사용자 인터페이스(UI) 특징</h3>
+                    <ul style="list-style: none; color: var(--text-secondary); font-size: 0.95rem;">
+                        <li style="margin-bottom: 0.5rem;">• <b>전문적인 레이아웃:</b> Varian Eclipse와 유사한 전문적인 의료용 소프트웨어 레이아웃을
+                            채택하여 숙련된 사용자가 직관적으로 사용할 수 있습니다.</li>
+                        <li style="margin-bottom: 0.5rem;">• <b>고해상도 지원:</b> 다크 모드와 고해상도 그래픽을 지원하며, 전체 화면
+                            모드(Fullscreen)로 작업 효율을 높였습니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section id="dosimachine-detail" class="feature-section alt-bg" style="margin-top: 4rem;">
+            <div class="grid align-center">
+                <div class="glass preview-box">
+                    <img src="images/linac_qa_hub_preview.png" alt="DosiMachine Interface" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="hero-text">
+                    <h2 style="color: var(--secondary); font-size: 1.2rem; margin-bottom: 1rem; text-transform: uppercase;">Product 02</h2>
+                    <h1 style="font-size: 3rem; margin-bottom: 1rem;">DosiMachine</h1>
+                    <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">Machine QA HUB Solution</p>
+                    <p>가속기 품질 관리 데이터를 통합 관리하고 분석하는 중앙 집중형 대시보드 시스템입니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="dosimachine-features">
+            <div class="section-header">
+                <h3>DosiMachine 주요 기능</h3>
+                <p>데이터 중심의 스마트한 QA 관리를 시작하세요.</p>
+            </div>
+            <div class="grid">
+                <div class="glass card">
+                    <div style="font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;">01</div>
+                    <h3 style="margin-bottom: 1rem; color: var(--secondary);">통합 점검 워크플로우 (Daily/Monthly/Yearly)</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">선형 가속기의 일간, 월간, 년간 품질 관리 항목을 누락 없이 체계적으로 관리합니다. 복잡한 데이터를 손쉽게 입력하고 중앙 데이터베이스에 안전하게 보관합니다.</p>
+                </div>
+                <div class="glass card">
+                    <div style="font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;">02</div>
+                    <h3 style="margin-bottom: 1rem; color: var(--secondary);">정밀 물리 분석 모듈 (Analysis Tools)</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Starshot, Winston-Lutz, Picket Fence, Field Analysis 등 고도의 정밀도를 요구하는 물리적 검증 도구들이 내장되어 있어 가속기 성능을 완벽하게 평가합니다.</p>
+                </div>
+                <div class="glass card">
+                    <div style="font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;">03</div>
+                    <h3 style="margin-bottom: 1rem; color: var(--secondary);">로그 및 하드웨어 연동 분석</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">가속기 자체 로그(T_Log, MPC)와 외부 측정 장비(BeamCheck, BC_Plus)의 데이터를 연동하여 다각적인 트렌드 분석과 오류 진단을 지원합니다.</p>
+                </div>
+                <div class="glass card">
+                    <div style="font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem;">04</div>
+                    <h3 style="margin-bottom: 1rem; color: var(--secondary);">자동 리포트 및 협업 도구</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">분석 결과를 규격화된 PDF 및 Word 리포트로 즉시 생성하며, 내장된 To-Do List와 공지사항 기능을 통해 의료진 간의 효율적인 업무 협업을 돕습니다.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="reveal">
+        <div class="footer-content">
+            <div class="footer-info">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <img src="images/logo.png" alt="DosiCare" style="height: 30px;">
+                    <div style="width: 1px; height: 18px; background: rgba(0,0,0,0.1);"></div>
+                    <img src="images/dosimachine_logo.png" alt="DosiMachine" style="height: 30px;">
+                </div>
+                <p>도지케어는 의료기관의 방사선 치료 품질 관리를 위한 전문 솔루션을 제공합니다.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>메뉴</h4>
+                    <a href="index.html">홈</a>
+                    <a href="software.html">소프트웨어</a>
+                    <a href="services.html">서비스</a>
+                </div>
+                <div class="footer-column">
+                    <h4>고객지원</h4>
+                    <a href="contact.html">문의하기</a>
+                    <a href="contact.html">찾아오시는 길</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 DosiCare. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section, .card, .preview-box').forEach(el => {
+            el.classList.add('reveal');
+            observer.observe(el);
+        });
+    </script>
+</body>
+
+</html>
