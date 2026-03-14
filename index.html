@@ -13,14 +13,28 @@
     <!-- Utility Menu Bar -->
     <div class="utility-bar">
         <div class="utility-left">
-            <span class="menu-icon">☰</span>
+            <span class="menu-icon" onclick="toggleSidebar()">☰</span>
             <div class="menu-items">
                 <span class="menu-item">파일 (File)</span>
-                <span class="menu-item">보기 (View)</span>
+                <div class="dropdown">
+                    <span class="menu-item dropdown-toggle">보기 (View)</span>
+                    <div class="dropdown-content">
+                        <div class="dropdown-item active" id="view-computer" onclick="setViewMode('computer')">
+                            <span class="view-icon">💻</span> Computer Mode
+                        </div>
+                        <div class="dropdown-item" id="view-smartphone" onclick="setViewMode('smartphone')">
+                            <span class="view-icon">📱</span> Smart Phone Mode
+                        </div>
+                    </div>
+                </div>
                 <span class="menu-item help-active">도움말 (Help)</span>
             </div>
         </div>
         <div class="utility-right">
+            <div class="view-toggles">
+                <span class="view-toggle-icon active" id="toggle-computer" title="Computer View" onclick="setViewMode('computer')">💻</span>
+                <span class="view-toggle-icon" id="toggle-smartphone" title="Smart Phone View" onclick="setViewMode('smartphone')">📱</span>
+            </div>
             <span class="home-icon" onclick="goHome()">🏠</span>
         </div>
     </div>
@@ -634,6 +648,38 @@
             document.querySelectorAll('.hub-slide').forEach(el => el.classList.remove('active'));
             document.querySelector('.hub-sidebar-item[data-hub-target="hub-slide-1"]').classList.add('active');
             document.getElementById('hub-slide-1').classList.add('active');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        // View Mode Switching
+        function setViewMode(mode) {
+            console.log('Setting view mode:', mode);
+            const body = document.body;
+            const computerItem = document.getElementById('view-computer');
+            const smartphoneItem = document.getElementById('view-smartphone');
+            const toggleComputer = document.getElementById('toggle-computer');
+            const toggleSmartphone = document.getElementById('toggle-smartphone');
+            const sidebar = document.getElementById('sidebar');
+            
+            if (mode === 'smartphone') {
+                body.classList.add('smartphone-mode');
+                computerItem.classList.remove('active');
+                smartphoneItem.classList.add('active');
+                toggleComputer.classList.remove('active');
+                toggleSmartphone.classList.add('active');
+                sidebar.classList.add('collapsed'); // Collapse sidebar by default in mobile
+            } else {
+                body.classList.remove('smartphone-mode');
+                computerItem.classList.add('active');
+                smartphoneItem.classList.remove('active');
+                toggleComputer.classList.add('active');
+                toggleSmartphone.classList.remove('active');
+                sidebar.classList.remove('collapsed'); // Show sidebar in desktop mode
+            }
         }
 
         // Dashboard HUB Slide Switching

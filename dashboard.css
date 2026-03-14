@@ -97,6 +97,91 @@ body {
     font-size: 1rem;
     color: #64748b;
     cursor: pointer;
+    transition: color 0.2s;
+}
+
+.home-icon:hover {
+    color: #3b82f6;
+}
+
+/* Quick View Toggles */
+.view-toggles {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 12px;
+    padding-right: 12px;
+    border-right: 1px solid #e2e8f0;
+}
+
+.view-toggle-icon {
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.view-toggle-icon:hover {
+    opacity: 1;
+    background-color: #e2e8f0;
+}
+
+.view-toggle-icon.active {
+    opacity: 1;
+    background-color: #eff6ff;
+    box-shadow: 0 0 0 1px #3b82f6 inset;
+}
+
+/* Dropdown Menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    z-index: 1000;
+    top: 100%;
+    left: 0;
+    margin-top: 5px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+    font-size: 12px;
+    color: #475569;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f5f9;
+}
+
+.dropdown-item.active {
+    background-color: #eff6ff;
+    color: #3b82f6;
+    font-weight: 600;
+}
+
+.view-icon {
+    font-size: 14px;
 }
 
 /* Top Navigation Bar */
@@ -106,6 +191,7 @@ body {
     display: flex;
     gap: 4px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    overflow-x: auto;
 }
 
 .top-nav::-webkit-scrollbar {
@@ -139,13 +225,23 @@ body {
 
 /* Sidebar */
 .sidebar {
-    width: 200px;
+    width: 170px;
     background-color: var(--dash-sidebar-bg);
     color: var(--dash-text-light);
     display: flex;
     flex-direction: column;
     padding: 12px;
     gap: 16px;
+    transition: all 0.3s ease;
+    overflow-x: hidden;
+}
+
+.sidebar.collapsed {
+    width: 0;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .sidebar h2 {
@@ -757,4 +853,148 @@ body {
     min-width: 80px;
     text-align: center;
     border: 1px solid #e2e8f0;
+}
+
+/* Smart Phone Mode Optimizations */
+.smartphone-mode {
+    overflow-y: auto !important;
+}
+
+.smartphone-mode .dashboard-container {
+    flex-direction: column;
+    overflow: visible;
+}
+
+.smartphone-mode .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    display: none; /* Hide sidebar by default in mobile mode */
+}
+
+/* If user wants to see sidebar in mobile mode, they can toggle it */
+.smartphone-mode .sidebar:not(.collapsed) {
+    display: flex;
+}
+.smartphone-mode .sidebar h2 {
+    display: none;
+}
+
+.smartphone-mode .top-nav {
+    display: flex !important;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+    position: sticky;
+    top: 40px; /* Below utility bar */
+    z-index: 999;
+    flex-shrink: 0;
+    min-height: 40px;
+    background-color: var(--dash-top-nav-bg);
+}
+
+.smartphone-mode .utility-bar {
+    display: flex !important;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 40px;
+    padding: 0 15px;
+    flex-shrink: 0;
+}
+
+.smartphone-mode .utility-right {
+    display: flex !important;
+    align-items: center;
+}
+
+.smartphone-mode .view-toggles {
+    display: flex !important;
+}
+
+.smartphone-mode .menu-icon, 
+.smartphone-mode .home-icon {
+    font-size: 20px;
+    padding: 8px;
+    color: #1e293b;
+}
+
+.smartphone-mode .menu-items {
+    gap: 15px;
+}
+
+.smartphone-mode .menu-item {
+    font-size: 13px;
+}
+
+.smartphone-mode .nav-btn {
+    min-width: 60px;
+    padding: 4px 6px;
+    font-size: 10px;
+    flex-shrink: 0;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.smartphone-mode .main-content {
+    padding: 15px;
+    overflow: visible !important;
+}
+
+.smartphone-mode .report-view {
+    display: none;
+    overflow: visible !important;
+}
+
+.smartphone-mode .active-report .report-view {
+    display: flex;
+}
+
+.smartphone-mode .report-frame {
+    padding: 0;
+    overflow: visible !important;
+}
+
+.smartphone-mode .hub-content-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.smartphone-mode .hub-text-content {
+    padding-left: 0;
+}
+
+.smartphone-mode .hub-slide h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.smartphone-mode .hub-text-content h4 {
+    font-size: 16px;
+}
+
+.smartphone-mode .hub-feature-list li {
+    font-size: 12px;
+}
+
+.smartphone-mode .target-grid {
+    grid-template-columns: 1fr;
+}
+
+.smartphone-mode .info-grid {
+    grid-template-columns: 1fr;
+}
+
+.smartphone-mode .full-home-img {
+    height: auto;
+}
+
+.smartphone-mode .video-caption-box p {
+    font-size: 12px;
+}
+
+.smartphone-mode .report-frame {
+    padding: 0;
 }
