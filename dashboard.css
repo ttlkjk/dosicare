@@ -43,24 +43,38 @@ body {
 
 /* Utility Menu Bar */
 .utility-bar {
-    background-color: #f1f5f9;
-    padding: 3px 12px;
+    background: linear-gradient(to bottom, #dce7f5, #f8fafc);
+    padding: 0 10px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e2e8f0;
-    font-size: 11px;
+    align-items: flex-end; /* Align items to the bottom to allow tabs to sit on the border */
+    border-bottom: 1px solid #cbd5e1;
+    font-size: 10px;
     color: #475569;
+    height: 30px;
 }
 
 .utility-left {
+    flex: 1 1 0;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.8rem;
+    height: 100%;
+    overflow: visible; /* Changed from hidden to allow dropdowns to show */
 }
 
+.utility-center {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 100%;
+}
+
+
+
 .menu-icon {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #64748b;
     cursor: pointer;
 }
@@ -68,29 +82,51 @@ body {
 .menu-items {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.2rem;
 }
 
-.menu-item {
+.menu-item, .dm-menu-item {
     cursor: pointer;
-    font-weight: 500;
-    padding: 0.2rem 0.5rem;
+    font-weight: 600;
+    padding: 0.2rem 0.4rem;
     border-radius: 4px;
     transition: background 0.2s;
+    color: #475569;
+    white-space: nowrap;
+    font-size: 10px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
 }
 
-.menu-item:hover {
-    background: #e2e8f0;
+.menu-item:hover, .dm-menu-item:hover {
+    background-color: #f1f5f9;
+    color: #1e293b;
 }
 
-.help-active {
-    background: #e5edf8;
-    color: #3b82f6;
+.dm-only-menu {
+    display: none !important;
 }
+
+body.active-dosimachine .dm-only-menu {
+    display: inline-flex !important;
+}
+
+/* Dropdown visibility for both standard and dm- prefixed menus */
+.dropdown:hover .dropdown-content,
+.dm-menu-item:hover .dm-dropdown-content {
+    display: block;
+}
+
+
 
 .utility-right {
+    flex: 1 1 0;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    padding-bottom: 2px;
 }
 
 .home-icon {
@@ -101,7 +137,7 @@ body {
 }
 
 .home-icon:hover {
-    color: #3b82f6;
+    color: white;
 }
 
 /* Quick View Toggles */
@@ -125,13 +161,14 @@ body {
 
 .view-toggle-icon:hover {
     opacity: 1;
-    background-color: #e2e8f0;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .view-toggle-icon.active {
     opacity: 1;
-    background-color: #eff6ff;
-    box-shadow: 0 0 0 1px #3b82f6 inset;
+    background-color: #f8fafc;
+    color: #0f172a;
+    box-shadow: none;
 }
 
 /* Dropdown Menu */
@@ -140,7 +177,7 @@ body {
     display: inline-block;
 }
 
-.dropdown-content {
+.dropdown-content, .dm-dropdown-content {
     display: none;
     position: absolute;
     background-color: white;
@@ -150,16 +187,29 @@ body {
     z-index: 1000;
     top: 100%;
     left: 0;
-    margin-top: 5px;
+    margin-top: 0px; /* Ref 1: Removed 5px gap to prevent hover loss */
     border: 1px solid #e2e8f0;
-    overflow: hidden;
+    overflow: visible; /* Ref 2: Changed from hidden to avoid clipping */
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown:hover .dropdown-content,
+.dm-menu-item:hover .dm-dropdown-content {
     display: block;
 }
 
-.dropdown-item {
+/* Hover Bridge: Creates an invisible link between the menu button and the dropdown 
+   to prevent losing hover state when moving the mouse across the vertical gap. */
+.dropdown-content::before, .dm-dropdown-content::before {
+    content: '';
+    position: absolute;
+    top: -15px; 
+    left: 0;
+    right: 0;
+    height: 15px;
+    background: transparent;
+}
+
+.dropdown-item, .dm-dropdown-item {
     padding: 10px 15px;
     font-size: 12px;
     color: #475569;
@@ -170,11 +220,17 @@ body {
     gap: 8px;
 }
 
-.dropdown-item:hover {
+.dropdown-item:hover, .dm-dropdown-item:hover {
     background-color: #f1f5f9;
 }
 
-.dropdown-item.active {
+.dm-separator {
+    height: 1px;
+    background-color: #f1f5f9;
+    margin: 4px 0;
+}
+
+.dropdown-item.active, .dm-dropdown-item.active {
     background-color: #eff6ff;
     color: #3b82f6;
     font-weight: 600;
@@ -214,6 +270,12 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+    filter: brightness(1.2);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .nav-btn:hover {
@@ -590,6 +652,7 @@ body {
     background-color: white;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     width: 100%;
+    min-height: 100vh;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -610,7 +673,34 @@ body {
 }
 
 .active-report .report-view {
-    display: flex;
+    display: flex !important;
+}
+
+/* Ensure all DM views are hidden when a report is active */
+.active-report .dosimachine-home,
+.active-report .dm-hero,
+.active-report .dm-feature-grid,
+.active-report .dm-field-analysis-view,
+.active-report .dm-starshot-analysis-view,
+.active-report .dm-picket-fence-analysis-view,
+.active-report .dm-winston-lutz-analysis-view,
+.active-report .dm-photon-calibration-view,
+.active-report .dm-ele-calibration-view,
+.active-report .dm-mlc-log-view,
+.active-report .dm-mpc-analyzer-view,
+.active-report .dm-gating-qa-view,
+.active-report .dm-invert-color-view,
+.active-report .dm-dicom-composite-view,
+.active-report .dm-profile-comparison-view,
+.active-report .dm-pdd-comparison-view,
+.active-report .dm-convert-to-accept-view,
+.active-report .dm-save-profile-asc-view,
+.active-report .dm-vertual-gantry-starshot-view,
+.active-report .dm-gantry-angle-cal-view,
+.active-report .dm-profile-report-view,
+.active-report .dm-3d-epid-pdd-view,
+.active-report .dm-configuration-view {
+    display: none !important;
 }
 
 /* HUB Section Integration inside Dashboard */
@@ -621,14 +711,17 @@ body {
 }
 
 .hub-sidebar-item {
-    padding: 10px 12px;
+    padding: 8px 12px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .hub-sidebar-item:hover {
@@ -643,8 +736,8 @@ body {
 
 .hub-sidebar-item .nav-num {
     opacity: 0.6;
-    margin-right: 8px;
-    font-size: 11px;
+    margin-right: 6px;
+    font-size: 10px;
 }
 
 /* Slide Styles for Dashboard */
@@ -661,6 +754,334 @@ body {
 
 .hub-slide.active {
     display: block;
+}
+
+/* Main Navigation Tabs in Utility Bar */
+.main-tab {
+    padding: 5px 25px;
+    border-radius: 10px 10px 0 0;
+    background: #334155;
+    color: #94a3b8;
+    font-weight: 700;
+    font-size: 11.5px;
+    letter-spacing: -0.02em;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+    border-bottom: none;
+    margin-bottom: -2px; /* Pull down to overlap with parent border */
+    white-space: nowrap;
+    opacity: 0.85;
+}
+
+.main-tab:hover {
+    color: #f8fafc;
+    background: #1e293b;
+    opacity: 1;
+}
+
+.main-tab.active {
+    background: linear-gradient(to bottom, #1e293b, #0f172a);
+    color: white;
+    border-color: #0f172a;
+    z-index: 10;
+    opacity: 1;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+}
+
+.main-tab.dosimachine.active {
+    background: #1e293b;
+    color: #94a3b8;
+}
+
+body.active-dosimachine .main-tab.dosimachine.active {
+    background: #1a5276;
+    color: white;
+}
+
+.main-tab:hover {
+    background: #2d3f55;
+    color: #f8fafc;
+}
+
+
+/* DosiMachine Section Styles */
+.dosimachine-home {
+    display: none;
+    flex-direction: column;
+    padding: 0;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.active-dosimachine .dosimachine-home {
+    display: flex;
+}
+
+.active-dosimachine .dashboard-home,
+.active-dosimachine .report-view,
+.active-dosimachine .sample-screen {
+    display: none;
+}
+
+.dm-hero {
+    background: white;
+    color: #1a5276;
+    padding: 2px 0; /* Minimal vertical space */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Removed unused overlay and text/logo styles for cleaner layout */
+
+.dm-hero-image-container {
+    width: 100%;
+    max-width: 1100px; /* Increased from 800px for better harmony */
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.dm-hero-img-full {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.dm-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 60px 40px;
+    background: #f8fafc;
+}
+
+.dm-feature-card {
+    background: white;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.dm-feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(26, 82, 118, 0.1);
+}
+
+.dm-feature-icon {
+    font-size: 40px;
+    margin-bottom: 24px;
+    display: block;
+}
+
+.dm-feature-card h3 {
+    font-size: 22px;
+    color: #1a5276;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.dm-feature-card p {
+    font-size: 15px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.dm-value-section {
+    padding: 80px 40px;
+    background: white;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 60px;
+    align-items: center;
+}
+
+.dm-value-image {
+    flex: 1.2;
+    min-width: 400px;
+}
+
+.dm-value-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.dm-value-content {
+    flex: 1;
+    min-width: 400px;
+}
+
+.dm-value-content h2 {
+    font-size: 36px;
+    color: #1a5276;
+    margin-bottom: 30px;
+    font-weight: 800;
+}
+
+.dm-value-list {
+    list-style: none;
+}
+
+.dm-value-item {
+    padding-left: 40px;
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.dm-value-item::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    color: #3b82f6;
+    font-size: 24px;
+}
+
+.dm-value-item h4 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .dm-hero h1 { font-size: 32px; }
+    .dm-hero p { font-size: 16px; }
+    .dm-value-image { min-width: 100%; }
+    .dm-value-content { min-width: 100%; }
+}
+
+
+/* DosiMachine Menu Bar */
+.dm-menu-bar {
+    display: flex;
+    padding: 2px 10px;
+    background-color: #f1f5f9;
+    gap: 2px;
+}
+
+.dm-menu-item {
+    position: relative;
+    padding: 5px 12px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #475569;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.dm-menu-item:hover {
+    background-color: #f1f5f9;
+    color: #1e293b;
+}
+
+.dm-only-menu {
+    display: none;
+}
+
+.active-dosimachine .dm-only-menu {
+    display: block;
+}
+
+.dm-dropdown-item:hover {
+    background-color: #f8fafc;
+    color: #2563eb;
+}
+
+.dm-separator {
+    height: 1px;
+    background-color: #e2e8f0;
+    margin: 4px 0;
+}
+
+
+.dm-tool-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #1a5276;
+    transition: all 0.2s;
+    color: white;
+    font-size: 18px;
+}
+
+.dm-tool-btn:hover {
+    background-color: #2980b9;
+}
+
+.dm-tool-sep {
+    width: 1px;
+    height: 24px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dm-zoom-label {
+    color: #aed6f1;
+    font-weight: 700;
+    font-size: 14px;
+    min-width: 50px;
+    text-align: center;
+}
+
+/* DosiMachine Status Bar (Bottom) */
+.dm-status-bar {
+    display: none;
+    align-items: center;
+    padding: 8px 20px;
+    background-color: #d6eaf8;
+    border-top: 1px solid #a9cce3;
+    gap: 20px;
+    font-size: 13px;
+}
+
+.active-dosimachine .dm-status-bar {
+    display: flex;
+}
+
+.dm-status-btn {
+    padding: 6px 15px;
+    background-color: #aed6f1;
+    border: none;
+    border-radius: 6px;
+    color: #1a5276;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dm-status-btn:hover {
+    background-color: #85c1e9;
+}
+
+.dm-status-label {
+    color: #1a5276;
+    font-weight: 500;
+}
+
+.dm-grid-spacing {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dm-grid-input {
+    width: 50px;
+    padding: 4px 8px;
+    border: 1px solid #a9cce3;
+    border-radius: 4px;
+    text-align: center;
 }
 
 @keyframes slideIn {
@@ -865,28 +1286,28 @@ body {
     overflow: visible;
 }
 
-.smartphone-mode .sidebar {
+.smartphone-mode:not(.active-dosimachine) .sidebar {
     width: 100%;
     height: auto;
     position: static;
-    display: none; /* Hide sidebar by default in mobile mode */
+    display: flex; /* Sidebar visible by default in mobile mode */
 }
 
-/* If user wants to see sidebar in mobile mode, they can toggle it */
-.smartphone-mode .sidebar:not(.collapsed) {
-    display: flex;
+/* Specific rule to hide the sidebar when the collapsed class is present */
+.smartphone-mode:not(.active-dosimachine) .sidebar.collapsed {
+    display: none;
 }
 .smartphone-mode .sidebar h2 {
     display: none;
 }
 
-.smartphone-mode .top-nav {
+.smartphone-mode:not(.active-dosimachine) .top-nav {
     display: flex !important;
     flex-wrap: nowrap;
     -webkit-overflow-scrolling: touch;
     overflow-x: auto;
     position: sticky;
-    top: 40px; /* Below utility bar */
+    top: 32px; /* Below utility bar (30px height + small buffer) */
     z-index: 999;
     flex-shrink: 0;
     min-height: 40px;
@@ -898,9 +1319,12 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
-    height: 40px;
-    padding: 0 15px;
+    height: 30px; /* Matched to desktop */
+    padding: 0 10px;
     flex-shrink: 0;
+    align-items: center;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .smartphone-mode .utility-right {
@@ -914,17 +1338,19 @@ body {
 
 .smartphone-mode .menu-icon, 
 .smartphone-mode .home-icon {
-    font-size: 20px;
-    padding: 8px;
-    color: #1e293b;
+    font-size: 18px;
+    padding: 4px 8px;
+    color: #94a3b8;
 }
 
 .smartphone-mode .menu-items {
-    gap: 15px;
+    gap: 0.2rem; /* Matched to desktop */
 }
 
-.smartphone-mode .menu-item {
-    font-size: 13px;
+.smartphone-mode .menu-item,
+.smartphone-mode .dm-menu-item {
+    font-size: 10px; /* Matched to desktop */
+    padding: 0.2rem 0.4rem; /* Matched to desktop */
 }
 
 .smartphone-mode .nav-btn {
@@ -997,4 +1423,353 @@ body {
 
 .smartphone-mode .report-frame {
     padding: 0;
+}
+
+/* DosiMachine Field Analysis View Styles */
+.dm-field-analysis-view {
+    display: none;
+    flex-direction: column;
+    padding: 40px;
+    background-color: #f8fafc;
+    min-height: 100%;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.dm-fa-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.dm-fa-header h2 {
+    font-size: 28px;
+    color: #1e293b;
+    margin-bottom: 15px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.dm-fa-header p {
+    font-size: 16px;
+    color: #475569;
+    line-height: 1.6;
+    word-break: keep-all;
+}
+
+.dm-fa-content {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.dm-fa-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.dm-fa-item:hover {
+    transform: translateY(-5px);
+}
+
+.dm-fa-item img {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.dm-fa-item p {
+    font-size: 15px;
+    color: #334155;
+    font-weight: 500;
+    text-align: center;
+    background: #f1f5f9;
+    padding: 12px 25px;
+    border-radius: 30px;
+}
+
+/* Smartphone Adjustments for Field Analysis */
+.smartphone-mode .dm-field-analysis-view {
+    padding: 20px;
+}
+
+.smartphone-mode .dm-fa-header h2 {
+    font-size: 20px;
+}
+
+.smartphone-mode .dm-fa-header p {
+    font-size: 14px;
+}
+
+.smartphone-mode .dm-fa-item {
+    padding: 15px;
+}
+
+.smartphone-mode .dm-fa-item p {
+    font-size: 13px;
+    padding: 8px 15px;
+}
+
+/* DosiMachine Starshot Analysis View Styles */
+.dm-starshot-analysis-view {
+    display: none;
+    flex-direction: column;
+    padding: 40px;
+    background-color: #f8fafc;
+    min-height: 100%;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.dm-sa-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.dm-sa-header h2 {
+    font-size: 28px;
+    color: #1e293b;
+    margin-bottom: 15px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.dm-sa-header p {
+    font-size: 16px;
+    color: #475569;
+    line-height: 1.6;
+    word-break: keep-all;
+}
+
+.dm-sa-content {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.dm-sa-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.dm-sa-item:hover {
+    transform: translateY(-5px);
+}
+
+.dm-sa-item img {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.dm-sa-item p {
+    font-size: 15px;
+    color: #334155;
+    font-weight: 500;
+    text-align: center;
+    background: #f1f5f9;
+    padding: 12px 25px;
+    border-radius: 30px;
+}
+
+/* Smartphone Adjustments for Starshot Analysis */
+.smartphone-mode .dm-starshot-analysis-view {
+    padding: 20px;
+}
+
+.smartphone-mode .dm-sa-header h2 {
+    font-size: 20px;
+}
+
+.smartphone-mode .dm-sa-header p {
+    font-size: 14px;
+}
+
+.smartphone-mode .dm-sa-content {
+    gap: 30px;
+}
+
+.smartphone-mode .dm-sa-item {
+    padding: 15px;
+}
+
+.smartphone-mode .dm-sa-item p {
+    font-size: 13px;
+    padding: 8px 15px;
+}
+
+/* DosiMachine Picket Fence Analysis View Styles */
+.dm-picket-fence-analysis-view {
+    display: none;
+    flex-direction: column;
+    padding: 40px;
+    background-color: #f8fafc;
+    min-height: 100%;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.dm-pfa-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.dm-pfa-header h2 {
+    font-size: 28px;
+    color: #1e293b;
+    margin-bottom: 15px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.dm-pfa-header p {
+    font-size: 16px;
+    color: #475569;
+    line-height: 1.6;
+    word-break: keep-all;
+}
+
+.dm-pfa-content {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.dm-pfa-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.dm-pfa-item:hover {
+    transform: translateY(-5px);
+}
+
+.dm-pfa-item img {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.dm-pfa-item p {
+    font-size: 15px;
+    color: #334155;
+    font-weight: 500;
+    text-align: center;
+    background: #f1f5f9;
+    padding: 12px 25px;
+    border-radius: 30px;
+}
+
+/* Smartphone Adjustments for Picket Fence Analysis */
+.smartphone-mode .dm-picket-fence-analysis-view {
+    padding: 20px;
+}
+
+.smartphone-mode .dm-pfa-header h2 {
+    font-size: 20px;
+}
+
+.smartphone-mode .dm-pfa-header p {
+    font-size: 14px;
+}
+
+.smartphone-mode .dm-pfa-content {
+    gap: 30px;
+}
+
+.smartphone-mode .dm-pfa-item {
+    padding: 15px;
+}
+
+.smartphone-mode .dm-pfa-item p {
+    font-size: 13px;
+    padding: 8px 15px;
+}
+
+/* --- HUB Report View Styles --- */
+.report-view {
+    display: none;
+    width: 100%;
+    min-height: calc(100vh - 180px);
+    padding: 60px 40px 40px 40px;
+    background: #f1f5f9;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    animation: fadeIn 0.4s ease-out;
+    position: relative;
+    z-index: 100;
+}
+
+.active-report .report-view {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.report-frame {
+    width: 100%;
+    max-width: 1200px;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.report-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+}
+
+.smartphone-mode .report-view {
+    padding: 15px;
+}
+
+.smartphone-mode .report-frame {
+    padding: 10px;
+    border-radius: 10px;
 }

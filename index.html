@@ -15,20 +15,97 @@
         <div class="utility-left">
             <span class="menu-icon" onclick="toggleSidebar()">☰</span>
             <div class="menu-items">
-                <span class="menu-item">파일 (File)</span>
-                <div class="dropdown">
-                    <span class="menu-item dropdown-toggle">보기 (View)</span>
-                    <div class="dropdown-content">
-                        <div class="dropdown-item active" id="view-computer" onclick="setViewMode('computer')">
-                            <span class="view-icon">💻</span> Computer Mode
-                        </div>
-                        <div class="dropdown-item" id="view-smartphone" onclick="setViewMode('smartphone')">
-                            <span class="view-icon">📱</span> Smart Phone Mode
-                        </div>
+                <!-- Merged File Menu -->
+                <div class="dm-menu-item">파일 (File)
+                    <div class="dm-dropdown-content">
+                        <div class="dm-dropdown-item">Open</div>
+                        <div class="dm-dropdown-item">Add...</div>
+                        <div class="dm-dropdown-item">Save As...</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMConfiguration()">Configuration</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item">Exit</div>
                     </div>
                 </div>
-                <span class="menu-item help-active">도움말 (Help)</span>
+                <!-- DosiMachine Specific Menus (Merged) -->
+                <div class="dm-menu-item dm-only-menu">Tools
+                    <div class="dm-dropdown-content">
+                        <div class="dm-dropdown-item" onclick="showDMInvertColor()">Invert color</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMDicomComposite()">Dicom Composite</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMGantryAngleCal()">Gantry_Angle_Cal</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item">Image_Rotate</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMProfileComparison()">Profile Comparison</div>
+                        <div class="dm-dropdown-item" onclick="showDMPDDComparison()">PDD Comparison</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMConvertToAccept()">Convert to Accept Format</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMSaveProfileToASC()">Save Profile to ASC</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDM3DEpidPdd()">3D EPID PDD Reconstruction</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item">RT Workspace</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item">Move Data</div>
+                    </div>
+                </div>
+                <div class="dm-menu-item dm-only-menu">Machine_QA
+                    <div class="dm-dropdown-content">
+                        <div class="dm-dropdown-item" onclick="showDMFieldAnalysis()">Field Analysis</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMStarshotAnalysis()">Starshot Analysis</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMVertualGantryStarshot()">Vertual Gantry Starshot</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMPicketFenceAnalysis()">Picket Fence Analysis</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMWinstonLutzAnalysis()">Winston-Lutz Analysis</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMPhotonCalibration()">Photon_Calibration(TRS-398)</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMEleCalibration()">Ele_Calibration(TRS-398)</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item">Calibration(TG52)</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMMLCLog()">MLC_Log</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMMPCAnalyzer()">MPC_Analyzer</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMGatingQA()">Gating_QA</div>
+                    </div>
+                </div>
+                <div class="dm-menu-item dm-only-menu">Data Handling
+                    <div class="dm-dropdown-content">
+                        <div class="dm-dropdown-item">Smoothing...</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item">Cax Correction</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item">Set Pixel Spacing</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item">Reset Smoothing</div>
+                    </div>
+                </div>
+                <div class="dm-menu-item dm-only-menu">Reports
+                    <div class="dm-dropdown-content">
+                        <div class="dm-dropdown-item" onclick="showDMProfileReport()">Profile Analyze & Report(PDF)</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item">Pho_PDD Analysis & Report</div>
+                        <div class="dm-dropdown-item">Ele_PDD Analysis & Report</div>
+                    </div>
+                </div>
+                <div class="dm-menu-item help-active">도움말 (Help)
+                    <div class="dm-dropdown-content">
+                        <div class="dm-dropdown-item">Features</div>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="utility-center">
+            <button class="main-tab active" id="tab-hub" onclick="switchMainTab('hub')">Linac QA HUB</button>
+            <button class="main-tab dosimachine" id="tab-dm" onclick="switchMainTab('dm')">DosiMachine</button>
         </div>
         <div class="utility-right">
             <div class="view-toggles">
@@ -38,6 +115,7 @@
             <span class="home-icon" onclick="goHome()">🏠</span>
         </div>
     </div>
+
 
     <!-- Top Navigation Bar -->
     <nav class="top-nav">
@@ -399,7 +477,7 @@
                             </div>
                             <div class="hub-image-box video-box">
                                 <video autoplay loop muted playsinline class="hub-video">
-                                    <source src="images/drag.mp4" type="video/mp4">
+                                    <source src="images2/drag.mp4" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
                                 <div class="video-caption-box">
@@ -423,7 +501,7 @@
                                 </ul>
                             </div>
                             <div class="hub-image-box">
-                                <img src="images/linac_qa_hub_preview.png" alt="Analysis Tools">
+                                <img src="images2/linac_qa_hub_preview.png" alt="Analysis Tools">
                             </div>
                         </div>
                     </div>
@@ -441,7 +519,7 @@
                                 <p>다크 모드와 직관적인 UI, 통합 To-Do 리스트가 연구원과 물리사에게 최적의 환경을 제공합니다.</p>
                             </div>
                             <div class="hub-image-box">
-                                <img src="images/easy_machine_preview.png" alt="Value Prop">
+                                <img src="images2/easy_machine_preview.png" alt="Value Prop">
                             </div>
                         </div>
                     </div>
@@ -464,7 +542,7 @@
                                 </div>
                             </div>
                             <div class="hub-image-box">
-                                <img src="images/config.png" alt="Workflow">
+                                <img src="images2/config.png" alt="Workflow">
                             </div>
                         </div>
                     </div>
@@ -488,8 +566,1051 @@
                         </div>
 
                         <div class="hub-footer-visual">
-                            <img src="images/machine.png" alt="DosiMachine" class="footer-machine-img">
+                            <img src="images2/machine.png" alt="DosiMachine" class="footer-machine-img">
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Promotional Home -->
+            <div class="dosimachine-home" id="dosimachine-home">
+                <section class="dm-hero">
+                    <div class="dm-hero-image-container">
+                        <img src="images2/top.png" alt="DosiMachine Overview" class="dm-hero-img-full">
+                    </div>
+                </section>
+
+                <section class="dm-feature-grid">
+                    <div class="dm-feature-card">
+                        <span class="dm-feature-icon">📊</span>
+                        <h3>Precision Analysis</h3>
+                        <p>Advanced algorithms for Field Analysis, Winston-Lutz, and Starshot built on industry-standard Pylinac and TG-142 protocols.</p>
+                    </div>
+                    <div class="dm-feature-card">
+                        <span class="dm-feature-icon">🛡️</span>
+                        <h3>Total Dosimetry</h3>
+                        <p>Complete support for TRS-398 and TG-51 protocols. Calibration for Photon and Electron beams with automated correction factors.</p>
+                    </div>
+                    <div class="dm-feature-card">
+                        <span class="dm-feature-icon">📁</span>
+                        <h3>RT Workspace</h3>
+                        <p>Unified environment to manage RT Plan, Dose, and Structure sets. Compare profiles and visualize 3D dose distributions.</p>
+                    </div>
+                    <div class="dm-feature-card">
+                        <span class="dm-feature-icon">⚙️</span>
+                        <h3>Log Analysis</h3>
+                        <p>Deep insight into Varian Trajectory Logs and Dynalogs. Monitor MLC performance with sub-millimeter accuracy.</p>
+                    </div>
+                </section>
+
+                <section class="dm-value-section">
+                    <div class="dm-value-content">
+                        <h2>Why DosiMachine?</h2>
+                        <ul class="dm-value-list">
+                            <li class="dm-value-item">
+                                <h4>Clinical Excellence</h4>
+                                <p>Designed by medical physicists for medical physicists, ensuring every tool meets clinical requirements.</p>
+                            </li>
+                            <li class="dm-value-item">
+                                <h4>Efficiency & Speed</h4>
+                                <p>Automated PDF report generation and real-time beam profiling significantly reduce workload.</p>
+                            </li>
+                            <li class="dm-value-item">
+                                <h4>Flexible Integration</h4>
+                                <p>Export data to ASC/CSV format for research or secondary verification in other systems.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dm-value-image">
+                        <img src="images2/a.png" alt="DosiMachine Feature Image">
+                    </div>
+                </section>
+            </div>
+
+            <!-- DosiMachine Field Analysis View -->
+            <div id="dm-field-analysis-view" class="dm-field-analysis-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-fa-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f0f7ff; padding: 2.5rem; border-radius: 20px; border: 1px solid #d0e7ff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #1e40af; margin-bottom: 1.5rem; border-left: 5px solid #3b82f6; padding-left: 1.2rem; font-weight: 800;">Field Analysis: 빔 품질 관리의 자동화 솔루션</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">자동화된 빔 프로파일 추출 및 분석</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">조사면(Field) 영상으로부터 중심축(CAX)을 자동으로 정렬하고, 수평/수직 방향의 주요 프로파일을 즉시 추출합니다. 수동으로 라인을 그릴 필요 없이 빔의 전반적인 품질을 한눈에 확인할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">다양한 국제 표준 프로토콜 지원</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">Varian, Elekta, Siemens, IEC, AQUA 등 임상에서 사용되는 다양한 분석 프로토콜을 모두 탑재하고 있습니다. 각 제조사 규격에 맞는 알고리즘으로 평탄도(Flatness)와 대칭도(Symmetry)를 정확하게 산출합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">정밀한 빔 성능 지표 산출</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">단순히 그래프를 보여주는 것을 넘어, Field Size, Penumbra(반음영), Beam Center Shift 등 가속기의 기하학적 및 선량적 정밀도를 결정하는 핵심 수치들을 정량적으로 제공합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">시각적 프로파일 맵 및 분석 결과 표시</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">영상 위에 직접 분석에 사용된 좌표와 영역을 마킹하여 시각화하므로, 알고리즘이 어느 지점을 기준으로 분석했는지 투명하게 확인할 수 있습니다. 이는 분석 결과의 신뢰도를 높여줍니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">체계적인 품질 관리 리포트(PDF) 생성</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">모든 결과 수치와 주요 프로파일 그래프가 포함된 전문적인 PDF 결과지를 자동으로 생성합니다. 이를 통해 일일/월간/연간 품질 관리(QA) 기록을 표준화된 양식으로 보관하고 문서화할 수 있습니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="dm-fa-content">
+                    <div class="dm-fa-item">
+                        <img src="images2/Field Analysis1.png" alt="Field Analysis 1">
+                        <p>EPID' 혹은 Film등에서 측정한 Dicom 파일 및 이미지 파일을 불러온다</p>
+                    </div>
+                    
+                    <div class="dm-fa-item">
+                        <img src="images2/Field Analysis2.png" alt="Field Analysis 2">
+                        <p>원하는 측정 날짜를 지정해서 PDF 문서로 저장한다.</p>
+                    </div>
+                    
+                    <div class="dm-fa-item">
+                        <img src="images2/Field Analysis3.png" alt="Field Analysis 3">
+                        <p>EPID로 측정한 이미지에서 원하는 위치에서의 Inline Crossline Profile을 추출해서 분석 가능하다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Starshot Analysis View -->
+            <div id="dm-starshot-analysis-view" class="dm-starshot-analysis-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-sa-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f0fdfa; padding: 2.5rem; border-radius: 20px; border: 1px solid #ccfbf1; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #0f766e; margin-bottom: 1.5rem; border-left: 5px solid #14b8a6; padding-left: 1.2rem; font-weight: 800;">Starshot Analysis: 초정밀 Isocenter 기하학적 분석</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #134e4a; display: block; margin-bottom: 0.3rem;">초정밀 Isocenter 분석</strong>
+                                <span style="color: #0f766e; line-height: 1.6;">여러 시점(Gantry, Couch, Collimator 회전)에서 촬영된 빔들이 만나는 지점인 회전 중심(Isocenter)의 정확성을 분석합니다. 특히 이 지점들이 형성하는 <strong>가장 작은 원의 반경(Isocenter Radius)</strong>을 0.01mm 단위로 계산하여 기하학적 정밀도를 정량적으로 평가합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #134e4a; display: block; margin-bottom: 0.3rem;">자동화된 빔 피크(Peak) 감지 및 추적</strong>
+                                <span style="color: #0f766e; line-height: 1.6;">영상 처리 알고리즘을 통해 각 방사선 빔의 중심선을 자동으로 탐지합니다. 수동으로 선을 긋거나 중심을 찾을 필요가 없어 분석의 일관성을 유지하고 사람에 의한 측정 오차를 방지합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #134e4a; display: block; margin-bottom: 0.3rem;">직관적인 시각적 검출 결과</strong>
+                                <span style="color: #0f766e; line-height: 1.6;">분석된 영상 위에 빔의 중심선, 교차 영역, 그리고 Isocenter 원을 직접 그려주어, 어느 부분에서 기계적 오차가 발생하는지 시각적으로 즉각 파악할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #134e4a; display: block; margin-bottom: 0.3rem;">다양한 측정 모드 지원</strong>
+                                <span style="color: #0f766e; line-height: 1.6;">갠트리(Gantry)뿐만 아니라 콜리메이터(Collimator), 카우치(Couch)의 회전 중심도 동일한 방식으로 분석할 수 있어, 가속기의 기하학적 성능을 다각도로 점검할 수 있는 통합 솔루션을 제공합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #134e4a; display: block; margin-bottom: 0.3rem;">표준화된 합격/불합격(Pass/Fail) 판정</strong>
+                                <span style="color: #0f766e; line-height: 1.6;">사전에 설정된 톨러런스(Tolerance, 예: 1.0mm)를 기준으로 분석 결과의 합격 여부를 즉시 보여줍니다. 또한, 분석 수치와 이미지가 포함된 전문 PDF 리포트를 생성하여 기기 보증(Commissioning)이나 정기 QA 기록으로 활용하기에 매우 적합합니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="dm-sa-content">
+                    <div class="dm-sa-item">
+                        <img src="images2/Starshot Analysis1.png" alt="Starshot Analysis 1">
+                        <p>EPID' 혹은 Film등에서 측정한 Dicom 파일 및 이미지 파일을 불러온다. 각 Angle의 빔을 합치는 기능 제공</p>
+                    </div>
+                    
+                    <div class="dm-sa-item">
+                        <img src="images2/Starshot Analysis2.png" alt="Starshot Analysis 2">
+                        <p>원하는 측정 날짜를 지정해서 PDF 문서로 저장한다. 저장된 문서에서 값을 자동으로 추출해서 월간 리포트에 기입 가능</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Picket Fence Analysis View -->
+            <div id="dm-picket-fence-analysis-view" class="dm-picket-fence-analysis-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-pfa-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #eef2ff; padding: 2.5rem; border-radius: 20px; border: 1px solid #e0e7ff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #3730a3; margin-bottom: 1.5rem; border-left: 5px solid #6366f1; padding-left: 1.2rem; font-weight: 800;">Picket Fence Analysis: MLC 구동 정밀도 검증 솔루션</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #312e81; display: block; margin-bottom: 0.3rem;">MLC 위치 정확도의 정교한 검증</strong>
+                                <span style="color: #3730a3; line-height: 1.6;">다엽 콜리메이터(MLC)가 계획된 위치에 정확히 도달했는지를 0.1mm 단위의 높은 정밀도로 분석합니다. 정기적인 테스트를 통해 MLC 리프의 기계적 마모나 제어 시스템의 오차를 조기에 발견할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #312e81; display: block; margin-bottom: 0.3rem;">개별 리프별 상세 진단</strong>
+                                <span style="color: #3730a3; line-height: 1.6;">전체 MLC의 평균 오차뿐만 아니라, 모든 개별 리프(Leaf) 각각의 최대 오차와 평균 오차를 산출합니다. 이를 통해 특정 리프의 모터 성능 저하나 구동 이상을 족집게처럼 찾아낼 수 있어 정비 효율성을 극대화합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #312e81; display: block; margin-bottom: 0.3rem;">자동화된 'Picket' 탐지 및 분석</strong>
+                                <span style="color: #3730a3; line-height: 1.6;">영상 내의 모든 정적/동적 조사 영역(Picket)을 알고리즘이 자동으로 식별하고 중심선을 추적합니다. 수동 측정의 번거로움을 없애고 분석의 객관성과 재현성을 보장합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #312e81; display: block; margin-bottom: 0.3rem;">시각적 오차 맵(Error Chart) 제공</strong>
+                                <span style="color: #3730a3; line-height: 1.6;">분석 영상 위에 각 리프의 오차 정도를 색상별(예: 합격은 녹색, 경고는 황색, 불합격은 적색)로 표시하며, 리프별 오차 분포를 그래프로 보여주어 문제 지점을 직관적으로 파악할 수 있게 합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #312e81; display: block; margin-bottom: 0.3rem;">임상적 톨러런스 기반 판정 및 리포트</strong>
+                                <span style="color: #3730a3; line-height: 1.6;">사전에 정의된 임상 기준(예: 0.5mm 또는 1.0mm)을 적용하여 전체 테스트의 합격/불합격 여부를 즉시 판정합니다. 분석 이미지와 정량적 수치가 포함된 PDF 리포트를 생성하여 체계적인 기록 관리가 가능합니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="dm-pfa-content">
+                    <div class="dm-pfa-item">
+                        <img src="images2/Picket Fence Analysis1.png" alt="Picket Fence Analysis 1">
+                        <p>EPID' 혹은 Film등에서 측정한 Data를 이용해서 모든 장비에 대한 Picket Fence 분석 가능</p>
+                    </div>
+                    
+                    <div class="dm-pfa-item">
+                        <img src="images2/Picket Fence Analysis2.png" alt="Picket Fence Analysis 2">
+                        <p>원하는 측정 날짜를 지정해서 PDF 문서로 저장한다. 저장된 문서에서 값을 자동으로 추출해서 월간 리포트에 기입 가능</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Winston-Lutz Analysis View -->
+            <div id="dm-winston-lutz-analysis-view" class="dm-winston-lutz-analysis-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-wla-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f8fafc; padding: 2.5rem; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #1e293b; margin-bottom: 1.5rem; border-left: 5px solid #64748b; padding-left: 1.2rem; font-weight: 800;">Winston-Lutz Analysis: 초정밀 입체적 Isocenter 검증</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #64748b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0f172a; display: block; margin-bottom: 0.3rem;">초정밀 입체적 Isocenter 검증</strong>
+                                <span style="color: #1e293b; line-height: 1.6;">갠트리, 콜리메이터, 카우치가 회전할 때 방사선 중심(CAX)이 물리적 타겟(BB)으로부터 얼마나 벗어나는지를 3차원적으로 분석합니다. SRS(뇌정위방사선수술)나 SBRT와 같이 극소 마진을 사용하는 치료에서 장비의 기하학적 정밀도를 보장하는 가장 신뢰도 높은 방법입니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #64748b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0f172a; display: block; margin-bottom: 0.3rem;">방사선 중심(CAX)과 타겟(BB)의 자동 정밀 탐지</strong>
+                                <span style="color: #1e293b; line-height: 1.6;">EPID 영상 내의 미세한 볼 베어링(BB) 위치와 조사면의 중심을 알고리즘이 자동으로 찾아냅니다. 수동 측정 시 발생할 수 있는 주관적 오차를 제거하고 0.1mm 이하의 정밀한 편차 분석이 가능합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #64748b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0f172a; display: block; margin-bottom: 0.3rem;">Isocenter 크기 및 이동(Shift)의 정량화</strong>
+                                <span style="color: #1e293b; line-height: 1.6;">모든 영상 데이터를 종합하여 실제 Isocenter가 형성하는 <strong>입체적인 원의 크기(Isocenter Size)</strong>와, 최적의 치료를 위해 장비를 어느 방향으로 얼마나 조정해야 하는지(Optimal Shift)에 대한 구체적인 수치를 제공합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #64748b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0f172a; display: block; margin-bottom: 0.3rem;">회전축별 개별 및 통합 분석</strong>
+                                <span style="color: #1e293b; line-height: 1.6;">갠트리만 회전했을 때, 혹은 카우치나 콜리메이터를 함께 회전했을 때의 오차를 구분하여 분석할 수 있습니다. 이를 통해 특정 회전축의 기계적 유격이나 정렬 불량 원인을 정확히 진단할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #64748b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0f172a; display: block; margin-bottom: 0.3rem;">표준화된 합격 판정 및 전문 리포트</strong>
+                                <span style="color: #1e293b; line-height: 1.6;">0.5mm~1.0mm 등 엄격한 임상 기준(Tolerance)을 적용하여 합격 여부를 즉시 판정합니다. 분석 이미지와 모든 방향의 오차 수치가 포함된 상세 PDF 리포트를 생성하여 고정밀 방사선 치료를 위한 필수 품질 관리 기록으로 활용할 수 있습니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-wla-content" style="width: 100%; display: flex; justify-content: center;">
+                    <img src="images2/Winston-Lutz Analysis1.png" alt="Winston-Lutz Analysis 1" style="max-width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+                </div>
+            </div>
+
+            <!-- DosiMachine Photon Calibration View -->
+            <div id="dm-photon-calibration-view" class="dm-photon-calibration-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-pc-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f0f9ff; padding: 2.5rem; border-radius: 20px; border: 1px solid #e0f2fe; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #0369a1; margin-bottom: 1.5rem; border-left: 5px solid #0ea5e9; padding-left: 1.2rem; font-weight: 800;">Photon Calibration: IAEA TRS-398 기반 절대선량 교정</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">국제 표준 프로토콜(IAEA TRS-398) 준수</strong>
+                                <span style="color: #0369a1; line-height: 1.6;">국제원자력기구(IAEA)에서 권고하는 고에너지 광자선 선량 교정 표준 프로토콜을 기반으로 합니다. 이를 통해 병원 내 선량 측정의 정확성을 국제적 기준에 맞춰 객관적으로 보장할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">복잡한 보정 계수의 자동 산출</strong>
+                                <span style="color: #0369a1; line-height: 1.6;">온도·기압($k_{TP}$), 이온 재결합($k_s$/$P_{ion}$), 극성 효과($k_{pol}$), 그리고 입자에 따른 에너지 보정 계수($k_Q$) 등 복잡한 물리적 보정 과정을 자동화하여 계산 오류를 방지하고 정확한 흡수선량을 산출합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">Dose per MU 및 오차율 정밀 계산</strong>
+                                <span style="color: #0369a1; line-height: 1.6;">측정된 전하량으로부터 'Dose per MU'를 계산하고, 목표 선량(예: 100 MU 조사 시 1.0 Gy) 대비 실제 출력되는 선량의 오차율(%)을 즉각적으로 보여주어 장비의 출력 일관성을 엄격히 관리할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">유연한 수동 보정 및 초기값 설정</strong>
+                                <span style="color: #0369a1; line-height: 1.6;">시스템에서 자동 계산된 보정 계수 외에도, 사용자가 직접 측정한 계수값을 입력할 수 있는 Manual Override 기능을 지원합니다. 이는 측정 데이터가 불충분하거나 특수한 환경에서도 신뢰성 있는 결과를 도출할 수 있게 돕습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">표준화된 선량 교정 리포트(PDF) 발행</strong>
+                                <span style="color: #0369a1; line-height: 1.6;">모든 측정값, 환경 변수, 적용된 보정 계수 및 최종 선량 결과가 포함된 전문적인 PDF 리포트를 생성합니다. 이는 가속기의 정기적인 선량 품질 관리(Dosimetry QA) 기록을 체계적으로 보존하는 데 필수적인 도구입니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-pc-content" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div class="pc-image-wrapper" style="max-width: 950px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 분석 화면 1 ]</p>
+                        <img src="images2/Photon_Calibration(TRS398)1.png" alt="Photon Calibration 1" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div class="pc-image-wrapper" style="max-width: 950px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 분석 화면 2 ]</p>
+                        <img src="images2/Photon_Calibration(TRS398)2.png" alt="Photon Calibration 2" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div class="pc-image-wrapper" style="max-width: 950px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 분석 화면 3 ]</p>
+                        <img src="images2/Photon_Calibration(TRS398)3.png" alt="Photon Calibration 3" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Electron Calibration View -->
+            <div id="dm-ele-calibration-view" class="dm-ele-calibration-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-ec-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #fffbeb; padding: 2rem; border-radius: 16px; border: 1px solid #fde68a; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.5rem; color: #92400e; margin-bottom: 1.2rem; border-left: 4px solid #f59e0b; padding-left: 1rem;">Dosimachine Ele_Calibration(TRS-398)</h2>
+                    <p style="font-size: 1.05rem; line-height: 1.7; color: #451a03; margin-bottom: 1rem;">
+                        Dosimachine에서 Ele_Calibration(TRS-398) 기능을 사용할 때의 주요 장점은 다음과 같습니다:
+                    </p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1rem; display: flex; gap: 0.8rem;">
+                            <span style="color: #f59e0b; font-weight: bold;">•</span>
+                            <span><strong>전자선 특화 보정 및 정밀도:</strong> 에너지별 전자선에 최적화된 저지능비(Stopping-power ratio)와 빔 품질 보정 계수($k_{Q,Q_0}$)를 TRS-398 표준 규격에 맞춰 자동 산출하므로 계산 오류를 최소화합니다.</span>
+                        </li>
+                        <li style="margin-bottom: 1rem; display: flex; gap: 0.8rem;">
+                            <span style="color: #f59e0b; font-weight: bold;">•</span>
+                            <span><strong>누락 데이터 및 극단적 상황 대응:</strong> 극성 보정($k_{pol}$)이나 이온 재결합 보정($k_s$) 측정값이 없는 경우 자동으로 1.0으로 초기화하며, Pylinac 연산 중 발생할 수 있는 '범위 초과(Out-of-bounds)' 오류 시에도 수동 Override 기능을 통해 안정적으로 결과값을 도출할 수 있습니다.</span>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 0.8rem;">
+                            <span style="color: #f59e0b; font-weight: bold;">•</span>
+                            <span><strong>사용자 친화적 워크플로우:</strong> 복잡한 전자선 교정 절차를 단일 인터페이스에 통합하여, 여러 에너지 대역의 측정치 입력부터 최종 절대선량 확인, 그리고 상세한 결과 요약 및 PDF 리포트 출력까지의 과정을 원스톱으로 처리할 수 있어 업무 효율성이 극대화됩니다.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-ec-content" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div class="ec-image-wrapper" style="max-width: 950px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 분석 화면 1 ]</p>
+                        <img src="images2/Photon_Calibration(TRS398)1.png" alt="Electron Calibration 1" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div class="ec-image-wrapper" style="max-width: 950px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 분석 화면 2 ]</p>
+                        <img src="images2/Photon_Calibration(TRS398)2.png" alt="Electron Calibration 2" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div class="ec-image-wrapper" style="max-width: 950px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 분석 화면 3 ]</p>
+                        <img src="images2/Photon_Calibration(TRS398)3.png" alt="Electron Calibration 3" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine MLC Log View -->
+            <div id="dm-mlc-log-view" class="dm-mlc-log-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-ml-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f1f5f9; padding: 2.5rem; border-radius: 20px; border: 1px solid #cbd5e1; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #0f172a; margin-bottom: 1.5rem; border-left: 5px solid #6366f1; padding-left: 1.2rem; font-weight: 800;">MLC Log 정밀 분석 솔루션</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e293b; display: block; margin-bottom: 0.3rem;">실제 조사 데이터 기반의 정밀 검증</strong>
+                                <span style="color: #475569; line-height: 1.6;">치료 중 가속기에서 생성된 로그 파일(Dynalog 또는 Trajectory Log)을 분석하여, 계획된 MLC 위치(Expected)와 실제로 움직인 위치(Actual)를 0.1mm 단위의 높은 분해능으로 비교 검증할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e293b; display: block; margin-bottom: 0.3rem;">리프별 상세 진단 및 통계</strong>
+                                <span style="color: #475569; line-height: 1.6;">모든 MLC 리프에 대해 각각의 RMS 오차, 최대 오차, 95% 분위수(95th Percentile)를 산출합니다. 이를 통해 특정 리프의 구동 이상이나 모터 성능 저하를 조기에 발견하여 예방 정비가 가능합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e293b; display: block; margin-bottom: 0.3rem;">2D 플루언스 및 감마 분석(Gamma Analysis)</strong>
+                                <span style="color: #475569; line-height: 1.6;">MLC의 움직임을 바탕으로 2차원 플루언스 맵(Fluence Map)을 재구성하고, 계획과 실제 간의 감마 인덱스를 계산합니다. 이는 단순한 기계적 오차를 넘어 실제 선량 분포에 미치는 영향까지 정량적으로 평가할 수 있게 해줍니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e293b; display: block; margin-bottom: 0.3rem;">분석 자동화 및 리포트 관리</strong>
+                                <span style="color: #475569; line-height: 1.6;">복잡한 로그 데이터 해석 과정을 자동화하여 시각적 그래프(히스토그램, 리프 오차 차트)로 즉시 보여주며, 분석 결과를 CSV 또는 PDF 리포트로 저장하여 체계적인 품질 관리 기록을 남길 수 있습니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-ml-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/MLC_log.png" alt="MLC Log Analysis" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine MPC Analyzer View -->
+            <div id="dm-mpc-analyzer-view" class="dm-mpc-analyzer-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-ma-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f0fdf4; padding: 2.5rem; border-radius: 20px; border: 1px solid #bbf7d0; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #166534; margin-bottom: 1.5rem; border-left: 5px solid #22c55e; padding-left: 1.2rem; font-weight: 800;">MPC Analyzer: Varian 가속기 최적화 통합 분석</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #064e3b; display: block; margin-bottom: 0.3rem;">Varian 가속기 최적화 통합 분석</strong>
+                                <span style="color: #14532d; line-height: 1.6;">Varian 가속기의 자체 검증 시스템인 MPC(Machine Performance Check) 결과 데이터를 직접 불러와 Isocenter(Size/Offset), Beam, Couch, MLC, Energy의 5대 핵심 지표를 하나의 화면에서 통합적으로 분석할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #064e3b; display: block; margin-bottom: 0.3rem;">장기적 트렌드 모니터링 및 추적</strong>
+                                <span style="color: #14532d; line-height: 1.6;">단순한 일회성 확인을 넘어, 필터링 기능을 통해 특정 기간 동안의 데이터를 시각화(Trend Plot)함으로써 장비 성능의 미세한 변화나 노후화 패턴을 정밀하게 추적할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #064e3b; display: block; margin-bottom: 0.3rem;">에너지 일관성(Energy Constancy) 정밀 진단</strong>
+                                <span style="color: #14532d; line-height: 1.6;">6X, 10X부터 FFF 모드까지 모든 에너지 대역의 선량 일관성을 그래프로 비교하여, 치료 빔의 물리적 안정성을 실시간으로 확인하고 편차를 관리할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #064e3b; display: block; margin-bottom: 0.3rem;">DICOM 영상 기반의 교차 검증</strong>
+                                <span style="color: #14532d; line-height: 1.6;">MPC 결과 수치뿐만 아니라, 실제 촬영된 DICOM 영상을 로드하여 프로파일(Profile) 분석을 병행할 수 있어 수치와 영상 데이터 간의 교차 검증이 가능합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #064e3b; display: block; margin-bottom: 0.3rem;">업무 효율을 높이는 자동화 기능</strong>
+                                <span style="color: #14532d; line-height: 1.6;">지정된 폴더를 실시간으로 감시하여 새로운 MPC 파일이 생성될 때마다 리포트를 자동 생성하는 Auto-Report 기능과, 전문적인 PDF 리포트 출력 기능을 통해 일일 QA 업무 시간을 획기적으로 단축해 줍니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-ma-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/MPC_Analyzer.png" alt="MPC Analyzer" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Gating QA View -->
+            <div id="dm-gating-qa-view" class="dm-gating-qa-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-gq-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #faf5ff; padding: 2.5rem; border-radius: 20px; border: 1px solid #e9d5ff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #581c87; margin-bottom: 1.5rem; border-left: 5px solid #a855f7; padding-left: 1.2rem; font-weight: 800;">Gating QA: 호흡 동기 정밀 검증 솔루션</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #3b0764; display: block; margin-bottom: 0.3rem;">정밀한 시간 지연(Latency) 분석</strong>
+                                <span style="color: #5b21b6; line-height: 1.6;">호흡 동기 방사선 치료(Gating)에서 가장 중요한 요소인 '시스템 베이턴시(Latency)'를 정량적으로 측정합니다. 치료 장비가 호흡 신호를 감지하고 실제 빔을 켜거나 끄는 데 걸리는 시간(ms 단위)을 평균, 최대, 최소값으로 산출하여 치료의 정확성을 보장합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #3b0764; display: block; margin-bottom: 0.3rem;">동적 위치 정확도 검증</strong>
+                                <span style="color: #5b21b6; line-height: 1.6;">호흡 패턴에 따라 움직이는 타겟(BB)의 실제 궤적을 EPID 영상으로 추적하고, 이를 치료 계획상의 위치와 비교합니다. RMS 오차 및 최대 오차 분석을 통해 움직이는 타겟에 대한 기계적인 조준 정밀도를 확인합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #3b0764; display: block; margin-bottom: 0.3rem;">통합 데이터 분석(Trajectory Log + EPID)</strong>
+                                <span style="color: #5b21b6; line-height: 1.6;">가속기의 구동 기록(Trajectory Log)과 실제 엑스레이 영상(EPID DICOM)을 시간축상에서 동기화하여 분석합니다. 이를 통해 신호 전달 과정의 지연뿐만 아니라 빔이 켜져 있는 동안의 물리적 위치 일치성을 한눈에 파악할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #3b0764; display: block; margin-bottom: 0.3rem;">시각적 통합 모니터링</strong>
+                                <span style="color: #5b21b6; line-height: 1.6;">빔의 세기(Intensity), BB의 움직임 궤적, 호흡 신호와 빔 온/오프 상태를 하나의 그래프에 통합하여 보여줍니다. 사용자는 시각적인 마커를 통해 로그 데이터와 실제 영상 간의 편차를 직관적으로 이해할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #3b0764; display: block; margin-bottom: 0.3rem;">표준화된 품질 관리 및 리포트</strong>
+                                <span style="color: #5b21b6; line-height: 1.6;">Varian-RGSC 시스템 등 국제적인 표준 워크플로우를 지원하며, 분석 수치와 그래프가 포함된 전문적인 PDF 리포트를 자동으로 생성하여 호흡 동기 QA 기록을 체계적으로 관리할 수 있게 해줍니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-gq-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/Gating_QA.png" alt="Gating QA Analysis" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Invert Color View -->
+            <div id="dm-invert-color-view" class="dm-invert-color-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-ic-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f8fafc; padding: 2.5rem; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #1e293b; margin-bottom: 1.5rem; border-left: 5px solid #334155; padding-left: 1.2rem; font-weight: 800;">Invert Color: 정밀 분석 보정 솔루션</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #334155; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0f172a; display: block; margin-bottom: 0.3rem;">DICOM 이미지 호환성 해결</strong>
+                                <span style="color: #475569; line-height: 1.6;">의료용 DICOM 영상은 촬영 장비나 설정에 따라 MONOCHROME1(0이 흰색) 또는 MONOCHROME2(0이 검은색) 방식을 사용합니다. 분석 알고리즘이 "밝은 부분"을 방사선 조사 영역으로 인식하도록 설계된 경우, 반대 형식의 영상을 Invert 기능을 통해 즉시 보정하여 분석 오류를 방지할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #334155; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0f172a; display: block; margin-bottom: 0.3rem;">분석 알고리즘의 정확도 향상</strong>
+                                <span style="color: #475569; line-height: 1.6;">Starshot이나 Winston-Lutz 분석 시 Pylinac 알고리즘은 일반적으로 주변보다 밝은 부분(High Intensity)을 추적합니다. 필름 스캔 데이터처럼 방사선 조사 부위가 어둡게 표시되는 경우, 색상을 반전시켜 알고리즘이 빔의 중심이나 Isocenter를 정확하게 포착하도록 돕습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #334155; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0f172a; display: block; margin-bottom: 0.3rem;">시각적 대조도(Contrast) 확보</strong>
+                                <span style="color: #475569; line-height: 1.6;">아주 미세한 방사선 분포나 작은 BB(금속 구)의 위치를 확인할 때, 배경과 타겟의 색상을 반전시킴으로써 육안으로 피크(Peak) 지점을 더 명확하게 식별하고 분석 파라미터(예: Peak 높이 임계값)를 설정하는 데 도움을 줍니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #334155; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0f172a; display: block; margin-bottom: 0.3rem;">필름 및 EPID 통합 지원</strong>
+                                <span style="color: #475569; line-height: 1.6;">어두운 배경에 밝은 선이 나타나는 EPID 영상과 밝은 배경에 어두운 선이 나타나는 필름 영상을 동일한 분석 환경에서 처리할 수 있게 해주어 장비와 매체에 구애받지 않는 일관된 품질 관리가 가능해집니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-ic-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/Invert color.png" alt="Invert Color Analysis" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Dicom Composite View -->
+            <div id="dm-dicom-composite-view" class="dm-dicom-composite-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-dc-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #fff7ed; padding: 2.5rem; border-radius: 20px; border: 1px solid #ffedd5; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #9a3412; margin-bottom: 1.5rem; border-left: 5px solid #f97316; padding-left: 1.2rem; font-weight: 800;">Dicom Composite: 멀티 빔 통합 시각화 솔루션</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f97316; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #7c2d12; display: block; margin-bottom: 0.3rem;">멀티 빔(Multi-beam) 통합 시각화</strong>
+                                <span style="color: #9a3412; line-height: 1.6;">각각의 DICOM 파일로 분리된 여러 방향의 빔이나 갠트리 각도 데이터를 하나의 **합성 이미지(Composite Image)**로 병합합니다. 이를 통해 전체 치료 빔이 공간상에서 어떻게 교차하고 중첩되는지 한눈에 직관적으로 파악할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f97316; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #7c2d12; display: block; margin-bottom: 0.3rem;">오버레이(Overlay)를 통한 기하학적 검증</strong>
+                                <span style="color: #9a3412; line-height: 1.6;">여러 장의 영상을 합산(Summation)하여 픽셀을 중첩시킴으로써, Starshot 분석이나 Isocenter 확인 시 각 빔의 중심선이 물리적인 한 점(Isocenter)에 정확히 모이는지 시각적으로 정밀하게 검토할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f97316; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #7c2d12; display: block; margin-bottom: 0.3rem;">지능형 리사이징 및 정규화</strong>
+                                <span style="color: #9a3412; line-height: 1.6;">병합하려는 영상들의 크기가 서로 다르더라도 LANCZOS 알고리즘 기반의 고품질 리사이징을 통해 해상도를 자동으로 맞추어 병합합니다. 또한, 픽셀 데이터의 데이터 타입 불일치를 내부적으로 처리하여 분석의 연속성을 유지합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f97316; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #7c2d12; display: block; margin-bottom: 0.3rem;">호흡 동기화 및 텔레스코픽 분석</strong>
+                                <span style="color: #9a3412; line-height: 1.6;">여러 프레임으로 구성된 동영상 형태의 DICOM 데이터를 단일 합성 영상으로 변환하여, 전체 치료 시간 동안의 빔 움직임 궤적이나 타겟의 이동 범위를 하나의 정적 이미지 안에 누적해서 표현하고 분석할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f97316; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #7c2d12; display: block; margin-bottom: 0.3rem;">DICOM 표준 호환성 확보</strong>
+                                <span style="color: #9a3412; line-height: 1.6;">합성된 결과를 'Secondary Capture' 형식의 표준 DICOM 파일로 저장하므로, 생성된 분석 이미지를 다른 치료 계획 시스템(TPS)이나 PACS(영상 전송 시스템)로 전송하여 보관하거나 공유하기가 매우 용이합니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-dc-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/Dicom Composite.png" alt="Dicom Composite Analysis" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Profile Comparison View -->
+            <div id="dm-profile-comparison-view" class="dm-profile-comparison-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-pc-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #eff6ff; padding: 2.5rem; border-radius: 20px; border: 1px solid #dbeafe; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #1e40af; margin-bottom: 1.5rem; border-left: 5px solid #3b82f6; padding-left: 1.2rem; font-weight: 800;">Profile Comparison: 빔 프로파일 상호 비교 분석</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">상호 비교 분석(Direct Comparison)</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">서로 다른 시간이나 조건(예: 에너지, 필드 사이즈, SSD 등)에서 측정된 여러 개의 빔 프로파일을 하나의 그래프에 겹쳐서 비교할 수 있습니다. 이를 통해 장비의 정기적인 성능 변화나 빔의 일관성을 직관적으로 확인할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">다양한 노이즈 제거 알고리즘</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">측정 데이터에 포함된 기계적 노이즈를 제거하기 위해 Least Square(Savitzky-Golay), Median, Gaussian, Moving Average 등 다양한 평활화(Smoothing) 옵션을 제공합니다. 이를 통해 보다 깨끗하고 신뢰할 수 있는 분석 데이터를 얻을 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">국제 표준 기반의 정량적 지표</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">Varian, Elekta, Siemens 등 주요 가속기 제조사의 분석 프로토콜을 모두 지원합니다. 각 프로토콜에 맞춘 Symmetry(대칭도), Flatness(평탄도), Field Width(FWHM) 등의 수치를 실시간으로 계산하여 제공합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">정밀한 빔 중심(Center) 및 반음영(Penumbra) 분석</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">빔 프로파일의 기하학적 중심 이동(Center Shift)과 좌우 반음영(Penumbra Left/Right)을 0.1mm 단위로 분석하여 빔의 기하학적 정밀도를 극대화합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">전문 포맷 수출 및 호환성</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">분석된 프로파일 데이터를 IBA myQA Accept (ASC/CSV) 등 전문 QA 소프트웨어 포맷으로 변환하여 저장할 수 있습니다. 이는 다른 시스템과의 데이터 연동 및 체계적인 품질 관리 기록 보존에 매우 유리합니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-pc-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/Profile Comparison.png" alt="Profile Comparison Analysis" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine PDD Comparison View -->
+            <div id="dm-pdd-comparison-view" class="dm-pdd-comparison-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-pc-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #fff1f2; padding: 2.5rem; border-radius: 20px; border: 1px solid #fecdd3; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #9f1239; margin-bottom: 1.5rem; border-left: 5px solid #f43f5e; padding-left: 1.2rem; font-weight: 800;">PDD Comparison: 심부선량 곡선 정밀 비교 분석</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f43f5e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #881337; display: block; margin-bottom: 0.3rem;">정밀한 심부선량 지표 자동 산출</strong>
+                                <span style="color: #9f1239; line-height: 1.6;">포톤(Photon) 및 전자선(Electron)의 PDD 곡선으로부터 $D_{max}$, $R_{100}$, $R_{90}$, $R_{80}$, $R_{50}$ 등 치료 계획에 필수적인 심부선량 지표들을 자동으로 계산합니다. 수동 측정 시 발생할 수 있는 오차를 줄이고 분석 속도를 획기적으로 높여줍니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f43f5e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #881337; display: block; margin-bottom: 0.3rem;">빔 에너지 품질(Quality) 검증</strong>
+                                <span style="color: #9f1239; line-height: 1.6;">포톤의 경우 **$Q_i$ (Quality Index, $D_{100}/D_{200}$)**를, 전자선의 경우 $E_0$ (평균 에너지) 및 **$R_p$ (실용 범위)**를 산출하여 가속기에서 나오는 방사선 에너지의 질이 기준치에 부합하는지 즉각적으로 평가할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f43f5e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #881337; display: block; margin-bottom: 0.3rem;">다중 곡선 오버레이 및 트렌드 분석</strong>
+                                <span style="color: #9f1239; line-height: 1.6;">서로 다른 기간에 측정된 PDD 데이터나 서로 다른 에너지의 데이터를 하나의 그래프로 겹쳐서 비교할 수 있습니다. 이를 통해 시간이 경과함에 따라 발생할 수 있는 빔 투과력의 변화나 품질 저하를 쉽게 추적할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f43f5e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #881337; display: block; margin-bottom: 0.3rem;">특화된 좌표 보정 및 정규화</strong>
+                                <span style="color: #9f1239; line-height: 1.6;">측정 시 발생하는 유효 측정점(Effective point of measurement) 오차를 보정하기 위한 Shift 기능과, 최대 선량을 기준으로 한 Normalization 기능을 지원합니다. 이를 통해 서로 다른 환경에서 측정된 데이터도 동일한 기준에서 공정하게 비교할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f43f5e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #881337; display: block; margin-bottom: 0.3rem;">표준 프로토콜 기반의 리포트</strong>
+                                <span style="color: #9f1239; line-height: 1.6;">분석된 모든 수치와 비교 그래프를 포함한 전문적인 리포트를 생성할 수 있습니다. 이는 임상에서 가속기의 Acceptance Testing이나 Commissioning, 그리고 정기적인 QA 기록을 체계적으로 문서화하는 데 매우 유용합니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-pd-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/PDD Comparison.png" alt="PDD Comparison Analysis" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Convert to Accept Format View -->
+            <div id="dm-convert-to-accept-view" class="dm-convert-to-accept-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-ca-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f0f9ff; padding: 2.5rem; border-radius: 20px; border: 1px solid #bae6fd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #0369a1; margin-bottom: 1.5rem; border-left: 5px solid #0ea5e9; padding-left: 1.2rem; font-weight: 800;">Convert to Accept Format: 이기종 데이터 호환 솔루션</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">이기종 장비 간의 데이터 호환성 확보</strong>
+                                <span style="color: #0369a1; line-height: 1.6;">Varian 가속기에서 측정된 원본 데이터(Lateral Profile, PDD 등)는 보통 엑셀이나 단순 텍스트 형식으로 저장되어 타사 분석 소프트웨어에서 직접 읽기 어렵습니다. 이 도구는 이를 IBA BluePhantom의 표준 규격인 **ASC(BDS format)**로 변환하여, 전 세계적으로 널리 사용되는 myQA Accept 소프트웨어에서 즉시 분석할 수 있게 해줍니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">좌표계 및 단위의 자동 정규화</strong>
+                                <span style="color: #0369a1; line-height: 1.6;">Varian과 IBA는 좌표계 기준이나 단위(cm vs mm)가 다를 수 있습니다. 이 변환 도구는 파일 내의 최대 좌표값을 분석하여 cm 단위를 mm로 자동 스케일링하고, 인덱스 기반의 데이터를 물리적 거리 좌표로 정확히 매핑하여 변환 시 발생할 수 있는 휴먼 에러를 차단합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">메타데이터 정밀 매핑</strong>
+                                <span style="color: #0369a1; line-height: 1.6;">단순한 수치뿐만 아니라 SSD, 측정 깊이(Depth), 에너지(Energy), 필드 사이즈(Field Size) 등의 핵심 메타데이터를 IBA 규격의 태그(%SSD, %DPTH, %FSZ 등)로 정밀하게 치환합니다. 덕분에 Accept 소프트웨어로 불러왔을 때 별도의 추가 설정 없이 바로 정확한 물리적 수치로 인식됩니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">다중 프로파일 일괄 처리</strong>
+                                <span style="color: #0369a1; line-height: 1.6;">하나의 Varian 출력 파일에 여러 필드 사이즈나 깊이의 데이터가 포함되어 있더라도, 이를 각각의 MSR(Measurement) 섹션으로 분리하여 하나의 통합된 IBA ASC 파일로 만들어줍니다. 이는 수십 개의 파일을 일일이 수동으로 편집해야 하는 번거로움을 획기적으로 줄여줍니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">분석 워크플로우의 연속성</strong>
+                                <span style="color: #0369a1; line-height: 1.6;">변환된 파일은 본 프로그램(Easy Machine_V2)의 Profile View로 자동 로드되어 즉시 분석이 가능할 뿐만 아니라, 병원 내에서 기존에 사용하던 IBA 전용 분석 툴들과의 완벽한 데이터 연동을 가능케 하여 품질 관리(QA) 업무의 효율성을 극대화합니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-ca-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/Convert to Accept Format.png" alt="Convert to Accept Format" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Save Profile to ASC View -->
+            <div id="dm-save-profile-asc-view" class="dm-save-profile-asc-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-spa-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f0fdf4; padding: 2.5rem; border-radius: 20px; border: 1px solid #dcfce7; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #166534; margin-bottom: 1.5rem; border-left: 5px solid #22c55e; padding-left: 1.2rem; font-weight: 800;">Save Profile to ASC: 이미지 기반 데이터 수치화 솔루션</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #14532d; display: block; margin-bottom: 0.3rem;">이미지 기반 데이터의 수치화 및 보존</strong>
+                                <span style="color: #166534; line-height: 1.6;">현재 화면에 로드된 DICOM 영상(EPID, CT 등)에서 마우스가 위치한 중심점(또는 특정 지점)을 기준으로 수평/수직 방사선 강도 데이터를 즉시 추출하여 수치 데이터(ASC/CSV)로 저장합니다. 이는 시각적인 영상을 분석 가능한 물리적 데이터로 변환하는 핵심 기능입니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #14532d; display: block; margin-bottom: 0.3rem;">IBA myQA Accept 와의 즉각적인 호환성</strong>
+                                <span style="color: #166534; line-height: 1.6;">추출된 프로파일을 IBA BluePhantom의 표준 규격인 **ASC(RFA300 format)**로 직접 저장할 수 있습니다. 별도의 변환 과정 없이 측정 직후 바로 전문가용 QA 소프트웨어(Accept)에서 분석을 이어갈 수 있어 워크플로우를 단순화합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #14532d; display: block; margin-bottom: 0.3rem;">지능형 DICOM 메타데이터 자동 주입</strong>
+                                <span style="color: #166534; line-height: 1.6;">파일을 저장할 때 단순한 수치뿐만 아니라, 원본 DICOM 헤더에서 추출한 에너지(Energy), SSD, 기기명(Station Name), 필드 사이즈(Field Size), 갠트리 각도(Gantry Angle) 등의 임상 정보를 파일 내에 자동으로 기록합니다. 이는 수동 입력으로 인한 데이터 누락이나 오류를 원천 차단합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #14532d; display: block; margin-bottom: 0.3rem;">픽셀 스페이싱(Pixel Spacing) 기반의 물리적 거리 계산</strong>
+                                <span style="color: #166534; line-height: 1.6;">영상의 픽셀 단위를 실제 물리적 거리(mm)로 자동 환산하여 저장합니다. 따라서 분석 소프트웨어에서 별도의 캘리브레이션 없이도 정확한 빔의 크기나 대칭도를 계산할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #14532d; display: block; margin-bottom: 0.3rem;">다양한 활용성 (Native CSV 지원)</strong>
+                                <span style="color: #166534; line-height: 1.6;">IBA 포맷 외에도 일반 엑셀이나 통계 소프트웨어에서 활용할 수 있는 Native CSV 포맷 저장을 지원합니다. 연구 목적의 데이터 분석이나 사용자 정의 보고서 작성 시 매우 유용하게 활용될 수 있습니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-spa-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/Save Profile to ASC.png" alt="Save Profile to ASC" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Vertual Gantry Starshot View -->
+            <div id="dm-vertual-gantry-starshot-view" class="dm-vertual-gantry-starshot-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-vgs-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #fdf2f8; padding: 2.5rem; border-radius: 20px; border: 1px solid #fce7f3; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #9d174d; margin-bottom: 1.5rem; border-left: 5px solid #ec4899; padding-left: 1.2rem; font-weight: 800;">Vertual Gantry Starshot: Winston-Lutz 기반 기하학적 분석</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #ec4899; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #831843; display: block; margin-bottom: 0.3rem;">Winston-Lutz 데이터를 이용한 가상 Starshot 재구성</strong>
+                                <span style="color: #9d174d; line-height: 1.6;">실제 Starshot 촬영(필름이나 EPID에 여러 빔을 쏘는 방식) 없이도, 기하학적 정밀도가 검증된 Winston-Lutz 시리즈 영상들을 바탕으로 각 갠트리 각도에서의 빔 중심 궤적을 하나의 가상 영상으로 변환해줍니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #ec4899; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #831843; display: block; margin-bottom: 0.3rem;">Isocenter 오차의 시각적 극대화</strong>
+                                <span style="color: #9d174d; line-height: 1.6;">각 갠트리 각도에서 방사선 중심(CAX)이 타겟(BB)으로부터 얼마나 벗어나 있는지(Walk-out)를 선(Line) 형태로 시각화합니다. 이를 통해 Isocenter 주변에서 발생하는 미세한 구동 오차를 Starshot 패턴처럼 직관적으로 확인할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #ec4899; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #831843; display: block; margin-bottom: 0.3rem;">정량적 Winston-Lutz 결과와의 상호 보완</strong>
+                                <span style="color: #9d174d; line-height: 1.6;">단순한 수치(Max 2D CAX->BB 등)만으로는 파악하기 어려운 **오차의 방향성(Directionality)**과 회전 특성을 시각적으로 보여줌으로써, 가속기의 기계적 정렬 상태를 더욱 입체적으로 진단할 수 있게 합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #ec4899; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #831843; display: block; margin-bottom: 0.3rem;">고해상도 분석 영상 제작 및 저장</strong>
+                                <span style="color: #9d174d; line-height: 1.6;">분석된 가상 Starshot 결과는 검은색 배경의 고대비 영상(PIL Image)으로 생성되며, 이를 Secondary Capture DICOM 파일로 저장할 수 있습니다. 저장된 DICOM 파일은 추후 Gantry_Angle_Cal 도구 등에서 다시 불러와 추가적인 기하학적 분석에 활용될 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #ec4899; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #831843; display: block; margin-bottom: 0.3rem;">편리한 품질 관리 기록</strong>
+                                <span style="color: #9d174d; line-height: 1.6;">복잡한 물리적 측정 과정을 거치지 않고도 기존에 수행한 Winston-Lutz 데이터를 재활용하여 수준 높은 Starshot 분석 결과 리포트를 생성할 수 있어, 장비의 유지보수 및 정기 QA 업무 시간을 크게 단축해줍니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-vgs-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/Vertual Gantry Starshot.png" alt="Vertual Gantry Starshot" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Gantry Angle Cal View -->
+            <div id="dm-gantry-angle-cal-view" class="dm-gantry-angle-cal-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-gac-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #fff7ed; padding: 2.5rem; border-radius: 20px; border: 1px solid #ffedd5; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #9a3412; margin-bottom: 1.5rem; border-left: 5px solid #f97316; padding-left: 1.2rem; font-weight: 800;">Gantry Angle Cal: 자동화된 기하학적 정밀도 분석</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f97316; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #7c2d12; display: block; margin-bottom: 0.3rem;">자동화된 갠트리 각도 산출</strong>
+                                <span style="color: #9a3412; line-height: 1.6;">영상 처리 알고리즘(Canny Edge Detection 및 Hough Transform)을 통해 DICOM 영상 내에 포함된 방사선 빔의 궤적을 자동으로 인식합니다. 이를 통해 수동 측정 없이도 각 빔의 정확한 기울기와 해당 갠트리 각도를 즉시 계산할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f97316; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #7c2d12; display: block; margin-bottom: 0.3rem;">DICOM 메타데이터와의 자동 정렬</strong>
+                                <span style="color: #9a3412; line-height: 1.6;">DICOM 파일의 헤더 정보(Image Comments 등)에 기록된 설정값과 실제 영상에서 측정된 각도를 자동으로 매칭합니다. 설정값(Target)과 실제 측정값(Measured) 사이의 편차를 한눈에 파악하여 장비의 물리적 각도 정확성을 검증할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f97316; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #7c2d12; display: block; margin-bottom: 0.3rem;">고정밀 Isocenter 분석</strong>
+                                <span style="color: #9a3412; line-height: 1.6;">검출된 여러 개의 빔 궤적을 바탕으로 최소자승법(Least Squares Method)을 적용해 회전 중심점(Isocenter)을 계산합니다. 계산된 ISO Radius 수치를 통해 각 빔이 한 점에 얼마나 정확히 일치하는지 정량적으로 평가할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f97316; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.14rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #7c2d12; display: block; margin-bottom: 0.3rem;">시각적 가독성 및 마킹</strong>
+                                <span style="color: #9a3412; line-height: 1.6;">각 빔에 고유한 색상을 지정하고, 영상 내에 해당 갠트리 각도 라벨을 자동으로 표시합니다. 특히 Isocenter 위치를 'X' 마커로 강조하여, 기하학적 오차의 발생 위치와 방향을 직관적으로 확인할 수 있게 돕습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #f97316; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #7c2d12; display: block; margin-bottom: 0.3rem;">Winston-Lutz/Starshot 통합 활용</strong>
+                                <span style="color: #9a3412; line-height: 1.6;">Virtual Gantry Starshot 등을 통해 생성된 합성 영상을 분석할 때 유용하며, 복잡한 영상을 정밀한 품질 관리 데이터(각도, 반경 등)로 변환해주는 강력한 기하학적 분석 워크플로우를 제공합니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-gac-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/Gantry_Angle_Cal.png" alt="Gantry Angle Cal" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Profile Analyze & Report View -->
+            <div id="dm-profile-report-view" class="dm-profile-report-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-pr-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #ecfdf5; padding: 2.5rem; border-radius: 20px; border: 1px solid #d1fae5; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #065f46; margin-bottom: 1.5rem; border-left: 5px solid #10b981; padding-left: 1.2rem; font-weight: 800;">Profile Analyze & Report: 정밀 분석 및 자동 리포팅 시스템</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #10b981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #064e3b; display: block; margin-bottom: 0.3rem;">원클릭 종합 품질 분석</strong>
+                                <span style="color: #065f46; line-height: 1.6;">사용자가 선택한 특정 프로파일(수평 또는 수직)에 대해 Symmetry(대칭도), Flatness(평탄도), Field Size(조사면 크기), Penumbra(반음영) 등 모든 핵심 QA 지표를 한 번에 자동 계산합니다. 여러 도구를 옮겨 다닐 필요 없이 즉각적인 정밀 분석이 가능합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #10b981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #064e3b; display: block; margin-bottom: 0.3rem;">공식적인 문서화 및 아카이빙</strong>
+                                <span style="color: #065f46; line-height: 1.6;">분석 결과와 고해상도 그래프가 포함된 표준화된 PDF 형식의 결과지를 생성합니다. 이는 가속기의 인수 검사(Acceptance Testing)나 정기 품질 관리 기록으로 즉시 활용할 수 있으며, 출력 및 디지털 보관이 용이합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #10b981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #064e3b; display: block; margin-bottom: 0.3rem;">지능형 픽셀 간격(Spacing) 적용</strong>
+                                <span style="color: #065f46; line-height: 1.6;">영상의 DICOM 헤더 정보뿐만 아니라 사용자가 수동으로 설정한 픽셀 간격까지 자동으로 고려하여 분석합니다. 이를 통해 실제 물리적 거리(mm)와 선량 강도를 오차 없이 리포트에 반영합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #10b981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #064e3b; display: block; margin-bottom: 0.3rem;">시각적 검증 데이터 포함</strong>
+                                <span style="color: #065f46; line-height: 1.6;">리포트 내의 프로파일 그래프에는 분석에 사용된 주요 지점들(중심점, 50% 선량 지점, 반음영 영역 등)이 시각적으로 마킹되어 포함됩니다. 이는 리포트를 검토하는 동료나 승인권자가 수치의 타당성을 직관적으로 검증할 수 있게 돕습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #10b981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #064e3b; display: block; margin-bottom: 0.3rem;">메타데이터 및 날짜 커스텀 지원</strong>
+                                <span style="color: #065f46; line-height: 1.6;">리포트 생성 시 측정 장비명, 에너지 정보 등의 메타데이터를 유지하며 보고서 발행 날짜를 사용자가 직접 수정할 수 있습니다. 실제 측정 시점과 문서 발행 시점을 일치시켜 데이터의 소급성(Traceability)을 확보하는 데 유리합니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-pr-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/Profile Analyze & Report(PDF).png" alt="Profile Analyze & Report(PDF)" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine 3D EPID PDD Reconstruction View -->
+            <div id="dm-3d-epid-pdd-view" class="dm-3d-epid-pdd-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-epid-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f0fdfa; padding: 2.5rem; border-radius: 20px; border: 1px solid #ccfbf1; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #115e59; margin-bottom: 1.5rem; border-left: 5px solid #14b8a6; padding-left: 1.2rem; font-weight: 800;">3D EPID PDD Reconstruction: 입체적 선량 평가 솔루션</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #134e4a; display: block; margin-bottom: 0.3rem;">EPID 영상을 이용한 가상 심부선량(PDD) 재구성</strong>
+                                <span style="color: #115e59; line-height: 1.6;">물 팬텀(Water Phantom)과 전리함(Ion Chamber)을 이용한 복잡한 측정 과정 없이, 가속기의 EPID로 촬영된 여러 장의 영상을 분석하여 빔의 투과 성능인 <strong>심부선량곡선(PDD Curve)</strong>을 3차원으로 재구성합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #134e4a; display: block; margin-bottom: 0.3rem;">이소도즈(Isodose) 표면의 3차원 시각화</strong>
+                                <span style="color: #115e59; line-height: 1.6;">Marching Cubes 알고리즘을 적용하여 특정 선량 수준(예: 50% Isodose)의 3차원 입체 형태를 추출하고 시각화합니다. 이를 통해 빔의 입체적인 모양과 선량 분포의 공간적 특성을 한눈에 파악할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #134e4a; display: block; margin-bottom: 0.3rem;">PDD 데이터의 ASC 포맷 수출 및 호환성</strong>
+                                <span style="color: #115e59; line-height: 1.6;">재구성된 PDD 데이터를 IBA myQA Accept (ASC) 형식으로 수출할 수 있습니다. 이를 통해 실제 물 팬텀 측정 데이터와 EPID 기반 재구성 데이터를 전문 분석 소프트웨어에서 직접 비교 검증할 수 있습니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #134e4a; display: block; margin-bottom: 0.3rem;">정밀한 캘리브레이션 및 보정 시스템</strong>
+                                <span style="color: #115e59; line-height: 1.6;">실제 물 팬텀 측정 데이터(Reference PDD)를 불러와 EPID 기반 데이터와 매칭하는 캘리브레이션 기능을 지원합니다. 이를 통해 EPID 센서의 특성에 따른 오차를 보정하고, 실제 치료 환경에 근접한 정확한 선량 재구성을 가능케 합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #134e4a; display: block; margin-bottom: 0.3rem;">STL 포맷 수출을 통한 입체 분석</strong>
+                                <span style="color: #115e59; line-height: 1.6;">생성된 3차원 모델을 STL 파일로 내보낼 수 있습니다. 이는 외부 3D 모델링 소프트웨어나 데이터 분석 툴에서 빔의 입체적 형태를 더욱 심도 있게 연구하거나 교육용 자료로 활용하는 데 매우 유용합니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-epid-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/3D EPID PDD Reconstruction.png" alt="3D EPID PDD Reconstruction" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Configuration View -->
+            <div id="dm-configuration-view" class="dm-configuration-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-config-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #faf5ff; padding: 2.5rem; border-radius: 20px; border: 1px solid #f3e8ff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #581c87; margin-bottom: 1.5rem; border-left: 5px solid #a855f7; padding-left: 1.2rem; font-weight: 800;">Configuration: 맞춤형 작업 환경 구축</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #4c1d95; display: block; margin-bottom: 0.3rem;">사용자 환경 맞춤화 (Personalization)</strong>
+                                <span style="color: #6b21a8; line-height: 1.6;">병원 이름(Hospital Name) 설정과 기본 파일 경로(Default Path) 지정을 통해, 프로그램을 매번 설정할 필요 없이 사용자 본인의 작업 환경에 최적화된 상태로 유지할 수 있습니다. 이는 결과지(PDF) 발행 시 자동으로 반영되어 전문성을 높여줍니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #4c1d95; display: block; margin-bottom: 0.3rem;">다양한 가속기 장비 통합 관리</strong>
+                                <span style="color: #6b21a8; line-height: 1.6;">병원 내에 있는 여러 대의 가속기(예: TrueBeam, VersaHD 등)를 개별적으로 등록하고 관리할 수 있습니다. 각 장비별로 고유한 이름과 기본 설정을 다르게 저장할 수 있어, 장비가 바뀔 때마다 복잡한 수치를 다시 입력하는 번거로움을 획기적으로 줄여줍니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #4c1d95; display: block; margin-bottom: 0.3rem;">지능형 선량 교정 초기값 설정 (TRS-398/TG51)</strong>
+                                <span style="color: #6b21a8; line-height: 1.6;">광자선(Photon) 및 전자선(Electron) 선량 교정에 사용되는 챔버 모델, 보정 계수($N_{D,w}$), 빔 품질 데이터(TPR, $R_{50}$) 등을 미리 세팅해 둘 수 있습니다. 현장에서 측정 시 실수로 수치를 잘못 입력하는 것을 방지하고 분석의 신속성을 확보합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #4c1d95; display: block; margin-bottom: 0.3rem;">글로벌 분석 프로토콜 선택</strong>
+                                <span style="color: #6b21a8; line-height: 1.6;">Varian, Elekta, Siemens, IEC, AQUA 등 전 세계 가속기 제조사 및 표준 기구가 권고하는 프로파일 분석 프로토콜을 자유롭게 선택할 수 있습니다. 가로(Crossline)와 세로(Inline) 프로파일 분석 기준을 프로젝트나 장비 특성에 맞춰 다르게 설정하는 세밀한 구성이 가능합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #4c1d95; display: block; margin-bottom: 0.3rem;">UI 최적화 및 워크플로우 관리</strong>
+                                <span style="color: #6b21a8; line-height: 1.6;">MLC 로그 분석용 전용 폴더 설정이나 결과 저장 경로 관리 등을 통해 데이터 관리가 체계화됩니다. 또한, 필요한 경우 상징적인 아이콘(Icon)을 직접 교체하거나 파일 관리 시스템을 최적화하여 작업의 편의성을 극대화합니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-config-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/Configuration.png" alt="Configuration" style="width: 100%; display: block;">
                     </div>
                 </div>
             </div>
@@ -507,12 +1628,22 @@
                     <img id="report-img" src="" alt="Report Content" class="report-image">
                 </div>
             </div>
+
+            <!-- DM Status Bar (Bottom) -->
+            <div class="dm-status-bar" id="dm-status-bar">
+            </div>
         </main>
     </div>
 
     <script>
         function showSample(name) {
             console.log('Switching to sample:', name);
+            
+            // Hide all DosiMachine views if they are open
+            if (typeof hideAllDMViews === 'function') {
+                hideAllDMViews();
+            }
+
             // Reset views
             document.getElementById('content-area').classList.remove('active-report');
             document.getElementById('content-area').classList.remove('active-view');
@@ -591,7 +1722,7 @@
                 case 'G_Angle':
                     sidebar.classList.add('active-gangle');
                     document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/G_Angle_main.png';
+                    document.getElementById('report-img').src = 'images/G_angle_main.png';
                     break;
                 case 'PDD':
                     sidebar.classList.add('active-pdd');
@@ -627,6 +1758,9 @@
         }
 
         function showReport(imgName, element) {
+            if (typeof hideAllDMViews === 'function') {
+                hideAllDMViews();
+            }
             document.getElementById('content-area').classList.remove('active-view');
             document.getElementById('content-area').classList.add('active-report');
             document.getElementById('report-img').src = 'images/' + imgName;
@@ -637,17 +1771,34 @@
         }
 
         function goHome() {
+            // Unconditionally hide all active DosiMachine detailed views
+            if (typeof hideAllDMViews === 'function') {
+                hideAllDMViews();
+            }
+
+            // General reset for shared elements
             document.getElementById('content-area').classList.remove('active-view');
             document.getElementById('content-area').classList.remove('active-report');
-            const sidebar = document.getElementById('sidebar');
-            ['active-myqa', 'active-tlog', 'active-mpc', 'active-bcplus', 'active-beamcheck', 'active-fieldanalysis', 'active-starshot', 'active-wlutz', 'active-picketfence', 'active-output', 'active-gangle', 'active-pdd', 'active-profile', 'active-gating', 'active-study', 'active-service', 'active-daily', 'active-monthly', 'active-yearly'].forEach(cls => sidebar.classList.remove(cls));
             document.getElementById('sample-screen').style.display = 'none';
-            
-            // Reset HUB slides to first one
-            document.querySelectorAll('.hub-sidebar-item').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.hub-slide').forEach(el => el.classList.remove('active'));
-            document.querySelector('.hub-sidebar-item[data-hub-target="hub-slide-1"]').classList.add('active');
-            document.getElementById('hub-slide-1').classList.add('active');
+
+            if (document.body.classList.contains('active-dosimachine')) {
+                // DosiMachine Home Reset
+                hideAllDMViews();
+                const dmHome = document.getElementById('dosimachine-home');
+                if (dmHome) dmHome.style.display = 'flex';
+            } else {
+                // Linac QA HUB Home Reset
+                const sidebar = document.getElementById('sidebar');
+                ['active-myqa', 'active-tlog', 'active-mpc', 'active-bcplus', 'active-beamcheck', 'active-fieldanalysis', 'active-starshot', 'active-wlutz', 'active-picketfence', 'active-output', 'active-gangle', 'active-pdd', 'active-profile', 'active-gating', 'active-study', 'active-service', 'active-daily', 'active-monthly', 'active-yearly'].forEach(cls => sidebar.classList.remove(cls));
+                
+                // Reset HUB slides to first one
+                document.querySelectorAll('.hub-sidebar-item').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.hub-slide').forEach(el => el.classList.remove('active'));
+                const firstHubItem = document.querySelector('.hub-sidebar-item[data-hub-target="hub-slide-1"]');
+                if (firstHubItem) firstHubItem.classList.add('active');
+                const firstSlide = document.getElementById('hub-slide-1');
+                if (firstSlide) firstSlide.classList.add('active');
+            }
         }
 
         function toggleSidebar() {
@@ -659,25 +1810,19 @@
         function setViewMode(mode) {
             console.log('Setting view mode:', mode);
             const body = document.body;
-            const computerItem = document.getElementById('view-computer');
-            const smartphoneItem = document.getElementById('view-smartphone');
             const toggleComputer = document.getElementById('toggle-computer');
             const toggleSmartphone = document.getElementById('toggle-smartphone');
             const sidebar = document.getElementById('sidebar');
             
             if (mode === 'smartphone') {
                 body.classList.add('smartphone-mode');
-                computerItem.classList.remove('active');
-                smartphoneItem.classList.add('active');
-                toggleComputer.classList.remove('active');
-                toggleSmartphone.classList.add('active');
-                sidebar.classList.add('collapsed'); // Collapse sidebar by default in mobile
+                if (toggleComputer) toggleComputer.classList.remove('active');
+                if (toggleSmartphone) toggleSmartphone.classList.add('active');
+                // Removed: sidebar.classList.add('collapsed'); 
             } else {
                 body.classList.remove('smartphone-mode');
-                computerItem.classList.add('active');
-                smartphoneItem.classList.remove('active');
-                toggleComputer.classList.add('active');
-                toggleSmartphone.classList.remove('active');
+                if (toggleComputer) toggleComputer.classList.add('active');
+                if (toggleSmartphone) toggleSmartphone.classList.remove('active');
                 sidebar.classList.remove('collapsed'); // Show sidebar in desktop mode
             }
         }
@@ -701,6 +1846,234 @@
                 });
             });
         });
+
+        function switchMainTab(tab) {
+            console.log('Switching main tab to:', tab);
+            const body = document.body;
+            const tabHub = document.getElementById('tab-hub');
+            const tabDm = document.getElementById('tab-dm');
+            const topNav = document.querySelector('.top-nav');
+            const sidebar = document.getElementById('sidebar');
+
+            if (tab === 'dm') {
+                body.classList.add('active-dosimachine');
+                tabHub.classList.remove('active');
+                tabDm.classList.add('active');
+                topNav.style.display = 'none'; 
+                sidebar.style.display = 'none'; 
+                goHome();
+            } else {
+                body.classList.remove('active-dosimachine');
+                tabHub.classList.add('active');
+                tabDm.classList.remove('active');
+                topNav.style.display = 'flex';
+                sidebar.style.display = 'flex';
+                goHome(); // Reset to HUB home
+            }
+        }
+
+        function showDMFieldAnalysis() {
+            console.log('Showing DosiMachine Field Analysis');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Field Analysis view
+            document.getElementById('dm-field-analysis-view').style.display = 'flex';
+        }
+
+        function showDMStarshotAnalysis() {
+            console.log('Showing DosiMachine Starshot Analysis');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Starshot view
+            document.getElementById('dm-starshot-analysis-view').style.display = 'flex';
+        }
+
+        function showDMPicketFenceAnalysis() {
+            console.log('Showing DosiMachine Picket Fence Analysis');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Picket Fence view
+            document.getElementById('dm-picket-fence-analysis-view').style.display = 'flex';
+        }
+
+        function showDMWinstonLutzAnalysis() {
+            console.log('Showing DosiMachine Winston-Lutz Analysis');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Winston-Lutz view
+            document.getElementById('dm-winston-lutz-analysis-view').style.display = 'flex';
+        }
+
+        function showDMPhotonCalibration() {
+            console.log('Showing DosiMachine Photon Calibration');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Photon Calibration view
+            document.getElementById('dm-photon-calibration-view').style.display = 'flex';
+        }
+
+        function showDMEleCalibration() {
+            console.log('Showing DosiMachine Electron Calibration');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Electron Calibration view
+            document.getElementById('dm-ele-calibration-view').style.display = 'flex';
+        }
+
+        function showDMMLCLog() {
+            console.log('Showing DosiMachine MLC Log');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show MLC Log view
+            document.getElementById('dm-mlc-log-view').style.display = 'flex';
+        }
+
+        function showDMMPCAnalyzer() {
+            console.log('Showing DosiMachine MPC Analyzer');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show MPC Analyzer view
+            document.getElementById('dm-mpc-analyzer-view').style.display = 'flex';
+        }
+
+        function showDMGatingQA() {
+            console.log('Showing DosiMachine Gating QA');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Gating QA view
+            document.getElementById('dm-gating-qa-view').style.display = 'flex';
+        }
+
+        function showDMInvertColor() {
+            console.log('Showing DosiMachine Invert Color');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Invert Color view
+            document.getElementById('dm-invert-color-view').style.display = 'flex';
+        }
+
+        function showDMDicomComposite() {
+            console.log('Showing DosiMachine Dicom Composite');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Dicom Composite view
+            document.getElementById('dm-dicom-composite-view').style.display = 'flex';
+        }
+
+        function showDMProfileComparison() {
+            console.log('Showing DosiMachine Profile Comparison');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Profile Comparison view
+            document.getElementById('dm-profile-comparison-view').style.display = 'flex';
+        }
+
+        function showDMPDDComparison() {
+            console.log('Showing DosiMachine PDD Comparison');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show PDD Comparison view
+            document.getElementById('dm-pdd-comparison-view').style.display = 'flex';
+        }
+
+        function showDMConvertToAccept() {
+            console.log('Showing DosiMachine Convert to Accept Format');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Convert to Accept Format view
+            document.getElementById('dm-convert-to-accept-view').style.display = 'flex';
+        }
+
+        function showDMSaveProfileToASC() {
+            console.log('Showing DosiMachine Save Profile to ASC');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Save Profile to ASC view
+            document.getElementById('dm-save-profile-asc-view').style.display = 'flex';
+        }
+
+        function showDMVertualGantryStarshot() {
+            console.log('Showing DosiMachine Vertual Gantry Starshot');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Vertual Gantry Starshot view
+            document.getElementById('dm-vertual-gantry-starshot-view').style.display = 'flex';
+        }
+
+        function showDMProfileReport() {
+            console.log('Showing DosiMachine Profile Report');
+            hideAllDMViews();
+            document.getElementById('dm-profile-report-view').style.display = 'flex';
+        }
+
+        function showDM3DEpidPdd() {
+            console.log('Showing DosiMachine 3D EPID PDD');
+            hideAllDMViews();
+            document.getElementById('dm-3d-epid-pdd-view').style.display = 'flex';
+        }
+
+        function showDMConfiguration() {
+            console.log('Showing DosiMachine Configuration');
+            hideAllDMViews();
+            document.getElementById('dm-configuration-view').style.display = 'flex';
+        }
+
+        function showDMGantryAngleCal() {
+            console.log('Showing DosiMachine Gantry Angle Cal');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Gantry Angle Cal view
+            document.getElementById('dm-gantry-angle-cal-view').style.display = 'flex';
+        }
+
+        function hideAllDMViews() {
+            const views = [
+                'dosimachine-home', 
+                'sample-screen', 
+                'report-view', 
+                'dm-field-analysis-view', 
+                'dm-starshot-analysis-view', 
+                'dm-picket-fence-analysis-view',
+                'dm-winston-lutz-analysis-view',
+                'dm-photon-calibration-view',
+                'dm-ele-calibration-view',
+                'dm-mlc-log-view',
+                'dm-mpc-analyzer-view',
+                'dm-gating-qa-view',
+                'dm-invert-color-view',
+                'dm-dicom-composite-view',
+                'dm-profile-comparison-view',
+                'dm-pdd-comparison-view',
+                'dm-convert-to-accept-view',
+                'dm-save-profile-asc-view',
+                'dm-vertual-gantry-starshot-view',
+                'dm-gantry-angle-cal-view',
+                'dm-profile-report-view',
+                'dm-3d-epid-pdd-view',
+                'dm-configuration-view'
+            ];
+            views.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+            });
+        }
     </script>
 </body>
 </html>
