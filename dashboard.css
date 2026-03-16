@@ -1279,6 +1279,8 @@ body.active-dosimachine .main-tab.dosimachine.active {
 /* Smart Phone Mode Optimizations */
 .smartphone-mode {
     overflow-y: auto !important;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 .smartphone-mode .dashboard-container {
@@ -1312,6 +1314,7 @@ body.active-dosimachine .main-tab.dosimachine.active {
     flex-shrink: 0;
     min-height: 40px;
     background-color: var(--dash-top-nav-bg);
+    width: 100%;
 }
 
 .smartphone-mode .utility-bar {
@@ -1325,6 +1328,7 @@ body.active-dosimachine .main-tab.dosimachine.active {
     align-items: center;
     background-color: #ffffff;
     border-bottom: 1px solid #e2e8f0;
+    width: 100%;
 }
 
 .smartphone-mode .utility-right {
@@ -1365,7 +1369,7 @@ body.active-dosimachine .main-tab.dosimachine.active {
 }
 
 .smartphone-mode .main-content {
-    padding: 15px;
+    padding: 0 !important; /* Full width for dashboard */
     overflow: visible !important;
 }
 
@@ -1423,6 +1427,57 @@ body.active-dosimachine .main-tab.dosimachine.active {
 
 .smartphone-mode .report-frame {
     padding: 0;
+}
+
+/* Full width for all DosiMachine views in smartphone mode */
+.smartphone-mode .dm-field-analysis-view,
+.smartphone-mode .dm-starshot-analysis-view,
+.smartphone-mode .dm-picket-fence-analysis-view,
+.smartphone-mode .dm-winston-lutz-analysis-view,
+.smartphone-mode .dm-photon-calibration-view,
+.smartphone-mode .dm-ele-calibration-view,
+.smartphone-mode .dm-mlc-log-view,
+.smartphone-mode .dm-mpc-analyzer-view,
+.smartphone-mode .dm-gating-qa-view,
+.smartphone-mode .dm-invert-color-view,
+.smartphone-mode .dm-dicom-composite-view,
+.smartphone-mode .dm-profile-comparison-view,
+.smartphone-mode .dm-pdd-comparison-view,
+.smartphone-mode .dm-convert-to-accept-view,
+.smartphone-mode .dm-save-profile-asc-view,
+.smartphone-mode .dm-vertual-gantry-starshot-view,
+.smartphone-mode .dm-gantry-angle-cal-view,
+.smartphone-mode .dm-profile-report-view,
+.smartphone-mode .dm-3d-epid-pdd-view,
+.smartphone-mode .dm-configuration-view {
+    padding: 0 !important; /* Override inline padding: 2rem */
+    width: 100% !important;
+}
+
+/* Reduce header constraints on smartphone */
+.smartphone-mode .dm-fa-header,
+.smartphone-mode .dm-sa-header,
+.smartphone-mode .dm-pfa-header,
+.smartphone-mode .dm-wla-header,
+.smartphone-mode .dm-pc-header,
+.smartphone-mode .dm-ec-header,
+.smartphone-mode .dm-ml-header,
+.smartphone-mode .dm-ma-header,
+.smartphone-mode .dm-gq-header,
+.smartphone-mode .dm-ic-header,
+.smartphone-mode .dm-dc-header {
+    max-width: 100% !important;
+    border-radius: 0 !important;
+    padding: 1rem !important;
+}
+
+.smartphone-mode .dm-wla-content img,
+.smartphone-mode .dm-fa-item img,
+.smartphone-mode .dm-sa-item img,
+.smartphone-mode .dm-pfa-item img {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    width: 100% !important;
 }
 
 /* DosiMachine Field Analysis View Styles */
@@ -1501,9 +1556,7 @@ body.active-dosimachine .main-tab.dosimachine.active {
 }
 
 /* Smartphone Adjustments for Field Analysis */
-.smartphone-mode .dm-field-analysis-view {
-    padding: 20px;
-}
+/* Replaced with general rule */
 
 .smartphone-mode .dm-fa-header h2 {
     font-size: 20px;
@@ -1598,9 +1651,7 @@ body.active-dosimachine .main-tab.dosimachine.active {
 }
 
 /* Smartphone Adjustments for Starshot Analysis */
-.smartphone-mode .dm-starshot-analysis-view {
-    padding: 20px;
-}
+/* Replaced with general rule */
 
 .smartphone-mode .dm-sa-header h2 {
     font-size: 20px;
@@ -1699,9 +1750,7 @@ body.active-dosimachine .main-tab.dosimachine.active {
 }
 
 /* Smartphone Adjustments for Picket Fence Analysis */
-.smartphone-mode .dm-picket-fence-analysis-view {
-    padding: 20px;
-}
+/* Replaced with general rule */
 
 .smartphone-mode .dm-pfa-header h2 {
     font-size: 20px;
