@@ -1822,3 +1822,327 @@ body.active-dosimachine .main-tab.dosimachine.active {
     padding: 10px;
     border-radius: 10px;
 }
+
+/* --- Premium MyQA Summary View Styles --- */
+.myqa-summary-view {
+    display: flex; /* Changed from none to ensure it's managed correctly by JS and layout */
+    flex-direction: column;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    min-height: 100%;
+    animation: premiumFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes premiumFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.myqa-premium-header {
+    text-align: left;
+    max-width: 1050px;
+    margin: 0 auto 2.5rem;
+    padding: 2.5rem;
+    background: white;
+    border-radius: 24px;
+    border: 1px solid rgba(14, 165, 233, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+    position: relative;
+    /* Removed overflow: hidden to prevent content clipping */
+}
+
+.myqa-premium-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #0ea5e9, #6366f1);
+}
+
+.myqa-premium-header h2 {
+    font-size: 2rem;
+    color: #0f172a;
+    margin-bottom: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.myqa-premium-header h2 .icon {
+    color: #0ea5e9;
+}
+
+.myqa-premium-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.myqa-premium-item {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    background: #f8fafc;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.myqa-premium-item:hover {
+    transform: translateY(-5px);
+    background: white;
+    border-color: #0ea5e9;
+    box-shadow: 0 12px 24px rgba(14, 165, 233, 0.08);
+}
+
+.myqa-premium-item .item-top-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.myqa-premium-item .item-num {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.myqa-premium-item .item-title {
+    font-size: 1.15rem;
+    color: #1e293b;
+    font-weight: 700;
+}
+
+.myqa-premium-item .item-desc {
+    color: #64748b;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    word-break: keep-all;
+}
+
+.myqa-content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    animation: premiumSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+}
+
+@keyframes premiumSlideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.myqa-content div {
+    max-width: 1100px;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.myqa-content img {
+    width: 100%;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.myqa-content div:hover img {
+    transform: scale(1.02);
+}
+
+/* Smartphone Adjustments for MyQA (Updated) */
+.smartphone-mode .myqa-summary-view {
+    padding: 1.5rem 1rem !important;
+}
+
+.smartphone-mode .myqa-premium-header {
+    padding: 1.5rem !important;
+    margin-bottom: 2rem;
+    border-radius: 16px !important;
+}
+
+.smartphone-mode .myqa-premium-header h2 {
+    font-size: 1.5rem;
+}
+
+.smartphone-mode .myqa-premium-list {
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.smartphone-mode .myqa-content div {
+    border-radius: 12px;
+}
+
+
+/* --- Premium StarShot Summary View Styles --- */
+.starshot-summary-view {
+    display: flex;
+    flex-direction: column;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    min-height: 100%;
+    animation: premiumFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.starshot-premium-header {
+    text-align: left;
+    max-width: 1050px;
+    margin: 0 auto 3.5rem;
+    padding: 3rem;
+    background: white;
+    border-radius: 24px;
+    border: 1px solid rgba(16, 185, 129, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+    position: relative;
+}
+
+.starshot-premium-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.starshot-premium-header h2 {
+    font-size: 2rem;
+    color: #064e3b;
+    margin-bottom: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.starshot-premium-header h2 .icon {
+    color: #10b981;
+}
+
+.starshot-premium-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: 100%;
+}
+
+.starshot-premium-item {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f0fdf4;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.starshot-premium-item:hover {
+    transform: translateY(-5px);
+    background: white;
+    border-color: #10b981;
+    box-shadow: 0 12px 24px rgba(16, 185, 129, 0.08);
+}
+
+.starshot-premium-item .item-num {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.starshot-premium-item .item-title {
+    font-size: 1.2rem;
+    color: #064e3b;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.starshot-premium-item .item-desc {
+    color: #374151;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    word-break: keep-all;
+}
+
+.starshot-content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    animation: premiumSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+}
+
+.starshot-content div {
+    max-width: 1100px;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.starshot-content img {
+    width: 100%;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.starshot-content div:hover img {
+    transform: scale(1.02);
+}
+
+/* Smartphone Adjustments for StarShot */
+.smartphone-mode .starshot-summary-view {
+    padding: 1.5rem 1rem !important;
+}
+
+.smartphone-mode .starshot-premium-header {
+    padding: 1.5rem !important;
+    margin-bottom: 2rem;
+    border-radius: 16px !important;
+}
+
+.smartphone-mode .starshot-premium-header h2 {
+    font-size: 1.5rem;
+}
+
+.smartphone-mode .starshot-premium-list {
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.smartphone-mode .starshot-content div {
+    border-radius: 12px;
+}

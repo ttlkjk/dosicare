@@ -440,7 +440,7 @@
         <!-- Main Content -->
         <main class="main-content" id="content-area">
             <!-- Home Content (HUB Slides) -->
-            <div class="dashboard-home">
+            <div class="dashboard-home" id="dashboard-home">
                 <div class="hub-main-dashboard">
                     <!-- Slide 1: Slogan & Values (Full Image) -->
                     <div class="hub-slide active" id="hub-slide-1">
@@ -1617,6 +1617,718 @@
 
             <!-- Removed HUB View Area (Now integrated into dashboard-home) -->
 
+            <!-- MyQA Summary View -->
+            <div id="myqa-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> MyQA: 스마트한 데이터 관리 및 분석</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">PDF 자동 파싱</div>
+                            </div>
+                            <div class="item-desc">myQA Daily PDF를 드래그 앤 드롭하면 측정 데이터(Flatness, Symmetry 등)가 자동으로 추출됩니다. 수동 입력의 번거로움을 없애고 데이터 정확성을 보장합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">워크플로우 통합</div>
+                            </div>
+                            <div class="item-desc">클릭 한 번으로 추출된 데이터를 월간 점검표(Monthly Check Sheet)의 해당 항목으로 즉시 전송할 수 있습니다. 반복적인 문서 작업을 지능적으로 자동화합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">트렌드 분석</div>
+                            </div>
+                            <div class="item-desc">저장된 데이터를 바탕으로 장비 성능 변화를 시각화하여 관리할 수 있습니다. 장기적인 성능 추이를 분석하여 선제적인 유지보수를 지원합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/MyQA_main.png" alt="MyQA Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- T_Log Summary View -->
+            <div id="tlog-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> T_Log: 자동화된 로그 분석 및 리포팅</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">Pylinac 기반 자동 분석</div>
+                            </div>
+                            <div class="item-desc">MLC RMS 오차 계산 및 감마 분석(Gamma Analysis)을 자동으로 수행합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">스마트 파일 매칭</div>
+                            </div>
+                            <div class="item-desc">수많은 로그 중 실제 치료(Treatment) 파일을 자동으로 찾아내 분석 대상으로 제안합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">종합 시각화</div>
+                            </div>
+                            <div class="item-desc">MLC 오차 히스토그램과 플루언스 맵이 포함된 요약 리포트를 즉시 생성합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">04</div>
+                                <div class="item-title">PDF 및 데이터 관리</div>
+                            </div>
+                            <div class="item-desc">분석 결과를 저장하고 전문적인 PDF 리포트로 즉시 내보낼 수 있습니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/T_log_main.png" alt="T_Log Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- MPC Summary View -->
+            <div id="mpc-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> MPC: 빠르고 정확한 장비 성능 분석</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">실시간 자동 감시 (File Watcher)</div>
+                            </div>
+                            <div class="item-desc">장비에서 MPC 결과 XML 파일이 생성되는 즉시 백그라운드에서 자동으로 감지하고 분석하여 데이터베이스에 저장합니다. 사용자의 개입이 전혀 필요 없습니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">TrueBeam/Halcyon 맞춤 분석</div>
+                            </div>
+                            <div class="item-desc">장비 호환성을 확보하여, Halcyon의 특수한 MLC 구조(Distal/Proximal)나 다중 에너지(6X, 10X, FFF 등) 결과를 정확하게 분리하여 추출합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">직관적인 시각화</div>
+                            </div>
+                            <div class="item-desc">전체 60개(또는 57개) MLC 리프의 개별 오차를 한눈에 볼 수 있는 바 차트와, 특정 리프의 시간에 따른 변화를 추적하는 트렌드 차트를 제공합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/MPC_Main.png" alt="MPC Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- BC_Plus Summary View -->
+            <div id="bcplus-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> BC_Plus: 효율적인 데이터 추출 및 시각화</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">PDF 자동 파싱 (BeamCheck)</div>
+                            </div>
+                            <div class="item-desc">Beam Checker Plus 장비의 PDF 리포트에서 측정 조건(에너지, SSD 등)과 측정값(Size X/Y, Flatness, Symmetry)을 드래그 앤 드롭만으로 즉시 추출하고, 기대값 대비 오차율(%)을 자동 계산합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">CSV 대량 처리 (BC_Plus)</div>
+                            </div>
+                            <div class="item-desc">여러 날짜의 Daily QA 데이터(CSV)를 한 번에 로드하여, 기간별 필터링 및 장기 트렌드 시각화(Chart.js)를 지원합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">점검표 원클릭 연동</div>
+                            </div>
+                            <div class="item-desc">파싱 및 분석된 데이터는 병원의 공식 양식인 일간 점검표(Daily Check Sheet) 및 월간 점검표(Monthly Check Sheet)로 클릭 한 번에 전송되어 수작업을 완전히 없애줍니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/BC_Plus_main.png" alt="BC_Plus Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- BeamCheck Summary View -->
+            <div id="beamcheck-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> BeamCheck: 지능형 리포트 분석 및 데이터 연동</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">스마트 PDF 파싱</div>
+                            </div>
+                            <div class="item-desc">RayDose BeamCheck 장비에서 출력한 PDF 리포트를 브라우저에 드래그 앤 드롭하기만 하면, 복잡한 표(Table) 구조 속에서 에너지, 측정 깊이(SSD), 평탄도(Flatness), 대칭도(Symmetry), 조사면 크기(Size)를 1초 만에 스마트하게 추출합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">기대값 및 오차율 자동 연산</div>
+                            </div>
+                            <div class="item-desc">측정된 실제 Size 값을 바탕으로 원래 장비 세팅값(Expected Value, 예: 100mm)을 역산하여, 그 차이를 정확한 백분율(%) 오차로 자동 변환하고, 1% 이상 등 기준치를 초과할 경우 붉은색 글씨로 시각적 경고를 줍니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">완벽한 데이터 이관 (원클릭 연동)</div>
+                            </div>
+                            <div class="item-desc">파싱 및 오차 계산이 끝난 모든 수치들은 "Add to Monthly" 버튼 한 번 클릭으로 병원의 공식 "월간 점검표"의 정확한 에너지 셀(Cell) 위치에 오차 없이 자동 기입되어, 수기 입력으로 인한 휴먼 에러를 원천 차단합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/BeamCheck_Main.png" alt="BeamCheck Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Field Analysis Summary View -->
+            <div id="fieldanalysis-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> Field Analysis: EPID 영상 리포트 자동 파싱 및 문서 기입</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">EPID 영상 리포트 원클릭 파싱</div>
+                            </div>
+                            <div class="item-desc">EPID로 촬영한 조사면(Field) 영상을 외부 소프트웨어에서 분석한 PDF 리포트를, 대시보드에 드래그 앤 드롭하는 것만으로 에너지, 수평/수직 사이즈, 평탄도, 대칭도를 1초 만에 자동 추출합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">조사면(Field Size) 오차율 즉각 연산</div>
+                            </div>
+                            <div class="item-desc">측정된 조사면 길이(예: 140.7mm)를 바탕으로 10단위 반올림(Rounding)을 적용해 본래의 셋업 크기(예: 140mm)를 예측하고, 이에 대한 오차율(%)을 구해 기준치 초과 시 즉각적인 붉은색 알람 색상을 표시합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">법정 문서 (월간 점검표) 자동 기입</div>
+                            </div>
+                            <div class="item-desc">분석된 모든 지표(Field Size 오차, Flatness, Symmetry)는 버튼 하나로 병원 공식 양식인 [월간 점검표]의 각 셀에 오기입 없이 자동으로 완벽하게 채워져, 방사선사의 반복적인 문서 작업 시간을 획기적으로 줄여줍니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/Field Analysys_main.png" alt="Field Analysis Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Starshot Summary View -->
+            <div id="starshot-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> Starshot: 정밀 기계적 중심축(Isocenter) 자동 분석</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">EPID Starshot 리포트 원클릭 파싱</div>
+                            </div>
+                            <div class="item-desc">외부 분석 소프트웨어에서 출력한 Starshot PDF 리포트를 대시보드에 드래그 앤 드롭하면, 측정 거리(SID), 허용 오차(Tolerance), 그리고 가장 중요한 최소 교차원 직경(Minimum Circle Diameter) 수치를 1초 만에 자동 추출합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">스마트 Pass/Fail 자동 판정</div>
+                            </div>
+                            <div class="item-desc">추출된 교차원 직경 값이 병원에서 설정한 허용 오차(예: 1.0mm)를 초과할 경우 즉각적으로 'FAIL(실패)' 상태로 판정하고 붉은색 알람을 띄워, 장비의 기계적 중심축(Isocenter) 이상 여부를 직관적으로 경고합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">법정 문서 (월간 점검표) 자동 연동</div>
+                            </div>
+                            <div class="item-desc">분석이 끝난 값들(SID, Tolerance, Diameter, Status)은 "Add to Monthly" 버튼 한 번 클릭으로 병원 공식 양식인 [월간 점검표]의 Mechanical 섹션에 오기입 없이 자동으로 전송 및 저장되어 업무 효율을 극대화합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/StarShot_Main.png" alt="Starshot Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- W_Lutz Summary View -->
+            <div id="wlutz-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> W_Lutz: 초정밀 방사선 수술(SRS) 품질 관리</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">복잡한 다차원 리포트의 원클릭 파싱</div>
+                            </div>
+                            <div class="item-desc">SRS(정위적 방사선 수술)에 필수적인 Winston-Lutz 검사의 외부 PDF 리포트를 찾아 다운로드한 뒤 브라우저에 드래그 앤 드롭하기만 하면 됩니다. 최대/중앙 2D 회전축 오차(CAX->BB), 갠트리/콜리메이터/카우치의 3D Isocenter 직경, RMS 편차, 그리고 보정값(Shift to iso)까지 10여 개의 복잡한 지표를 1초 만에 스마트하게 추출합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">다중 회전축의 트렌드 분석</div>
+                            </div>
+                            <div class="item-desc">갠트리나 카우치 등 특정 축에서만 발생하는 미세한 서브 밀리미터 단위의 기계적 마모나 이탈 현상을, 원하는 파라미터만 골라 다중 꺾은선(Line) 트렌드 차트로 섬세하게 감시할 수 있습니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">법정 문서 (월간 점검표) 자동 기입 및 판정</div>
+                            </div>
+                            <div class="item-desc">최대 2D 오차 등 월간 QA에 꼭 필요한 지표들은 "Add to Monthly" 버튼 한 번으로 병원 공식 통합 [월간 점검표]에 자동 기록됩니다. 동시에 최대 오차가 1.0mm 이하인지 여유롭게 분석해 자동으로 Pass/Fail 상태까지 판단/기록하여 복잡한 수기 작업의 피로도를 0으로 만듭니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/WLutz_Main.png" alt="W_Lutz Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Picket Fence Summary View -->
+            <div id="picketfence-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> Picket Fence: 자동 MLC 오차 분석 및 트렌드 감시</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">복잡한 MLC 리포트의 원클릭 파싱</div>
+                            </div>
+                            <div class="item-desc">다운로드한 Picket Fence PDF 리포트를 브라우저에 드래그 앤 드롭하기만 하면 됩니다. 갠트리/콜리메이터 각도와 같은 측정 조건부터 절대 중간 오차(Absolute median error), 최대 오차(Max Error), 합격률(Leaves passing %)까지 한 번에 자동 추출됩니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">엄격한 자동 상태 판정 (Pass/Fail)</div>
+                            </div>
+                            <div class="item-desc">추출된 중간 오차(Median error)가 설정된 허용 오차(Tolerance)를 초과하거나, 합격률이 100.0% 미만일 경우 즉각적으로 붉은색의 FAIL 판정을 내려 사용자의 시각적 인지를 돕고 안전을 보장합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">MLC 노후화 트렌드 분석</div>
+                            </div>
+                            <div class="item-desc">120개에 달하는 MLC 모터의 미세한 마모나 노후화를 감시하기 위해 합격률, 중간 오차, 최대 오차 등 원하는 지표만 선택하여 과거 데이터부터 이어지는 트렌드를 꺾은선 차트로 추적 관찰할 수 있습니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/Picket Fence_main.png" alt="Picket Fence Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Summary View -->
+            <div id="output-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> Output: TRS-398 및 에너지별 출력 안정성 분석</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">TRS-398 맞춤형 PDF 파싱</div>
+                            </div>
+                            <div class="item-desc">출력 교정 리포트(TRS-398)를 드래그 앤 드롭하면, Pion/Ppol 보정에 필수적인 3단계 전압 측정값(M1~M3)과 Dose/MU 지표를 시스템이 지능적으로 자동 추출합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">실시간 정밀 계산 및 검증</div>
+                            </div>
+                            <div class="item-desc">PDF에 평균값이 누락되었더라도 실시간으로 소수점 4자리까지 자동 계산하며, 입력된 에너지를 표준 규격으로 자동 변환하여 데이터 무결성을 보장합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">에너지별 장기 출력 트렌드 감시</div>
+                            </div>
+                            <div class="item-desc">6MV, 10MV, FFF 등 각 에너지별 출력 안정성을 개별 필터링하여 추적할 수 있으며, 미세한 출력 변화(Drift)를 차트로 감시하여 최적의 튜닝 시점을 결정할 수 있습니다.</div>
+                        </li>
+                        <li class="myqa-premium-item" style="display: none;">
+                            <div class="item-top-row">
+                                <div class="item-num">04</div>
+                                <div class="item-title">점검표(월간/연간) 초고속 연동</div>
+                            </div>
+                            <div class="item-desc">"Add to Monthly/Yearly" 버튼 하나로 모든 측정값과 결과값이 병원 공식 점검표의 정확한 위치에 자동 기입되어 오타와 혼선을 완벽하게 차단합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/Output_main.png" alt="Output Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- PDD Summary View -->
+            <div id="pdd-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> PDD: 선량 심도 지표(Percent Depth Dose) 자동 분석</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">정밀 선량 지표 자동 추출</div>
+                            </div>
+                            <div class="item-desc">PDF 리포트를 드래그 앤 드롭하면 dmax, R100~R50 심도 지표와 D50~D200 선량 지표, 에너지 질 Qi 값을 즉각적으로 파싱합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">지능형 에너지 및 모달리티 매핑</div>
+                            </div>
+                            <div class="item-desc">추출된 에너지를 분석하여 광자선(X-선)과 전자선을 스스로 구분하며, 연간 점검에 필요한 데이터 세트를 지능적으로 분류 관리합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">월간 점검표 스마트 연동</div>
+                            </div>
+                            <div class="item-desc">에너지를 판별하여 광자선(Dmax/D10/D20/QI)과 전자선(R90/R80/R50) 항목에 맞는 데이터를 실시간으로 자동 기입하여 오류를 차단합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">04</div>
+                                <div class="item-title">다중 지표 트렌드 모니터링</div>
+                            </div>
+                            <div class="item-desc">dmax%, R50, Qi 등 핵심 지표를 에너지별로 시각화하여 추적할 수 있으며, 빔의 경화나 연화 현상을 과학적·통계적으로 감지합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/PDD_main.png" alt="PDD Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Summary View -->
+            <div id="profile-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> Profile: 빔 균일성 및 기하학적 정밀 분석</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">리포트 방향성 자동 매핑</div>
+                            </div>
+                            <div class="item-desc">PDF 리포트를 드래그 앤 드롭하면 'Horizontal/Vertical' 표기를 분석하여 시스템의 Crossline/Inline 방향으로 자동 매칭 및 추출합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">균일성 및 기하학적 지표 통합 파싱</div>
+                            </div>
+                            <div class="item-desc">평탄도(Flatness)와 대칭성(Symmetry)뿐만 아니라, 프로파일 파형에서 계산된 실제 조사면 크기(Field Size)와 오차(%)를 동시에 산출합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">월간 점검표 다중 섹션 연동</div>
+                            </div>
+                            <div class="item-desc">"Add to Monthly" 클릭 시 점검표의 '4. Field Analysis'와 '3. Field Size Analysis' 두 곳에 적재적소로 자동 입력되어 작업 시간을 단축합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">04</div>
+                                <div class="item-title">정밀 트렌드 분석 및 오차 경고</div>
+                            </div>
+                            <div class="item-desc">6가지 핵심 팩터를 에너지별로 추적하고 시각화하며, 허용 기준(1.0%) 초과 시 즉각적인 색상 경고로 빔의 기하학적 안정성을 모니터링합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/Profile_main.png" alt="Profile Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Study Summary View -->
+            <div id="study-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> Study: 통합 파일 매니저 및 지능형 문서 뷰어</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">주요 장점 및 폴더 확인</div>
+                            </div>
+                            <div class="item-desc">장비별 Study 폴더뿐만 아니라 모든 QA 카테고리의 폴더 구조를 탐색기 형태로 실시간 확인하며, 연구용 데이터와 미디어 파일을 한곳에서 유연하게 관리합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">강력한 보기(Viewing) 기능</div>
+                            </div>
+                            <div class="item-desc">PDF, Excel, 영상은 물론 서버 사이드 변환을 통해 한글(HWP), Office 문서도 즉시 볼 수 있으며, Trajectory Log 선택 시 T_Log 대시보드로 즉시 연동됩니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">편집(Editing) 및 관리 기능</div>
+                            </div>
+                            <div class="item-desc">우클릭 메뉴를 통해 폴더/파일 생성(CRUD), 복사/붙여넣기 기능을 지원하며, '탐색기에서 위치 찾기(Locate)'로 실제 PC 내 파일을 즉시 하이라이트할 수 있습니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/Study_main.png" alt="Study Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Summary View -->
+            <div id="service-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> Service: 리니악 장비 유지보수 및 수리 이력 관리</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">디지털 리포트 생성</div>
+                            </div>
+                            <div class="item-desc">수기 방식 대신 표준화된 디지털 폼을 사용하여 장비 정보와 점검 내역(Inspection Items, Work Performed 등)을 체계적으로 입력하고 관리합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">안전한 저장 및 관리</div>
+                            </div>
+                            <div class="item-desc">장비별 전용 폴더에 JSON 형식으로 데이터가 안전하게 저장되며, 필요할 때 언제든 과거 이력을 즉시 확인하고 투명하게 수정할 수 있습니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">전문적인 PDF 출력</div>
+                            </div>
+                            <div class="item-desc">기업 로고와 정돈된 구조를 갖춘 공식 서식의 PDF 리포트를 자동으로 생성하여, 외부 제출용이나 법정 문서 관리용으로 즉시 활용 가능합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/Service_main.png" alt="Service Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Summary View -->
+            <div id="daily-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> Daily QA: 일간 점검 자동화 및 통합 워크플로우</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">자동 데이터 추출 (Daily QA)</div>
+                            </div>
+                            <div class="item-desc">측정 장비에서 생성된 파일(MPC XML 등)을 드래그 앤 드롭하면 Isocenter, Beam Energy, MLC 오차 등의 수치를 자동으로 분석하여 기입합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">스마트 판정 및 데이터 통합</div>
+                            </div>
+                            <div class="item-desc">수집된 데이터를 기준치와 자동 비교하여 PASS/FAIL을 표시하며, 클릭 한 번으로 에너지별 데이터를 월간 점검표로 즉시 연동합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">전문적인 점검표 생성</div>
+                            </div>
+                            <div class="item-desc">디지털 서명이 포함된 일간 점검표를 생성하고, 공식 문서 규격인 Word, Excel, PDF 형식으로 즉시 내보내어 법정 문서 관리를 간소화합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/Daily_main.png" alt="Daily Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Summary View -->
+            <div id="monthly-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> Monthly QA: 체계적인 품질 관리 데이터 통합 허브</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">데이터 통합 허브</div>
+                            </div>
+                            <div class="item-desc">Output, PDD, Profile, Winston-Lutz, G-Angle 등 개별 대시보드의 분석 결과를 버튼 클릭 한 번으로 월간 점검표에 자동 기입합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">지능형 분석 및 데이터 관리</div>
+                            </div>
+                            <div class="item-desc">기대값 자동 제안 및 오차율Red 경고로 실수를 방지하며, 모든 내역은 서버에 JSON 형식으로 안전하게 저장되어 이력 추적이 용이합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">다양한 공식 서식 지원</div>
+                            </div>
+                            <div class="item-desc">작성된 점검표는 디지털 서명을 포함하여 Word, Excel, PDF 등 사용자가 원하는 형식의 고품격 공식 보고서로 즉시 내보낼 수 있습니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/Monthly_main.png" alt="Monthly Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Yearly Summary View -->
+            <div id="yearly-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> Yearly QA: 리니악 품질 관리의 최상위 연간 기록 허브</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">최상위 통합 관리 및 공신력</div>
+                            </div>
+                            <div class="item-desc">선량, 기계적 정밀도 등 모든 범주의 연간 결과를 종합 관리하며, 디지털 서명을 통해 법적/기술적 신뢰성을 완벽히 보장합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">체계적인 데이터 장기 보존</div>
+                            </div>
+                            <div class="item-desc">모든 정보는 JSON 형식으로 저장되며, 장비별/연도별 폴더 구조 자동 생성 및 관리로 수년 이상의 장기 이력 추적이 용이합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">다양한 공식 서식 출력</div>
+                            </div>
+                            <div class="item-desc">작성된 점검표는 Word, Excel, PDF 등 사용자가 원하는 형식으로 즉시 생성 가능하며, 고품질 PDF는 공식 제출용으로 바로 활용됩니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/Yearly_main.png" alt="Yearly Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gating Summary View -->
+            <div id="gating-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> Gating: 호흡 동기 치료 정밀도 분석 및 통합 QA 워크플로우</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">지능형 데이터 추출 및 동적 성능 분석</div>
+                            </div>
+                            <div class="item-desc">PDF 리포트에서 지연 시간(Latency)을 ms 단위로 파싱하고, Targeted Window RMS Error 등을 자동 정량화하여 치료 정확도를 mm 단위로 검증합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">하이브리드 통합 데이터 및 리포트 관리</div>
+                            </div>
+                            <div class="item-desc">영상(Cine)과 로그(Trajectory)가 결합된 분석 결과를 디지털화하여 보관하며, 이를 바탕으로 전문적인 Gating QA Analysis Report를 재생성할 수 있습니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">점검표 스마트 연동 및 기록 유지</div>
+                            </div>
+                            <div class="item-desc">분석된 모든 게이팅 지표를 클릭 한 번으로 [연간 점검표]로 전송하여, 수기 입력 없이도 항상 최신 상태의 고정밀 QC 기록을 유지할 수 있습니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/Gating_main.png" alt="Gating Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
+            <!-- G_Angle Summary View -->
+            <div id="gangle-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> G_Angle: Winston-Lutz 기반 갠트리 정밀 각도 검증</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">Winston-Lutz 기반 설계 각도 정밀 분석</div>
+                            </div>
+                            <div class="item-desc">분석 과정에서 BB와 EPID 영상으로 확인된 실제 갠트리 위치와 장비의 설계된 각도(Target/Virtual Angle)를 밀리미터 및 도 단위로 정밀 비교합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">이미지 기반 OCR 및 지능형 추출</div>
+                            </div>
+                            <div class="item-desc">스크린샷 드래그 앤 드롭만으로 Tesseract.js가 텍스트를 즉시 추출하며, 복합 형식에서 Target/Measured 값을 스스로 분리하여 오차를 계산합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">연간 점검표 연동 및 문서화 자동화</div>
+                            </div>
+                            <div class="item-desc">분석 결과를 [연간 점검표]의 기계 점검 섹션으로 원클릭 전송하고, 공식 서식의 PDF 리포트를 즉시 생성하여 법적/기술적 근거 자료로 활용합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images/G_Angle_main.png" alt="G_Angle Dashboard Main">
+                    </div>
+                </div>
+            </div>
+
             <!-- Sample Screen Placeholder -->
             <div id="sample-screen" class="sample-screen">
                 <div id="sample-text">Sample View</div>
@@ -1656,98 +2368,79 @@
             switch (name) {
                 case '일간점검':
                     sidebar.classList.add('active-daily');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/Daily_main.png';
+                    document.getElementById('daily-summary-view').style.display = 'flex';
                     break;
                 case '월간점검':
                     sidebar.classList.add('active-monthly');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/Monthly_main.png';
+                    document.getElementById('monthly-summary-view').style.display = 'flex';
                     break;
                 case '년간점검':
                     sidebar.classList.add('active-yearly');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/Yearly_main.png';
+                    document.getElementById('yearly-summary-view').style.display = 'flex';
                     break;
                 case 'MyQA':
                     sidebar.classList.add('active-myqa');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/MyQA_main.png';
+                    document.getElementById('myqa-summary-view').style.display = 'flex';
                     break;
                 case 'T_Log':
                     sidebar.classList.add('active-tlog');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/T_log_main.png';
+                    document.getElementById('tlog-summary-view').style.display = 'flex';
                     break;
                 case 'MPC':
                     sidebar.classList.add('active-mpc');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/MPC_Main.png';
+                    document.getElementById('mpc-summary-view').style.display = 'flex';
                     break;
                 case 'BC_Plus':
                     sidebar.classList.add('active-bcplus');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/BC_Plus_main.png';
+                    document.getElementById('bcplus-summary-view').style.display = 'flex';
                     break;
                 case 'BeamCheck':
                     sidebar.classList.add('active-beamcheck');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/BeamCheck_Main.png';
+                    document.getElementById('beamcheck-summary-view').style.display = 'flex';
                     break;
                 case 'Field Analysis':
                     sidebar.classList.add('active-fieldanalysis');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/Field Analysys_main.png';
+                    document.getElementById('fieldanalysis-summary-view').style.display = 'flex';
                     break;
                 case 'StarShot':
                     sidebar.classList.add('active-starshot');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/StarShot_Main.png';
+                    document.getElementById('starshot-summary-view').style.display = 'flex';
                     break;
                 case 'W_Lutz':
                     sidebar.classList.add('active-wlutz');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/W_Lutz_main.png';
+                    document.getElementById('wlutz-summary-view').style.display = 'flex';
                     break;
                 case 'Picket Fence':
                     sidebar.classList.add('active-picketfence');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/Picket Fence_main.png';
+                    document.getElementById('picketfence-summary-view').style.display = 'flex';
                     break;
                 case 'Output':
                     sidebar.classList.add('active-output');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/Output_main.png';
+                    document.getElementById('output-summary-view').style.display = 'flex';
                     break;
                 case 'G_Angle':
                     sidebar.classList.add('active-gangle');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/G_angle_main.png';
+                    document.getElementById('gangle-summary-view').style.display = 'flex';
                     break;
                 case 'PDD':
                     sidebar.classList.add('active-pdd');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/PDD_main.png';
+                    document.getElementById('pdd-summary-view').style.display = 'flex';
                     break;
                 case 'Profile':
                     sidebar.classList.add('active-profile');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/Profile_main.png';
+                    document.getElementById('profile-summary-view').style.display = 'flex';
                     break;
                 case 'Gating':
                     sidebar.classList.add('active-gating');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/Gating_main.png';
+                    document.getElementById('gating-summary-view').style.display = 'flex';
                     break;
                 case 'Study':
                     sidebar.classList.add('active-study');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/Study_main.png';
+                    document.getElementById('study-summary-view').style.display = 'flex';
                     break;
                 case 'Service':
                     sidebar.classList.add('active-service');
-                    document.getElementById('content-area').classList.add('active-report');
-                    document.getElementById('report-img').src = 'images/Service_main.png';
+                    document.getElementById('service-summary-view').style.display = 'flex';
                     break;
                 default:
                     document.getElementById('content-area').classList.add('active-view');
@@ -1798,6 +2491,10 @@
                 if (firstHubItem) firstHubItem.classList.add('active');
                 const firstSlide = document.getElementById('hub-slide-1');
                 if (firstSlide) firstSlide.classList.add('active');
+                
+                // Ensure dashboard home is visible
+                const dashboardHome = document.getElementById('dashboard-home');
+                if (dashboardHome) dashboardHome.style.display = 'block';
             }
         }
 
@@ -2045,6 +2742,7 @@
 
         function hideAllDMViews() {
             const views = [
+                'dashboard-home',
                 'dosimachine-home', 
                 'sample-screen', 
                 'report-view', 
@@ -2067,7 +2765,26 @@
                 'dm-gantry-angle-cal-view',
                 'dm-profile-report-view',
                 'dm-3d-epid-pdd-view',
-                'dm-configuration-view'
+                'dm-configuration-view',
+                'myqa-summary-view',
+                'tlog-summary-view',
+                'mpc-summary-view',
+                'bcplus-summary-view',
+                'beamcheck-summary-view',
+                'fieldanalysis-summary-view',
+                'starshot-summary-view',
+                'wlutz-summary-view',
+                'picketfence-summary-view',
+                'output-summary-view',
+                'pdd-summary-view',
+                'profile-summary-view',
+                'study-summary-view',
+                'service-summary-view',
+                'daily-summary-view',
+                'monthly-summary-view',
+                'yearly-summary-view',
+                'gating-summary-view',
+                'gangle-summary-view'
             ];
             views.forEach(id => {
                 const el = document.getElementById(id);
