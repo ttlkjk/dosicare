@@ -75,6 +75,8 @@
                         <div class="dm-dropdown-item" onclick="showDMMPCAnalyzer()">MPC_Analyzer</div>
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMGatingQA()">Gating_QA</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMOffsetOutput()">Offset_Output</div>
                     </div>
                 </div>
                 <div class="dm-menu-item dm-only-menu">Data Handling
@@ -1102,6 +1104,55 @@
                 <div class="dm-gq-content" style="width: 100%; display: flex; justify-content: center;">
                     <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
                         <img src="images2/Gating_QA.png" alt="Gating QA Analysis" style="width: 100%; display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Offset_Output View -->
+            <div id="dm-offset-output-view" class="dm-offset-output-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <div class="dm-oo-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f0f7ff; padding: 2.5rem; border-radius: 20px; border: 1px solid #d0e7ff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 1.6rem; color: #1e40af; margin-bottom: 1.5rem; border-left: 5px solid #3b82f6; padding-left: 1.2rem; font-weight: 800;">Offset_Output: 자동화된 필드 정렬 및 중심점 추출</h2>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">자동화된 필드 정렬 및 중심점 추출</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">조사면(Field) 영상으로부터 중심축을 자동으로 탐지하고 7.5cm Offset 지점을 즉시 추출합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">다중 갠트리 각도(0-270°) 통합 분석</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">Gantry 0, 90, 180, 270도 영상을 비교하여 치료기 회전 시의 정렬 상태를 정밀 검증합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">정량적 오차 지표 및 정규화 데이터 산출</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">Gantry 0도 기준 정규화 및 각 지점별 Error 값을 수치로 명확하게 제공합니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">시각적 데이터 시트 및 분석 결과 피드백</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">고급 다크 테마 UI를 통해 분석 결과를 투명하게 시각화하여 신뢰도를 높여줍니다.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
+                            <div>
+                                <strong style="font-size: 1.1rem; color: #1e3a8a; display: block; margin-bottom: 0.3rem;">전문적인 품질 관리 리포트(PDF/CSV) 생성</strong>
+                                <span style="color: #1e40af; line-height: 1.6;">모든 결과 수치가 포함된 PDF 결과지 및 CSV 데이터를 자동으로 생성하여 체계적인 QA 기록을 지원합니다.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-oo-content" style="width: 100%; display: flex; justify-content: center;">
+                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
+                        <img src="images2/Offset_Output.png" alt="Offset Output Analysis" style="width: 100%; display: block;">
                     </div>
                 </div>
             </div>
@@ -2802,6 +2853,15 @@
             document.getElementById('dm-gantry-angle-cal-view').style.display = 'flex';
         }
 
+        function showDMOffsetOutput() {
+            console.log('Showing DosiMachine Offset_Output');
+            // Hide all potential views
+            hideAllDMViews();
+            
+            // Show Offset_Output view
+            document.getElementById('dm-offset-output-view').style.display = 'flex';
+        }
+
         function hideAllDMViews() {
             const views = [
                 'dashboard-home',
@@ -2825,6 +2885,7 @@
                 'dm-save-profile-asc-view',
                 'dm-vertual-gantry-starshot-view',
                 'dm-gantry-angle-cal-view',
+                'dm-offset-output-view',
                 'dm-profile-report-view',
                 'dm-3d-epid-pdd-view',
                 'dm-configuration-view',
