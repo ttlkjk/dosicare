@@ -483,6 +483,9 @@ body.active-dosimachine .dm-only-menu {
 .active-myqa .home-sidebar { display: none; }
 .active-myqa #myqa-sidebar { display: flex; }
 
+.active-myqasql .home-sidebar { display: none; }
+.active-myqasql #myqasql-sidebar { display: flex; }
+
 .active-tlog .home-sidebar { display: none; }
 .active-tlog #tlog-sidebar { display: flex; }
 

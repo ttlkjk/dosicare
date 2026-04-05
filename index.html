@@ -125,6 +125,7 @@
         <button class="nav-btn monthly" onclick="showSample('월간점검')">월간점검</button>
         <button class="nav-btn yearly" onclick="showSample('년간점검')">년간점검</button>
         <button class="nav-btn" onclick="showSample('MyQA')">MyQA</button>
+        <button class="nav-btn" onclick="showSample('MyQA_SQL')">MyQA_SQL</button>
         <button class="nav-btn" onclick="showSample('T_Log')">T_Log</button>
         <button class="nav-btn" onclick="showSample('MPC')">MPC</button>
         <button class="nav-btn" onclick="showSample('BC_Plus')">BC_Plus</button>
@@ -185,6 +186,20 @@
                             <span>2023-11-27</span>
                         </div>
                         <span class="file-name">MyQA_Report_Default_2023-11-27.pdf</span>
+                        <span class="file-badge">PDF</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MyQA_SQL Category Sidebar -->
+            <div class="sidebar-content category-sidebar" id="myqasql-sidebar">
+                <div class="file-list">
+                    <div class="file-item" onclick="showReport('../images2/sql1.png', this)">
+                        <div class="file-meta">
+                            <span>myQA_SQL</span>
+                            <span>2026-04-01</span>
+                        </div>
+                        <span class="file-name">MyQA_Report_Default_2026-04-01.pdf</span>
                         <span class="file-badge">PDF</span>
                     </div>
                 </div>
@@ -2438,6 +2453,42 @@
                 </div>
             </div>
 
+            <!-- MyQA_SQL Summary View -->
+            <div id="myqa-sql-summary-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header">
+                    <h2><span class="icon">✨</span> MyQA: 스마트한 데이터 관리 및 분석</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">SQL DB 직접 로드 및 추출</div>
+                            </div>
+                            <div class="item-desc">MyQA SQL 데이터베이스를 서버에서 즉시 로드하여측정 데이터(Output, Flatness, Symmetry 등)를 자동으로 추출합니다. 복잡한 수동 쿼리나 지루한 데이터 리스트 확인 없이 실시간으로 정보를 읽어와 정확성을 보장합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">워크플로우 통합</div>
+                            </div>
+                            <div class="item-desc">클릭 한 번으로 추출된 데이터를 <b>월간 점검표(Monthly Check Sheet)</b>의 해당 에너지 항목으로 즉시 전송할 수 있습니다. 장비 이름과 에너지 레이블을 지능적으로 매칭하여 매월 반복되는 문서 기록 작업을 완벽하게 자동화합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">장비별 대시보드 관리</div>
+                            </div>
+                            <div class="item-desc">날짜별, 장비별 필터링을 통해 축적된 데이터를 체계적으로 관리하고 시각화할 수 있습니다. 장비의 성능 추이를 직관적으로 파악하여 선제적인 유지보수를 지원하고 효율적인 QA 운영 환경을 제공합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="myqa-content">
+                    <div>
+                        <img src="images2/sql.png" alt="MyQA SQL Dashboard">
+                    </div>
+                </div>
+            </div>
+
             <!-- Sample Screen Placeholder -->
             <div id="sample-screen" class="sample-screen">
                 <div id="sample-text">Sample View</div>
@@ -2469,7 +2520,7 @@
             document.getElementById('content-area').classList.remove('active-report');
             document.getElementById('content-area').classList.remove('active-view');
             const sidebar = document.getElementById('sidebar');
-            ['active-myqa', 'active-tlog', 'active-mpc', 'active-bcplus', 'active-beamcheck', 'active-quickcheck', 'active-fieldanalysis', 'active-starshot', 'active-wlutz', 'active-picketfence', 'active-output', 'active-gangle', 'active-pdd', 'active-profile', 'active-gating', 'active-study', 'active-service', 'active-daily', 'active-monthly', 'active-yearly'].forEach(cls => sidebar.classList.remove(cls));
+            ['active-myqa', 'active-myqasql', 'active-tlog', 'active-mpc', 'active-bcplus', 'active-beamcheck', 'active-quickcheck', 'active-fieldanalysis', 'active-starshot', 'active-wlutz', 'active-picketfence', 'active-output', 'active-gangle', 'active-pdd', 'active-profile', 'active-gating', 'active-study', 'active-service', 'active-daily', 'active-monthly', 'active-yearly'].forEach(cls => sidebar.classList.remove(cls));
             
             // Remove active highlight from all files initially
             document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
@@ -2490,6 +2541,10 @@
                 case 'MyQA':
                     sidebar.classList.add('active-myqa');
                     document.getElementById('myqa-summary-view').style.display = 'flex';
+                    break;
+                case 'MyQA_SQL':
+                    sidebar.classList.add('active-myqasql');
+                    document.getElementById('myqa-sql-summary-view').style.display = 'flex';
                     break;
                 case 'T_Log':
                     sidebar.classList.add('active-tlog');
@@ -2595,7 +2650,7 @@
             } else {
                 // Linac QA HUB Home Reset
                 const sidebar = document.getElementById('sidebar');
-                ['active-myqa', 'active-tlog', 'active-mpc', 'active-bcplus', 'active-beamcheck', 'active-fieldanalysis', 'active-starshot', 'active-wlutz', 'active-picketfence', 'active-output', 'active-gangle', 'active-pdd', 'active-profile', 'active-gating', 'active-study', 'active-service', 'active-daily', 'active-monthly', 'active-yearly'].forEach(cls => sidebar.classList.remove(cls));
+                ['active-myqa', 'active-myqasql', 'active-tlog', 'active-mpc', 'active-bcplus', 'active-beamcheck', 'active-fieldanalysis', 'active-starshot', 'active-wlutz', 'active-picketfence', 'active-output', 'active-gangle', 'active-pdd', 'active-profile', 'active-gating', 'active-study', 'active-service', 'active-daily', 'active-monthly', 'active-yearly'].forEach(cls => sidebar.classList.remove(cls));
                 
                 // Reset HUB slides to first one
                 document.querySelectorAll('.hub-sidebar-item').forEach(el => el.classList.remove('active'));
@@ -2908,6 +2963,7 @@
                 'yearly-summary-view',
                 'gating-summary-view',
                 'gangle-summary-view',
+                'myqa-sql-summary-view',
                 'quickcheck-summary-view'
             ];
             views.forEach(id => {
