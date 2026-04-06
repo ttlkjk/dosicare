@@ -344,7 +344,7 @@ body.active-dosimachine .dm-only-menu {
 .main-brochure-btn {
     position: relative;
     margin-top: 20px;
-    margin-left: -390px; /* Fine-tuned further left for perfect visual alignment */
+    margin-left: -390px; /* Desktop alignment offset */
     background: linear-gradient(135deg, #0d9488, #14b8a6);
     color: white;
     padding: 12px 28px;
@@ -359,10 +359,34 @@ body.active-dosimachine .dm-only-menu {
     z-index: 10;
 }
 
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+    .main-brochure-btn {
+        margin-left: 0; /* Clear desktop offset */
+        margin-right: 0;
+        transform: scale(0.9);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-brochure-btn {
+        margin-left: 0;
+        padding: 10px 20px;
+        transform: scale(0.85); /* Slightly smaller for mobile */
+    }
+}
+
 .main-brochure-btn:hover {
     transform: translateY(-5px) scale(1.05);
     box-shadow: 0 10px 25px rgba(13, 148, 136, 0.45);
     filter: brightness(1.1);
+}
+
+/* Maintain hover effect even with mobile scale */
+@media (max-width: 1024px) {
+    .main-brochure-btn:hover {
+        transform: scale(0.95) translateY(-5px);
+    }
 }
 
 .main-brochure-btn .btn-icon {
@@ -602,6 +626,7 @@ body.active-dosimachine .dm-only-menu {
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column; /* Ensure vertical layout for image + button */
     justify-content: center;
     align-items: center;
     background-color: white;
