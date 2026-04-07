@@ -86,6 +86,10 @@
     position:relative;width:100%;height:130mm;background:#fff;overflow:hidden;flex-shrink:0;
     display: flex; align-items: center; justify-content: center;
   }
+  .p1-hero-orbit-wrapper{
+    position:relative; width:100%; height:100%;
+    display:flex; align-items:center; justify-content:center;
+  }
   .p1-hero-img{width:100%;height:100%;object-fit:contain;padding:8mm; animation: float 6s ease-in-out infinite; }
 
   
@@ -94,6 +98,102 @@
     50% { transform: translateY(-5px); }
     100% { transform: translateY(0px); }
   }
+
+  /* ─── Orbiting Satellites ─── */
+  /* Satellites follow the 3 orbital rings drawn in the welcome.png image:
+     Ring A: Near-horizontal (~5° tilt) equatorial ring
+     Ring B: Tilted ~58° CW (upper-right to lower-left)
+     Ring C: Tilted ~-58° CCW (upper-left to lower-right) */
+  .satellite-orbit {
+    position: absolute;
+    top: 42%; left: 50%;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    border-radius: 50%;
+  }
+
+  .satellite-orbit-1 {
+    width: 370px; height: 370px;
+    margin-left: -185px; margin-top: -185px;
+    animation: orbitSpin1 10s linear infinite;
+  }
+  .satellite-orbit-2 {
+    width: 360px; height: 360px;
+    margin-left: -180px; margin-top: -180px;
+    animation: orbitSpin2 8s linear infinite;
+  }
+  .satellite-orbit-3 {
+    width: 355px; height: 355px;
+    margin-left: -177px; margin-top: -177px;
+    animation: orbitSpin3 12s linear infinite;
+  }
+
+  /* Ring A keyframes: near-horizontal equatorial ring */
+  @keyframes orbitSpin1 {
+    from { transform: rotateZ(5deg) rotateX(76deg) rotateZ(0deg); }
+    to   { transform: rotateZ(5deg) rotateX(76deg) rotateZ(360deg); }
+  }
+  /* Ring B keyframes: tilted CW ~58° (upper-right to lower-left) */
+  @keyframes orbitSpin2 {
+    from { transform: rotateZ(58deg) rotateX(74deg) rotateZ(0deg); }
+    to   { transform: rotateZ(58deg) rotateX(74deg) rotateZ(360deg); }
+  }
+  /* Ring C keyframes: tilted CCW ~-58° (upper-left to lower-right) */
+  @keyframes orbitSpin3 {
+    from { transform: rotateZ(-58deg) rotateX(74deg) rotateZ(0deg); }
+    to   { transform: rotateZ(-58deg) rotateX(74deg) rotateZ(360deg); }
+  }
+
+  .satellite {
+    position: absolute;
+    width: 16px; height: 16px;
+    background: radial-gradient(circle, #ffffff 0%, #5eead4 30%, #14b8a6 60%, #0d9488 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 14px 5px rgba(20, 184, 166, 0.8),
+                0 0 35px 10px rgba(20, 184, 166, 0.35),
+                0 0 50px 18px rgba(20, 184, 166, 0.12);
+    top: 0; left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    animation: satellitePulse 2s ease-in-out infinite;
+  }
+  @keyframes satellitePulse {
+    0%, 100% { filter: brightness(1); transform: scale(1); }
+    50% { filter: brightness(1.5); transform: scale(1.15); }
+  }
+  .satellite::after {
+    content: '';
+    position: absolute;
+    width: 24px; height: 6px;
+    background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.5), transparent);
+    top: 5px; left: -16px;
+    border-radius: 50%;
+    filter: blur(2px);
+  }
+
+  .satellite-sm {
+    width: 13px; height: 13px;
+    margin-left: -6px; margin-top: -6px;
+    box-shadow: 0 0 12px 5px rgba(94, 234, 212, 0.7),
+                0 0 28px 9px rgba(94, 234, 212, 0.25);
+    background: radial-gradient(circle, #ffffff 0%, #99f6e4 30%, #5eead4 60%, #2dd4bf 100%);
+    animation: satellitePulse 2.8s ease-in-out infinite;
+  }
+  .satellite-sm::after {
+    width: 20px; height: 5px;
+    top: 4px; left: -12px;
+    background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.4), transparent);
+  }
+
+  .satellite-xs {
+    width: 10px; height: 10px;
+    margin-left: -5px; margin-top: -5px;
+    box-shadow: 0 0 10px 4px rgba(20, 184, 166, 0.7),
+                0 0 22px 7px rgba(20, 184, 166, 0.2);
+    background: radial-gradient(circle, #ffffff 0%, #ccfbf1 30%, #5eead4 60%, #14b8a6 100%);
+    animation: satellitePulse 3.5s ease-in-out infinite;
+  }
+  .satellite-xs::after { display: none; }
 
   
   .p1-body{
@@ -387,8 +487,21 @@
     <span class="p1-badge top-bar-label">Medical Physics QA Solution</span>
   </div>
 
-  <div class="p1-hero">
-    <img class="p1-hero-img" src="image/welcome.png" alt="Linac QA Hub Hub">
+  <div class="p1-hero" style="perspective: 800px;">
+    <div class="p1-hero-orbit-wrapper">
+      <img class="p1-hero-img" src="image/welcome.png" alt="Linac QA Hub Hub">
+      
+      <!-- Orbiting Satellites (follow the 3 orbital rings drawn in the image) -->
+      <div class="satellite-orbit satellite-orbit-1">
+        <div class="satellite"></div>
+      </div>
+      <div class="satellite-orbit satellite-orbit-2">
+        <div class="satellite satellite-sm"></div>
+      </div>
+      <div class="satellite-orbit satellite-orbit-3">
+        <div class="satellite satellite-xs"></div>
+      </div>
+    </div>
   </div>
 
   <div class="p1-body">

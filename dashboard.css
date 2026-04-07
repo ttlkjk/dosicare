@@ -631,6 +631,18 @@ body.active-dosimachine .dm-only-menu {
     align-items: center;
     background-color: white;
     overflow: hidden;
+    position: relative;
+}
+
+/* Orbit wrapper for satellites on index page */
+.index-orbit-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 800px;
 }
 
 .full-home-img {
@@ -639,6 +651,99 @@ body.active-dosimachine .dm-only-menu {
     object-fit: contain; /* Keeps aspect ratio but fills as much as possible */
     transition: all 0.3s ease;
 }
+
+/* ─── Index Page Orbiting Satellites ─── */
+/* Follow the 3 orbital rings in the QA HUB image:
+   Ring A: Near-horizontal equatorial ring
+   Ring B: Tilted ~58° CW
+   Ring C: Tilted ~-58° CCW */
+.idx-satellite-orbit {
+    position: absolute;
+    top: 47%; left: 33%;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+.idx-orbit-1 {
+    width: 320px; height: 320px;
+    margin-left: -160px; margin-top: -160px;
+    animation: idxOrbit1 10s linear infinite;
+}
+.idx-orbit-2 {
+    width: 310px; height: 310px;
+    margin-left: -155px; margin-top: -155px;
+    animation: idxOrbit2 8s linear infinite;
+}
+.idx-orbit-3 {
+    width: 305px; height: 305px;
+    margin-left: -152px; margin-top: -152px;
+    animation: idxOrbit3 12s linear infinite;
+}
+
+@keyframes idxOrbit1 {
+    from { transform: rotateZ(5deg) rotateX(76deg) rotateZ(0deg); }
+    to   { transform: rotateZ(5deg) rotateX(76deg) rotateZ(360deg); }
+}
+@keyframes idxOrbit2 {
+    from { transform: rotateZ(58deg) rotateX(74deg) rotateZ(0deg); }
+    to   { transform: rotateZ(58deg) rotateX(74deg) rotateZ(360deg); }
+}
+@keyframes idxOrbit3 {
+    from { transform: rotateZ(-58deg) rotateX(74deg) rotateZ(0deg); }
+    to   { transform: rotateZ(-58deg) rotateX(74deg) rotateZ(360deg); }
+}
+
+.idx-sat {
+    position: absolute;
+    width: 14px; height: 14px;
+    background: radial-gradient(circle, #ffffff 0%, #5eead4 30%, #14b8a6 60%, #0d9488 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 14px 5px rgba(20, 184, 166, 0.8),
+                0 0 35px 10px rgba(20, 184, 166, 0.35),
+                0 0 50px 18px rgba(20, 184, 166, 0.12);
+    top: 0; left: 50%;
+    margin-left: -7px;
+    margin-top: -7px;
+    animation: idxSatPulse 2s ease-in-out infinite;
+}
+@keyframes idxSatPulse {
+    0%, 100% { filter: brightness(1); transform: scale(1); }
+    50% { filter: brightness(1.5); transform: scale(1.15); }
+}
+.idx-sat::after {
+    content: '';
+    position: absolute;
+    width: 22px; height: 5px;
+    background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.5), transparent);
+    top: 4px; left: -14px;
+    border-radius: 50%;
+    filter: blur(2px);
+}
+
+.idx-sat-sm {
+    width: 11px; height: 11px;
+    margin-left: -5px; margin-top: -5px;
+    box-shadow: 0 0 12px 5px rgba(94, 234, 212, 0.7),
+                0 0 28px 9px rgba(94, 234, 212, 0.25);
+    background: radial-gradient(circle, #ffffff 0%, #99f6e4 30%, #5eead4 60%, #2dd4bf 100%);
+    animation: idxSatPulse 2.8s ease-in-out infinite;
+}
+.idx-sat-sm::after {
+    width: 18px; height: 4px;
+    top: 3px; left: -11px;
+    background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.4), transparent);
+}
+
+.idx-sat-xs {
+    width: 9px; height: 9px;
+    margin-left: -4px; margin-top: -4px;
+    box-shadow: 0 0 10px 4px rgba(20, 184, 166, 0.7),
+                0 0 22px 7px rgba(20, 184, 166, 0.2);
+    background: radial-gradient(circle, #ffffff 0%, #ccfbf1 30%, #5eead4 60%, #14b8a6 100%);
+    animation: idxSatPulse 3.5s ease-in-out infinite;
+}
+.idx-sat-xs::after { display: none; }
 
 /* MyQA Folder & File Styles */
 .folder-item {
