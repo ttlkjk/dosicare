@@ -1204,6 +1204,20 @@ body.active-dosimachine .main-tab.dosimachine.active {
     color: #1e293b;
 }
 
+/* Configuration Menu Button Hover Effect */
+.config-menu-btn {
+    user-select: none;
+}
+.config-menu-btn:hover {
+    background: #25426b !important;
+    color: #ffffff !important;
+}
+.config-menu-btn.active {
+    background: #2b4c7e !important;
+    color: #ffffff !important;
+    border-left-color: #38bdf8 !important;
+}
+
 .dm-only-menu {
     display: none;
 }

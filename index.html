@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linac QA Hub Dashboard | DosiCare</title>
-    <link rel="stylesheet" href="dashboard.css?v=6.2">
+    <link rel="stylesheet" href="dashboard.css?v=6.3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1761,6 +1761,22 @@
 
             <!-- DosiMachine Configuration View -->
             <div id="dm-configuration-view" class="dm-configuration-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
+                <!-- Guide Notice Banner -->
+                <div style="max-width: 1200px; width: 100%; margin-bottom: 1.2rem; background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%); border: 1px solid #3b82f6; border-left: 6px solid #38bdf8; border-radius: 12px; padding: 1.1rem 1.4rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 6px 20px rgba(15, 39, 68, 0.25);">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <span style="font-size: 1.6rem; background: rgba(56, 189, 248, 0.15); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 1px solid rgba(56, 189, 248, 0.3);">⚙️</span>
+                        <div>
+                            <div style="font-size: 1.05rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem;">DosiMachine 환경설정 (Configuration) 안내</div>
+                            <div style="font-size: 0.92rem; color: #cbd5e1; font-weight: 500;">
+                                좌측의 <strong style="color: #38bdf8; font-weight: 700;">설정 메뉴 버튼들</strong>(장비 기본 정보, 리포트 폴더 설정, 일반 및 프로토콜 등)을 각각 클릭하여 세부 기능 및 항목별 설정 화면을 확인해 보세요.
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; border-radius: 20px; padding: 0.45rem 1rem; font-size: 0.85rem; color: #38bdf8; font-weight: 700; white-space: nowrap; display: flex; align-items: center; gap: 6px;">
+                        <span>👈</span> 좌측 버튼을 클릭하세요
+                    </div>
+                </div>
+
                 <div style="max-width: 1200px; width: 100%; display: flex; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid #cbd5e1; overflow: hidden; min-height: 550px;">
                     <!-- Left Sidebar Menu -->
                     <div style="width: 220px; background: #1e3a5f; color: #ffffff; padding: 1.5rem 0; flex-shrink: 0; display: flex; flex-direction: column;">
