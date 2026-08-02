@@ -49,9 +49,9 @@ body {
     justify-content: space-between;
     align-items: flex-end; /* Align items to the bottom to allow tabs to sit on the border */
     border-bottom: 1px solid #cbd5e1;
-    font-size: 10px;
+    font-size: 13px;
     color: #475569;
-    height: 30px;
+    height: 34px;
 }
 
 .utility-left {
@@ -74,7 +74,7 @@ body {
 
 
 .menu-icon {
-    font-size: 0.9rem;
+    font-size: 1.15rem;
     color: #64748b;
     cursor: pointer;
 }
@@ -88,12 +88,12 @@ body {
 .menu-item, .dm-menu-item {
     cursor: pointer;
     font-weight: 600;
-    padding: 0.2rem 0.4rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 4px;
     transition: background 0.2s;
     color: #475569;
     white-space: nowrap;
-    font-size: 10px;
+    font-size: 13.5px;
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -211,7 +211,7 @@ body.active-dosimachine .dm-only-menu {
 
 .dropdown-item, .dm-dropdown-item {
     padding: 10px 15px;
-    font-size: 12px;
+    font-size: 14px;
     color: #475569;
     cursor: pointer;
     transition: background 0.2s;
@@ -239,7 +239,7 @@ body.active-dosimachine .dm-only-menu {
 /* Sub-dropdown & Shortcuts */
 .menu-shortcut {
     margin-left: auto;
-    font-size: 11px;
+    font-size: 12.5px;
     color: #94a3b8;
     padding-left: 12px;
 }
@@ -979,12 +979,12 @@ body.active-dosimachine .dm-only-menu {
 
 /* Main Navigation Tabs in Utility Bar */
 .main-tab {
-    padding: 5px 25px;
+    padding: 6px 25px;
     border-radius: 10px 10px 0 0;
     background: #334155;
     color: #94a3b8;
     font-weight: 700;
-    font-size: 11.5px;
+    font-size: 13.5px;
     letter-spacing: -0.02em;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1190,8 +1190,8 @@ body.active-dosimachine .main-tab.dosimachine.active {
 
 .dm-menu-item {
     position: relative;
-    padding: 5px 12px;
-    font-size: 10px;
+    padding: 6px 14px;
+    font-size: 13.5px;
     font-weight: 600;
     color: #475569;
     cursor: pointer;
