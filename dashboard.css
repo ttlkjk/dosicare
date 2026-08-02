@@ -236,6 +236,36 @@ body.active-dosimachine .dm-only-menu {
     font-weight: 600;
 }
 
+/* Sub-dropdown & Shortcuts */
+.menu-shortcut {
+    margin-left: auto;
+    font-size: 11px;
+    color: #94a3b8;
+    padding-left: 12px;
+}
+
+.dm-dropdown-item.has-submenu {
+    position: relative;
+    justify-content: space-between;
+}
+
+.dm-dropdown-item.has-submenu .dm-sub-dropdown-content {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    z-index: 1001;
+}
+
+.dm-dropdown-item.has-submenu:hover .dm-sub-dropdown-content {
+    display: block;
+}
+
 .view-icon {
     font-size: 14px;
 }
