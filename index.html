@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linac QA Hub Dashboard | DosiCare</title>
-    <link rel="stylesheet" href="dashboard.css?v=6.4">
+    <link rel="stylesheet" href="dashboard.css?v=6.5">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -725,22 +725,10 @@
 
             <!-- DosiMachine Promotional Home -->
             <div class="dosimachine-home" id="dosimachine-home" style="background-color: #ffffff; padding: 1rem; border-radius: 16px;">
-                <!-- Top Navigation Guide Banner -->
-                <div style="width: 100%; margin-bottom: 1.2rem; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border: 1.5px solid #38bdf8; border-left: 6px solid #38bdf8; border-radius: 14px; padding: 1.1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 8px 25px rgba(15, 23, 42, 0.25); position: relative; overflow: hidden;">
-                    <div style="position: absolute; right: -20px; top: -20px; width: 120px; height: 120px; background: rgba(56, 189, 248, 0.08); border-radius: 50%; pointer-events: none;"></div>
-                    <div style="display: flex; align-items: center; gap: 1.2rem; position: relative; z-index: 1;">
-                        <span style="font-size: 1.8rem; background: rgba(56, 189, 248, 0.15); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8;">💡</span>
-                        <div>
-                            <div style="font-size: 1.1rem; font-weight: 800; color: #ffffff; margin-bottom: 0.25rem;">
-                                DosiMachine 주요 기능 확인 안내
-                            </div>
-                            <div style="font-size: 0.93rem; color: #e2e8f0; font-weight: 500; line-height: 1.4;">
-                                상단 메뉴 바의 <strong style="color: #38bdf8; font-weight: 700; background: rgba(56, 189, 248, 0.15); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(56, 189, 248, 0.3);">메뉴 버튼들</strong>(파일, Edit, Tools, Machine QA, Device QA, Image QA, Data Handling, RTPS, Reports, Plan View 등)을 클릭하시면 각 분석 화면과 세부 기능들을 바로 확인하실 수 있습니다.
-                            </div>
-                        </div>
-                    </div>
-                    <div style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border: 1px solid #38bdf8; border-radius: 30px; padding: 0.55rem 1.1rem; font-size: 0.88rem; color: #ffffff; font-weight: 700; white-space: nowrap; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4); position: relative; z-index: 1;">
-                        <span>👆</span> 상단 메뉴 버튼 클릭
+                <!-- Simple Pill Guide Notice -->
+                <div style="width: 100%; display: flex; justify-content: center; align-items: center; margin: 0.2rem 0 1rem 0;">
+                    <div style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border: 1.5px solid #38bdf8; border-radius: 30px; padding: 0.55rem 1.6rem; font-size: 0.95rem; color: #ffffff; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.35); letter-spacing: -0.01em;">
+                        <span style="font-size: 1.15rem;">👆</span> 상단 메뉴 버튼 클릭
                     </div>
                 </div>
 
@@ -1780,19 +1768,10 @@
 
             <!-- DosiMachine Configuration View -->
             <div id="dm-configuration-view" class="dm-configuration-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
-                <!-- Guide Notice Banner -->
-                <div style="max-width: 1200px; width: 100%; margin-bottom: 1.2rem; background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%); border: 1px solid #3b82f6; border-left: 6px solid #38bdf8; border-radius: 12px; padding: 1.1rem 1.4rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 6px 20px rgba(15, 39, 68, 0.25);">
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <span style="font-size: 1.6rem; background: rgba(56, 189, 248, 0.15); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 1px solid rgba(56, 189, 248, 0.3);">⚙️</span>
-                        <div>
-                            <div style="font-size: 1.05rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem;">DosiMachine 환경설정 (Configuration) 안내</div>
-                            <div style="font-size: 0.92rem; color: #cbd5e1; font-weight: 500;">
-                                좌측의 <strong style="color: #38bdf8; font-weight: 700;">설정 메뉴 버튼들</strong>(장비 기본 정보, 리포트 폴더 설정, 일반 및 프로토콜 등)을 각각 클릭하여 세부 기능 및 항목별 설정 화면을 확인해 보세요.
-                            </div>
-                        </div>
-                    </div>
-                    <div style="background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; border-radius: 20px; padding: 0.45rem 1rem; font-size: 0.85rem; color: #38bdf8; font-weight: 700; white-space: nowrap; display: flex; align-items: center; gap: 6px;">
-                        <span>👈</span> 좌측 버튼을 클릭하세요
+                <!-- Simple Pill Guide Notice -->
+                <div style="width: 100%; max-width: 1200px; display: flex; justify-content: flex-start; align-items: center; margin-bottom: 0.8rem;">
+                    <div style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border: 1.5px solid #38bdf8; border-radius: 30px; padding: 0.55rem 1.6rem; font-size: 0.95rem; color: #ffffff; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.35); letter-spacing: -0.01em;">
+                        <span style="font-size: 1.15rem;">👈</span> 좌측 설정 메뉴 버튼 클릭
                     </div>
                 </div>
 
