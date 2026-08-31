@@ -2515,17 +2515,6 @@ body.active-dosimachine .main-tab.dosimachine.active {
     .main-tab { margin-bottom: 0; }
 }
 
-/* ─── 홈 안내 배지 + 브로슈어 바로가기 ─── */
-.dm-guide-row {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin: 0.2rem 0 1rem 0;
-}
-
 .dm-guide-pill,
 .dm-brochure-pill {
     display: inline-flex;
@@ -2562,6 +2551,65 @@ body.active-dosimachine .main-tab.dosimachine.active {
     color: #0369a1;
     box-shadow: 0 4px 15px rgba(2, 132, 199, 0.22);
     transform: translateY(-1px);
+}
+
+@media (max-width: 520px) {
+    .dm-guide-pill,
+    .dm-brochure-pill {
+        padding: 0.5rem 1.1rem;
+        font-size: 0.88rem;
+    }
+}
+
+/* ─── 홈 안내 배지 + 브로슈어 바로가기 ─── */
+.dm-guide-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin: 0.2rem 0 1rem 0;
+}
+
+/* 두 배지는 형태·크기·그림자 처리를 공유하고 색으로만 구분한다 */
+.dm-guide-pill,
+.dm-brochure-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 30px;
+    padding: 0.55rem 1.6rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+/* 안내 배지 — 기존 디자인 그대로 */
+.dm-guide-pill {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    border: 1.5px solid #38bdf8;
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.35);
+}
+
+/* 브로슈어 — 같은 형태, 사이트의 기존 브로슈어 색(teal) */
+.dm-brochure-pill {
+    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    border: 1.5px solid #5eead4;
+    box-shadow: 0 4px 15px rgba(13, 148, 136, 0.35);
+    text-decoration: none;
+    transition: box-shadow 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+}
+
+.dm-brochure-pill:hover,
+.dm-brochure-pill:focus-visible {
+    color: #ffffff;
+    filter: brightness(1.07);
+    box-shadow: 0 7px 20px rgba(13, 148, 136, 0.45);
+    transform: translateY(-2px);
 }
 
 @media (max-width: 520px) {
