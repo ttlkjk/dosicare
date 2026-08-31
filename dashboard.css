@@ -55,7 +55,9 @@ body {
 }
 
 .utility-left {
+    /* 남는 가로 공간을 이쪽이 받아서 .menu-items 가 가운데 정렬될 여지를 만든다 */
     flex: 1 1 0;
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 0.8rem;
@@ -80,8 +82,12 @@ body {
 }
 
 .menu-items {
+    /* 남는 공간을 모두 차지한 뒤 그 안에서 가운데 정렬한다.
+       폭이 빠듯할 때는 자연스럽게 예전처럼 왼쪽부터 채워진다. */
+    flex: 1 1 auto;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.2rem;
 }
 
@@ -121,7 +127,8 @@ body.active-dosimachine .dm-only-menu {
 
 
 .utility-right {
-    flex: 1 1 0;
+    /* 콘텐츠 폭만 차지한다. 1 1 0 이면 남는 공간을 전부 흡수해 메뉴가 왼쪽에 몰린다 */
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -1190,7 +1197,8 @@ body.active-dosimachine .main-tab.dosimachine.active {
 
 .dm-menu-item {
     position: relative;
-    padding: 6px 14px;
+    /* 좌우 여백을 줄여 메뉴바에 여유 공간을 만든다 (.menu-items 가운데 정렬용) */
+    padding: 6px 10px;
     font-size: 13.5px;
     font-weight: 600;
     color: #475569;
@@ -2477,9 +2485,11 @@ body.active-dosimachine .main-tab.dosimachine.active {
     border: 0;
 }
 
-/* ─── 좁은 화면: 앱 메뉴바가 가로 스크롤을 만들지 않도록 여러 줄로 접는다 ───
-   (.menu-items 에 overflow 를 주면 드롭다운이 잘리므로 wrap 으로 처리) */
-@media (max-width: 1100px) {
+/* ─── 좁은 화면: 앱 메뉴바가 가로 스크롤/겹침을 만들지 않도록 여러 줄로 접는다 ───
+   (.menu-items 에 overflow 를 주면 드롭다운이 잘리므로 wrap 으로 처리)
+   한 줄에 [햄버거+메뉴+탭+아이콘]이 모두 들어가려면 약 1345px 이 필요하다.
+   여유를 두어 1399px 이하에서 접는다. */
+@media (max-width: 1399px) {
     .utility-bar {
         height: auto;
         min-height: 34px;
