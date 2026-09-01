@@ -21,7 +21,7 @@
     <meta name="twitter:description" content="DosiMachine은 선형가속기(Linac) 품질관리를 위한 통합 소프트웨어입니다. Field Analysis, Starshot, Winston-Lutz, Picket Fence, TRS-398 선량교정, MLC/Trajectory Log 분석과 PDF 리포트 자동화를 하나의 워크플로우로 제공합니다.">
     <meta name="twitter:image" content="https://dosicare.co.kr/images/main.png">
     <title>DosiMachine | 방사선 치료 품질관리(QA) 통합 솔루션 — DosiCare</title>
-    <link rel="stylesheet" href="dashboard.css?v=6.8">
+    <link rel="stylesheet" href="dashboard.css?v=6.9">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -197,6 +197,8 @@
                         <div class="dm-dropdown-item" onclick="showDMPeriodReport()">Period_Report_Window</div>
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMDosiReport()">DosiReport</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMAIConsult()">AI Consult (지능형 장비 분석)</div>
                     </div>
                 </div>
                 <!-- 9-1. Plan View Menu -->
@@ -825,6 +827,13 @@
                                 <div class="item-title">자동 산출 PDF 기반 품질 관리 절차서(SOP/Procedure) 지능형 자동 생성</div>
                             </div>
                             <div class="item-desc">분석 결과로 자동 생성된 PDF 검증 보고서 수치와 그래프 데이터를 종합 파싱하여 원내 정기 감사를 위한 표준 '품질 관리 절차서(SOP)' 문서를 클릭 한 번으로 자동 연동 및 생성합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item" onclick="showDMAIConsult()" style="cursor: pointer;">
+                            <div class="item-top-row">
+                                <div class="item-num">10</div>
+                                <div class="item-title">AI Consult — 축적된 QA 리포트를 읽고 답하는 지능형 장비 분석 &amp; 컨설팅</div>
+                            </div>
+                            <div class="item-desc">리포트 폴더에 쌓인 PDF를 분야별로 자동 수집·요약해 AI에게 넘겨, 이상 징후 감지부터 장기 드리프트 예측, AAPM TG-142 대조까지 자연어 대화로 상담합니다.</div>
                         </li>
                     </ul>
                 </div>
@@ -1691,6 +1700,11 @@
                             <li class="dm-mo-row dm-mo-live" onclick="showDMDosiReport()" title="DosiReport 화면 열기">
                                 <span class="dm-mo-name">DosiReport</span>
                                 <span class="dm-mo-desc">일간 · 월간 · 연간 점검표를 Excel과 한글(HWP) 서식으로 자동 작성합니다.</span>
+                                <span class="dm-mo-go">열기 →</span>
+                            </li>
+                            <li class="dm-mo-row dm-mo-live" onclick="showDMAIConsult()" title="AI Consult 화면 열기">
+                                <span class="dm-mo-name">AI Consult</span>
+                                <span class="dm-mo-desc">축적된 QA 리포트를 AI가 읽고 이상 징후 · 추세 · 조치 사항을 상담해 줍니다.</span>
                                 <span class="dm-mo-go">열기 →</span>
                             </li>
                     </ul>
@@ -4110,6 +4124,121 @@
                 </div>
             </div>
 
+            <!-- DosiMachine AI Consult View -->
+            <div id="dm-ai-consult-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
+                    <h2><span class="icon">🤖</span> AI Consult: 축적된 QA 리포트를 읽고 답하는 지능형 장비 분석 &amp; 컨설팅</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">리포트 폴더 자동 스캔 &amp; 분야별 측정값 수집</div>
+                            </div>
+                            <div class="item-desc">지정한 Report 폴더를 훑어 Output, PDD, Profile, Winston-Lutz, Starshot, Picket Fence, MPC 등 QA 분야별로 PDF를 분류하고, 각 문서에서 핵심 측정 수치를 추출해 AI가 이해할 수 있는 형태로 정리합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">분석 기간 지정 — 전체 · 1개월 · 3개월 · 6개월 · 1년 · 직접 선택</div>
+                            </div>
+                            <div class="item-desc">보고 싶은 구간만 골라 분석할 수 있습니다. 최근 이상이 의심될 때는 짧게, 장기 추세를 볼 때는 전체 기간으로 두면 해당 범위의 리포트만 근거로 삼아 답변합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">4개 분야 · 16종 빠른 진단 프리셋</div>
+                            </div>
+                            <div class="item-desc"><b>종합·안전</b>(전체 QA 브리핑, 이상 징후 &amp; 경계치 감지, 차기 점검 권고, 장기 드리프트 선제 예측), <b>선량·빔품질</b>(출력 &amp; 빔 품질 추세, TRS-398 절대선량 교정 분석, PDD/Profile 대칭도, 일간 빔 안정성), <b>기계적·등각점</b>(Winston-Lutz 3D 등각점, Starshot 회전축, EPID/OBI Offset, MLC Leaf 정밀도), <b>임상·TG-142</b>(전수 프로토콜 대조, Action Level 감지, SRS/SBRT 준비도, MPC 교차 검증)을 버튼 한 번으로 실행합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">04</div>
+                                <div class="item-title">장기 드리프트(Drift) 선제 예측</div>
+                            </div>
+                            <div class="item-desc">날짜별 측정값의 점진적 변동 경향을 통계적으로 감지해, 향후 1~2개월 내 허용기준 초과가 우려되는 항목을 미리 짚어 줍니다. 기준을 벗어난 뒤 대응하는 대신 미리 관리할 수 있습니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">05</div>
+                                <div class="item-title">자연어 질의 &amp; 근거 리포트 원본 즉시 확인</div>
+                            </div>
+                            <div class="item-desc">프리셋 외에도 궁금한 내용을 그대로 물어보면 됩니다. 답변에 인용된 리포트 파일명을 클릭하면 근거가 된 PDF 원본이 바로 열려, AI 답변을 실제 측정 문서와 대조할 수 있습니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">06</div>
+                                <div class="item-title">내 API 키 사용 — 데이터는 원내 PC에 남습니다</div>
+                            </div>
+                            <div class="item-desc">기본 모델은 Gemini 2.5 Flash이며 Claude · OpenAI · Ollama도 선택할 수 있습니다. 병원이 직접 발급한 API 키를 넣어 쓰는 구조라 별도 서버에 리포트를 업로드하지 않으며, Ollama를 고르면 외부 전송 없이 로컬에서만 분석할 수 있습니다.</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
+                  <div class="aic-wrap">
+                    <div class="aic-shot">
+                        <div class="aic-titlebar">
+                            <span class="aic-dot"></span>
+                            <span>Easy Machine &mdash; AI Consult (지능형 장비 QA 분석 &amp; 컨설팅)</span>
+                        </div>
+                        <div class="aic-body">
+                            <div class="aic-topbar">
+                                <div class="aic-brand">
+                                    <span class="aic-avatar">🤖</span>
+                                    <div>
+                                        <div class="aic-title">AI Consult · 지능형 장비 QA 분석 &amp; 컨설팅</div>
+                                        <div class="aic-sub">분석 폴더: <span class="aic-link">C:/…/Report</span></div>
+                                    </div>
+                                </div>
+                                <div class="aic-badges">
+                                    <span class="aic-badge">📁 분석 폴더 지정</span>
+                                    <span class="aic-badge">📂 리포트 62개 <em>(17개 분야)</em></span>
+                                    <span class="aic-badge">🧠 모델: gemini-2.5-flash</span>
+                                    <span class="aic-badge">🔑 내 API 키</span>
+                                </div>
+                            </div>
+
+                            <div class="aic-row">
+                                <span class="aic-row-label">📅 분석 대상 기간:</span>
+                                <span class="aic-chip aic-chip-on">전체 기간</span>
+                                <span class="aic-chip">최근 1개월</span>
+                                <span class="aic-chip">최근 3개월</span>
+                                <span class="aic-chip">최근 6개월</span>
+                                <span class="aic-chip">최근 1년</span>
+                                <span class="aic-chip aic-chip-ghost">년-월-일 ~ 년-월-일</span>
+                            </div>
+
+                            <div class="aic-row">
+                                <span class="aic-row-label">⚡ 빠른 진단:</span>
+                                <span class="aic-chip aic-chip-sel">🛡️ 종합·안전 ▾</span>
+                                <span class="aic-chip">⚛️ 선량·빔품질 ▾</span>
+                                <span class="aic-chip">🎯 기계적·등각점 ▾</span>
+                                <span class="aic-chip">📜 임상·TG-142 ▾</span>
+                            </div>
+
+                            <div class="aic-stage">
+                                <div class="aic-panel">
+                                    <div class="aic-panel-head">🛡️ 종합·안전</div>
+                                    <div class="aic-panel-item">📊 전체 QA 종합 브리핑</div>
+                                    <div class="aic-panel-item">⚠️ 이상 징후 &amp; 경계치 감지</div>
+                                    <div class="aic-panel-item">📋 차기 점검 권고 &amp; 조치 계획</div>
+                                    <div class="aic-panel-item">⏳ 장기 드리프트(Drift) 선제 예측</div>
+                                </div>
+                                <div class="aic-bubble">
+                                    <div class="aic-bubble-head"><span class="aic-avatar aic-avatar-sm">🤖</span> AI Consult</div>
+                                    <p>안녕하세요, 장비 QA 분석을 도와드리는 AI Consult입니다.</p>
+                                    <p>Reports 폴더에 쌓인 <b>62개</b>의 QA 리포트를 읽어 출력 선량 오차, 빔 프로파일,
+                                       기계적 정밀도(EPID/WL) 상태를 진단해 드립니다.</p>
+                                    <p class="aic-hint">💡 리포트 파일명을 클릭하시면 바로 PDF 원본 미리보기 창이 열립니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="aic-caption">AI Consult 화면 구성 — 분석 폴더 · 기간 필터 · 빠른 진단 프리셋 · 대화형 답변</p>
+                  </div>
+                </div>
+            </div>
+
             <!-- DosiMachine About View -->
             <div id="dm-about-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
                 <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
@@ -4847,6 +4976,12 @@
             document.getElementById('dm-dosi-report-view').style.display = 'flex';
         }
 
+        function showDMAIConsult() {
+            console.log('Showing DosiMachine AI Consult View');
+            hideAllDMViews();
+            document.getElementById('dm-ai-consult-view').style.display = 'flex';
+        }
+
         function showDMAbout() {
             console.log('Showing DosiMachine About View');
             hideAllDMViews();
@@ -5052,6 +5187,7 @@
                 'dm-total-report-view',
                 'dm-period-report-view',
                 'dm-dosi-report-view',
+                'dm-ai-consult-view',
                 'dm-about-view',
                 'dm-demo-status-view',
                 'dm-plan-view',
