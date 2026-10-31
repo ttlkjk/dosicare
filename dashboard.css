@@ -2390,20 +2390,6 @@ body.active-dosimachine .main-tab.dosimachine.active {
     border-radius: 12px;
 }
 
-/* "NEW" tag on menu items and cards for features added to the program recently */
-.dm-new-badge {
-    display: inline-block;
-    margin-left: 6px;
-    padding: 1px 6px;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    color: #ffffff;
-    background: #ef4444;
-    border-radius: 999px;
-    vertical-align: middle;
-}
-
 /* Plain-language limits shown under a feature description */
 .dm-note {
     max-width: 1050px;
@@ -2479,7 +2465,6 @@ body.active-dosimachine .main-tab.dosimachine.active {
     white-space: nowrap;
 }
 
-.myqa-premium-header h2 .dm-new-badge,
 .myqa-premium-header h2 .dm-beta-badge {
     font-size: 0.75rem;
     letter-spacing: 0;
