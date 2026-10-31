@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linac QA Hub Dashboard | DosiCare</title>
-    <link rel="stylesheet" href="dashboard.css?v=6.5">
+    <link rel="stylesheet" href="dashboard.css?v=6.6">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -49,22 +49,24 @@
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMDicomComposite()">Dicom Composite</div>
                         <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-dicom-header-editor-view')">Dicom Header Editor</div>
+                        <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMGantryAngleCal()">Gantry_Angle_Cal</div>
                         <div class="dm-separator"></div>
-                        <div class="dm-dropdown-item">Collimator Angle Cal</div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-small-tools-view')">Collimator Angle Cal</div>
                         <div class="dm-separator"></div>
-                        <div class="dm-dropdown-item">Image_Rotate</div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-small-tools-view')">Image_Rotate</div>
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMProfileComparison()">Profile Comparison</div>
                         <div class="dm-dropdown-item" onclick="showDMPDDComparison()">PDD Comparison</div>
                         <div class="dm-separator"></div>
-                        <div class="dm-dropdown-item" onclick="showDMConvertToAccept()">Convert to Accept Format</div>
-                        <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMSaveProfileToASC()">Save Profile to ASC</div>
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMRTWorkspace()">RT Workspace</div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-log-recon-view')">Eclipse 로그 선량 재구성 <span class="dm-new-badge">NEW</span></div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-cbct-dose-view')">CBCT 조직변화 선량 <span class="dm-new-badge">NEW</span></div>
                         <div class="dm-separator"></div>
-                        <div class="dm-dropdown-item">Move PDD Data</div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-small-tools-view')">Move PDD Data</div>
                     </div>
                 </div>
                 <!-- 4. Machine QA Menu -->
@@ -74,8 +76,6 @@
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMStarshotAnalysis()">Starshot Analysis</div>
                         <div class="dm-separator"></div>
-                        <div class="dm-dropdown-item" onclick="showDMVertualGantryStarshot()">Virtual Gantry Starshot</div>
-                        <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMPicketFenceAnalysis()">Picket Fence Analysis</div>
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMWinstonLutzAnalysis()">Winston-Lutz Analysis</div>
@@ -84,7 +84,7 @@
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMEleCalibration()">Electron TRS-398 Calibration</div>
                         <div class="dm-separator"></div>
-                        <div class="dm-dropdown-item">Calibration(TG52)</div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-tg52-view')">Calibration(TG52)</div>
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMMLCLog()">Machine Log Analysis</div>
                         <div class="dm-separator"></div>
@@ -93,8 +93,9 @@
                         <div class="dm-dropdown-item" onclick="showDMGatingQA()">Gating QA</div>
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMOffsetOutput()">Offset Output</div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-epid-output-view')">EPID Output Constancy / Wedge Factor <span class="dm-new-badge">NEW</span></div>
                         <div class="dm-separator"></div>
-                        <div class="dm-dropdown-item" onclick="showDM3DEpidPdd()">3D EPID PDD Reconstruction</div>
+                        <div class="dm-dropdown-item" onclick="showDM3DEpidPdd()">3D EPID PDD Reconstruction <span class="dm-beta-badge">개발 중</span></div>
                     </div>
                 </div>
                 <!-- 5. Device QA Menu -->
@@ -106,8 +107,6 @@
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showSample('BC_Plus')">Beamcheckplus</div>
                         <div class="dm-separator"></div>
-                        <div class="dm-dropdown-item" onclick="showSample('MPC')">TrueBeam MPC QA</div>
-                        <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showSample('T_Log')">Trajectory log QA</div>
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showSample('T_Log')">DosiCare Trajectory Analyzer</div>
@@ -116,17 +115,36 @@
                 <!-- 6. Image QA Menu -->
                 <div class="dm-menu-item dm-only-menu">Image QA
                     <div class="dm-dropdown-content">
-                        <div class="dm-dropdown-item" onclick="showDMIBAPrimusL()">IBA Primus L Analysis</div>
-                        <div class="dm-separator"></div>
-                        <div class="dm-dropdown-item" onclick="showDMRITEPID()">RIT EPID Analysis</div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-image-qa-view')">팬텀 전체 보기 (Overview)</div>
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item has-submenu">
-                            <span>Catphan QA</span> <span style="font-size: 10px;">▶</span>
+                            <span>CT</span> <span style="font-size: 10px;">▶</span>
                             <div class="dm-sub-dropdown-content">
-                                <div class="dm-dropdown-item" onclick="showDMCatphanUniformity()">Uniformity (CTP486)</div>
-                                <div class="dm-dropdown-item" onclick="showDMCatphanMaterial()">Material (CTP404)</div>
-                                <div class="dm-dropdown-item">Resolution (CTP528)</div>
-                                <div class="dm-dropdown-item">Low Contrast (CTP515)</div>
+                                <div class="dm-dropdown-item" onclick="showDMView('dm-image-qa-view')">ACR CT Phantom (Module 1~4)</div>
+                                <div class="dm-separator"></div>
+                                <div class="dm-dropdown-item" onclick="showDMCatphanMaterial()">CATPHAN Materials (CTP404)</div>
+                                <div class="dm-dropdown-item" onclick="showDMCatphanUniformity()">CATPHAN Uniformity (CTP486)</div>
+                                <div class="dm-dropdown-item" onclick="showDMView('dm-image-qa-view')">CATPHAN Low Contrast (CTP515)</div>
+                                <div class="dm-dropdown-item" onclick="showDMView('dm-image-qa-view')">CATPHAN Resolution (CTP528)</div>
+                                <div class="dm-separator"></div>
+                                <div class="dm-dropdown-item" onclick="showDMView('dm-image-qa-view')">Gammex 467 (전자밀도)</div>
+                                <div class="dm-dropdown-item" onclick="showDMView('dm-image-qa-view')">CIRS 062 (전자밀도)</div>
+                                <div class="dm-dropdown-item" onclick="showDMView('dm-image-qa-view')">Tomotherapy Cheese (3종)</div>
+                            </div>
+                        </div>
+                        <div class="dm-dropdown-item has-submenu">
+                            <span>EPID</span> <span style="font-size: 10px;">▶</span>
+                            <div class="dm-sub-dropdown-content">
+                                <div class="dm-dropdown-item" onclick="showDMView('dm-image-qa-view')">PTW EPID QC Phantom</div>
+                                <div class="dm-dropdown-item" onclick="showDMView('dm-image-qa-view')">Las Vegas EPID Phantom</div>
+                                <div class="dm-dropdown-item" onclick="showDMRITEPID()">RIT EPID Phantom</div>
+                            </div>
+                        </div>
+                        <div class="dm-dropdown-item has-submenu">
+                            <span>kV Imaging</span> <span style="font-size: 10px;">▶</span>
+                            <div class="dm-sub-dropdown-content">
+                                <div class="dm-dropdown-item" onclick="showDMIBAPrimusL()">IBA Primus L Phantom</div>
+                                <div class="dm-dropdown-item" onclick="showDMView('dm-image-qa-view')">Leeds TOR18 Phantom</div>
                             </div>
                         </div>
                     </div>
@@ -170,16 +188,20 @@
                     <div class="dm-dropdown-content">
                         <div class="dm-dropdown-item" onclick="showDMProfileReport()">Profile Analyze & Report(PDF)</div>
                         <div class="dm-separator"></div>
-                        <div class="dm-dropdown-item">Auto PDD Report</div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-pdd-report-view')">Auto PDD Report</div>
                         <div class="dm-separator"></div>
-                        <div class="dm-dropdown-item">Photon PDD Report</div>
-                        <div class="dm-dropdown-item">Electron PDD Report</div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-pdd-report-view')">Photon PDD Report</div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-pdd-report-view')">Electron PDD Report</div>
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMTotalReport()">Total Report</div>
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMPeriodReport()">Period_Report_Window</div>
                         <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-qa-trend-view')">QA Trend &amp; SPC <span class="dm-new-badge">NEW</span></div>
+                        <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMDosiReport()">DosiReport</div>
+                        <div class="dm-separator"></div>
+                        <div class="dm-dropdown-item" onclick="showDMView('dm-ai-consult-view')">AI Consult (지능형 장비 분석) <span class="dm-new-badge">NEW</span></div>
                     </div>
                 </div>
                 <!-- 9-1. Plan View Menu -->
@@ -191,7 +213,7 @@
                         <div class="dm-separator"></div>
                         <div class="dm-dropdown-item" onclick="showDMDemoStatus()">Demo Status</div>
                         <div class="dm-separator"></div>
-                        <div class="dm-dropdown-item">Features</div>
+                        <div class="dm-dropdown-item" onclick="goHome()">Features</div>
                     </div>
                 </div>
             </div>
@@ -779,33 +801,80 @@
                         <li class="myqa-premium-item" onclick="showDMTransferData()" style="cursor: pointer;">
                             <div class="item-top-row">
                                 <div class="item-num">06</div>
-                                <div class="item-title">RTPS(Eclipse, Monaco, RayStation) 데이터 전송 & 원내 EMR/PACS 연동</div>
+                                <div class="item-title">RTPS(Eclipse, Monaco, RayStation 등 8종) 빔 데이터 변환 & 폴더 저장</div>
                             </div>
-                            <div class="item-desc">분석이 완료된 빔 프로파일 및 QA 데이터를 주요 치료 계획 시스템(RTPS) 입력 포맷으로 변환 전송하고 원내 중앙 QA 서버 및 EMR/PACS로 즉시 아카이빙합니다.</div>
+                            <div class="item-desc">분석이 완료된 PDD·빔 프로파일을 대상 치료 계획 시스템(RTPS)을 골라 ASC 파일로 변환하고, 지정한 전송 폴더에 일괄 저장합니다.</div>
                         </li>
                         <li class="myqa-premium-item" onclick="showDMRITEPID()" style="cursor: pointer;">
                             <div class="item-top-row">
                                 <div class="item-num">07</div>
-                                <div class="item-title">필름(Film) 없는 디지털 EPID 영상 기반 전 장비 Machine QA 완벽 지원</div>
+                                <div class="item-title">필름(Film) 없이 EPID 영상으로 하는 Machine QA</div>
                             </div>
-                            <div class="item-desc">번거롭고 오차가 발생하는 필름(Film) 현상/스캔 작업 없이 전자 포털 영상 장치(EPID) DICOM 이미지를 직접 활용하여 Winston-Lutz, Starshot, Picket Fence 등 모든 Machine QA 분석을 고정밀 디지털 방식으로 즉시 수행합니다.</div>
+                            <div class="item-desc">필름 현상·스캔 작업 없이 전자 포털 영상 장치(EPID) DICOM 이미지를 바로 읽어 Winston-Lutz, Starshot, Picket Fence, Field Analysis, EPID 출력 항상성 같은 Machine QA를 분석합니다.</div>
                         </li>
                         <li class="myqa-premium-item" onclick="showDMFileOpen()" style="cursor: pointer;">
                             <div class="item-top-row">
                                 <div class="item-num">08</div>
                                 <div class="item-title">이종 기종 QA 계측 장비 데이터 무변환(Direct Import) 즉시 분석 & PDF 출력</div>
                             </div>
-                            <div class="item-desc">원내에 보유 중인 다양한 브랜드/제조사(IBA, PTW, Sun Nuclear 등)의 Machine QA 계측 디바이스 데이터 포맷을 별도 포맷 변환 작업 없이 바로 로딩하여 실시간 정밀 분석을 수행하고 공식 PDF 보고서로 즉시 자동 변환합니다.</div>
+                            <div class="item-desc">IBA(.asc · .opab), PTW(.mcc), CSV 형식의 수조 측정 데이터와 DICOM · TIFF 영상을 변환 없이 바로 열어 분석하고 PDF 보고서로 저장합니다.</div>
                         </li>
                         <li class="myqa-premium-item" onclick="showDMTotalReport()" style="cursor: pointer;">
                             <div class="item-top-row">
                                 <div class="item-num">09</div>
-                                <div class="item-title">자동 산출 PDF 기반 품질 관리 절차서(SOP/Procedure) 지능형 자동 생성</div>
+                                <div class="item-title">QA 결과 PDF → 원내 점검표(Excel · Word) 연결</div>
                             </div>
-                            <div class="item-desc">분석 결과로 자동 생성된 PDF 검증 보고서 수치와 그래프 데이터를 종합 파싱하여 원내 정기 감사를 위한 표준 '품질 관리 절차서(SOP)' 문서를 클릭 한 번으로 자동 연동 및 생성합니다.</div>
+                            <div class="item-desc">저장된 QA 리포트 PDF의 값과 Pass/Fail을 병원 점검표의 해당 칸에 넣고, 칸에서 출처 PDF로 가는 링크를 겁니다. 엉뚱한 칸에 쓰거나 판정을 지어내지 않도록 막는 장치가 들어 있으며, 넣은 값은 사람이 한 번 확인하는 것을 전제로 합니다.</div>
                         </li>
                     </ul>
                 </div>
+
+                <div class="myqa-premium-header" style="width: 100%; margin-bottom: 1rem;">
+                    <h2><span class="icon">🆕</span> 최근 추가된 기능</h2>
+                    <p style="margin: -1rem 0 0; color: #64748b; line-height: 1.6; word-break: keep-all;">카드를 누르면 자세한 설명이 열립니다. <span class="dm-beta-badge">개발 중</span> 표시는 프로그램에 들어 있지만 실측 데이터로 검증을 이어 가는 중인 기능입니다.</p>
+                </div>
+                <section class="dm-feature-grid" style="margin-bottom: 2rem;">
+                    <div class="dm-feature-card" onclick="showDMView('dm-plan-check-view')" style="cursor: pointer;">
+                        <span class="dm-feature-icon">🩺</span>
+                        <h3>Plan Check <span class="dm-new-badge">NEW</span></h3>
+                        <p>Plan View 안에서 선량 제약 · 구조물 · 계획 규칙 · 갠트리 충돌 위험을 한 번에 점검</p>
+                    </div>
+                    <div class="dm-feature-card" onclick="showDMView('dm-log-recon-view')" style="cursor: pointer;">
+                        <span class="dm-feature-icon">🔁</span>
+                        <h3>Eclipse 로그 선량 재구성 <span class="dm-new-badge">NEW</span></h3>
+                        <p>TrajectoryLog대로 Eclipse에서 선량을 다시 계산해 계획 선량과 3D 감마 · DVH 비교</p>
+                    </div>
+                    <div class="dm-feature-card" onclick="showDMView('dm-epid-output-view')" style="cursor: pointer;">
+                        <span class="dm-feature-icon">📏</span>
+                        <h3>EPID Output Constancy <span class="dm-new-badge">NEW</span></h3>
+                        <p>EPID 영상의 CU/MU로 출력 항상성과 쐐기 신호비를 기준값과 비교</p>
+                    </div>
+                    <div class="dm-feature-card" onclick="showDMView('dm-qa-trend-view')" style="cursor: pointer;">
+                        <span class="dm-feature-icon">📈</span>
+                        <h3>QA Trend &amp; SPC <span class="dm-new-badge">NEW</span></h3>
+                        <p>QA 결과 9종을 날짜별로 그리고 I-MR 관리한계로 평소와 다른 변화를 표시</p>
+                    </div>
+                    <div class="dm-feature-card" onclick="showDMView('dm-image-qa-view')" style="cursor: pointer;">
+                        <span class="dm-feature-icon">🧪</span>
+                        <h3>Image QA 팬텀 확대 <span class="dm-beta-badge">개발 중</span></h3>
+                        <p>ACR CT, 전자밀도(Gammex · CIRS · Tomo Cheese), PTW EPID, Las Vegas, Leeds TOR18</p>
+                    </div>
+                    <div class="dm-feature-card" onclick="showDMView('dm-ai-consult-view')" style="cursor: pointer;">
+                        <span class="dm-feature-icon">🤖</span>
+                        <h3>AI Consult <span class="dm-beta-badge">개발 중</span></h3>
+                        <p>QA 리포트 폴더를 AI에게 읽혀 질문에 답하고 기간 리포트 작성 (참고용)</p>
+                    </div>
+                    <div class="dm-feature-card" onclick="showDMView('dm-cbct-dose-view')" style="cursor: pointer;">
+                        <span class="dm-feature-icon">🫁</span>
+                        <h3>CBCT 조직변화 선량 <span class="dm-beta-badge">개발 중</span></h3>
+                        <p>SmartAdapt 정합 CT 위에서 같은 플랜을 다시 계산해 몸의 변화가 선량에 준 영향 보기</p>
+                    </div>
+                    <div class="dm-feature-card" onclick="showDMView('dm-dicom-header-editor-view')" style="cursor: pointer;">
+                        <span class="dm-feature-icon">🏷️</span>
+                        <h3>Dicom Header Editor <span class="dm-new-badge">NEW</span></h3>
+                        <p>여러 DICOM 파일의 태그를 탭으로 열어 확인 · 수정 · 일괄 적용</p>
+                    </div>
+                </section>
 
                 <section class="dm-feature-grid" style="margin-bottom: 2rem;">
                     <div class="dm-feature-card">
@@ -816,12 +885,12 @@
                     <div class="dm-feature-card">
                         <span class="dm-feature-icon">🖼️</span>
                         <h3>Image & Device QA</h3>
-                        <p>Catphan Phantom (Uniformity/Material), IBA Primus L, RIT EPID Analysis, TrueBeam MPC 및 Trajectory Log QA 완벽 지원</p>
+                        <p>CT(ACR CT, CATPHAN 4개 모듈, 전자밀도 팬텀 5종) · EPID(PTW, Las Vegas, RIT) · kV(IBA Primus L, Leeds TOR18) 팬텀 분석, MPC Analyzer, Trajectory Log QA</p>
                     </div>
                     <div class="dm-feature-card">
                         <span class="dm-feature-icon">🖥️</span>
                         <h3>Plan View & RT Workspace</h3>
-                        <p>DICOM RT Plan/Dose/Structure 3D 등선량면 뷰어, MLC 구동 궤적 검증 및 Planned vs Delivered 빔 오버레이 대조 분석</p>
+                        <p>CT · 구조물 · 선량 3방향 뷰어, DVH · Plan Points, Beam's Eye View MLC 재생, 계획 대 로그 재구성 선량 비교, Plan Check</p>
                     </div>
                     <div class="dm-feature-card">
                         <span class="dm-feature-icon">⚙️</span>
@@ -844,7 +913,7 @@
                             </li>
                             <li class="dm-value-item">
                                 <h4>Seamless Integration</h4>
-                                <p>다양한 Water Phantom 장비 데이터 호환성 및 RTPS/EMR/PACS 연동으로 완벽한 품질 관리 디지털 전환 구현</p>
+                                <p>다양한 Water Phantom 장비 데이터 호환, RTPS 데이터 변환, Eclipse(ESAPI) 연동으로 QA 데이터를 한 프로그램에서 처리</p>
                             </li>
                         </ul>
                     </div>
@@ -885,7 +954,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/Field analysis.png" alt="Field Analysis View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/field_analysis.png" alt="Field Analysis View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -921,7 +990,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/starshot analysis.png" alt="Starshot Analysis View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/starshot.png" alt="Starshot Analysis View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -957,7 +1026,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/Picket Fence Analysis.png" alt="Picket Fence Analysis View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/picket_fence.png" alt="Picket Fence Analysis View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -972,7 +1041,7 @@
                                 <div class="item-num">01</div>
                                 <div class="item-title">방사선 중심(CAX) 및 BB 타겟 자동 탐지</div>
                             </div>
-                            <div class="item-desc">EPID 영상 내 볼 베어링(BB) 타겟과 조사면 중심(CAX) 오차를 0.1mm 이하 정밀도로 자동 추적 분석합니다.</div>
+                            <div class="item-desc">EPID 영상에서 볼 베어링(BB) 타겟과 조사면 중심(CAX)을 자동으로 찾아 둘 사이의 거리를 mm 단위로 계산합니다.</div>
                         </li>
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
@@ -988,12 +1057,19 @@
                             </div>
                             <div class="item-desc">Gantry/Couch/Collimator 회전축별 기계 오차 진단 및 SRS/SBRT 임상 기준 톨러런스 기반 PDF 보고서를 자동 생성합니다.</div>
                         </li>
+                        <li class="myqa-premium-item" onclick="showDMVertualGantryStarshot()" style="cursor: pointer;">
+                            <div class="item-top-row">
+                                <div class="item-num">04</div>
+                                <div class="item-title">Virtual Starshot (창 안의 버튼)</div>
+                            </div>
+                            <div class="item-desc">같은 Winston-Lutz 영상으로 가상 Starshot 영상을 만들어 각도별 빔 중심의 어긋남 방향을 봅니다. 눌러서 자세히 보기.</div>
+                        </li>
                     </ul>
                 </div>
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/Winston Lutz Analysis.png" alt="Winston Lutz Analysis View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/winston_lutz.png" alt="Winston Lutz Analysis View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -1042,16 +1118,12 @@
                 </div>
                 <div class="dm-pc-content" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
                     <div class="pc-image-wrapper" style="max-width: 950px; width: 100%;">
-                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 분석 화면 1 ]</p>
-                        <img src="images2/Photon_Calibration(TRS398)1.png" alt="Photon Calibration 1" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 교정 계산 화면 (입력값은 예시) ]</p>
+                        <img src="screens/trs398_window.png" alt="Photon Calibration window" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
                     </div>
                     <div class="pc-image-wrapper" style="max-width: 950px; width: 100%;">
-                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 분석 화면 2 ]</p>
-                        <img src="images2/Photon_Calibration(TRS398)2.png" alt="Photon Calibration 2" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                    </div>
-                    <div class="pc-image-wrapper" style="max-width: 950px; width: 100%;">
-                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 분석 화면 3 ]</p>
-                        <img src="images2/Photon_Calibration(TRS398)3.png" alt="Photon Calibration 3" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 교정 리포트 PDF 1쪽 ]</p>
+                        <img src="screens/trs398_report.png" alt="Photon Calibration report" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
                     </div>
                 </div>
             </div>
@@ -1080,16 +1152,12 @@
                 </div>
                 <div class="dm-ec-content" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
                     <div class="ec-image-wrapper" style="max-width: 950px; width: 100%;">
-                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 분석 화면 1 ]</p>
-                        <img src="images2/Photon_Calibration(TRS398)1.png" alt="Electron Calibration 1" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 교정 계산 화면 (입력값은 예시) ]</p>
+                        <img src="screens/ele_window.png" alt="Electron Calibration window" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
                     </div>
                     <div class="ec-image-wrapper" style="max-width: 950px; width: 100%;">
-                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 분석 화면 2 ]</p>
-                        <img src="images2/Photon_Calibration(TRS398)2.png" alt="Electron Calibration 2" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                    </div>
-                    <div class="ec-image-wrapper" style="max-width: 950px; width: 100%;">
-                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 분석 화면 3 ]</p>
-                        <img src="images2/Photon_Calibration(TRS398)3.png" alt="Electron Calibration 3" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 교정 리포트 PDF 1쪽 ]</p>
+                        <img src="screens/ele_report.png" alt="Electron Calibration report" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
                     </div>
                 </div>
             </div>
@@ -1103,7 +1171,7 @@
                             <div style="min-width: 32px; height: 32px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
                             <div>
                                 <strong style="font-size: 1.1rem; color: #1e293b; display: block; margin-bottom: 0.3rem;">실제 조사 데이터 기반의 정밀 검증</strong>
-                                <span style="color: #475569; line-height: 1.6;">치료 중 가속기에서 생성된 로그 파일(Dynalog 또는 Trajectory Log)을 분석하여, 계획된 MLC 위치(Expected)와 실제로 움직인 위치(Actual)를 0.1mm 단위의 높은 분해능으로 비교 검증할 수 있습니다.</span>
+                                <span style="color: #475569; line-height: 1.6;">치료 중 가속기가 남긴 Varian Trajectory Log를 읽어, 계획된 MLC · 갠트리 위치(Expected)와 실제로 움직인 위치(Actual)를 비교합니다. 빔 홀드(Beam Hold) 횟수도 함께 셉니다. (Dynalog는 읽을 수 있지만 실측 파일로는 아직 확인하지 않았습니다.)</span>
                             </div>
                         </li>
                         <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
@@ -1117,7 +1185,7 @@
                             <div style="min-width: 32px; height: 32px; background: #6366f1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
                             <div>
                                 <strong style="font-size: 1.1rem; color: #1e293b; display: block; margin-bottom: 0.3rem;">2D 플루언스 및 감마 분석(Gamma Analysis)</strong>
-                                <span style="color: #475569; line-height: 1.6;">MLC의 움직임을 바탕으로 2차원 플루언스 맵(Fluence Map)을 재구성하고, 계획과 실제 간의 감마 인덱스를 계산합니다. 이는 단순한 기계적 오차를 넘어 실제 선량 분포에 미치는 영향까지 정량적으로 평가할 수 있게 해줍니다.</span>
+                                <span style="color: #475569; line-height: 1.6;">MLC 움직임으로 계획 · 실제 플루언스 맵을 만들어 감마 지도(1%/1mm)를 그립니다. 감마 지도는 참고용 정보이며, 판정은 MLC · 갠트리 위치 오차로 합니다.</span>
                             </div>
                         </li>
                         <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
@@ -1131,7 +1199,7 @@
                 </div>
                 <div class="dm-ml-content" style="width: 100%; display: flex; justify-content: center;">
                     <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/MLC_log.png" alt="MLC Log Analysis" style="width: 100%; display: block;">
+                        <img src="screens/machine_log.png" alt="MLC Log Analysis" style="width: 100%; display: block;">
                     </div>
                 </div>
             </div>
@@ -1166,7 +1234,7 @@
                             <div style="min-width: 32px; height: 32px; background: #22c55e; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
                             <div>
                                 <strong style="font-size: 1.1rem; color: #064e3b; display: block; margin-bottom: 0.3rem;">DICOM 영상 기반의 교차 검증</strong>
-                                <span style="color: #14532d; line-height: 1.6;">MPC 결과 수치뿐만 아니라, 실제 촬영된 DICOM 영상을 로드하여 프로파일(Profile) 분석을 병행할 수 있어 수치와 영상 데이터 간의 교차 검증이 가능합니다.</span>
+                                <span style="color: #14532d; line-height: 1.6;">MPC가 남긴 BeamProfileCheck 영상의 프로파일을 함께 보여 주고(참고용, 판정 안 함), RT Image DICOM으로 내보내 메인 화면에서 더 분석할 수 있습니다. 예전 'TrueBeam MPC QA' 창의 기능도 이 창으로 합쳐졌습니다.</span>
                             </div>
                         </li>
                         <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
@@ -1178,9 +1246,22 @@
                         </li>
                     </ul>
                 </div>
-                <div class="dm-ma-content" style="width: 100%; display: flex; justify-content: center;">
-                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/MPC_Analyzer.png" alt="MPC Analyzer" style="width: 100%; display: block;">
+                <div class="dm-ma-content" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 항목 탭: 실행별 판정과 전체 항목 ]</p>
+                        <img src="screens/mpc_items.png" alt="MPC Analyzer - items" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 추세 탭: 항목별 날짜 추세 ]</p>
+                        <img src="screens/mpc_trend.png" alt="MPC Analyzer - trend" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ MLC 탭: 리프별 오프셋 · 백래시 ]</p>
+                        <img src="screens/mpc_mlc.png" alt="MPC Analyzer - MLC" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 빔 영상 탭: BeamProfileCheck 프로파일 (참고용) ]</p>
+                        <img src="screens/mpc_beam.png" alt="MPC Analyzer - beam image" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
                     </div>
                 </div>
             </div>
@@ -1193,22 +1274,22 @@
                         <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
                             <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
                             <div>
-                                <strong style="font-size: 1.1rem; color: #3b0764; display: block; margin-bottom: 0.3rem;">정밀한 시간 지연(Latency) 분석</strong>
-                                <span style="color: #5b21b6; line-height: 1.6;">호흡 동기 방사선 치료(Gating)에서 가장 중요한 요소인 '시스템 베이턴시(Latency)'를 정량적으로 측정합니다. 치료 장비가 호흡 신호를 감지하고 실제 빔을 켜거나 끄는 데 걸리는 시간(ms 단위)을 평균, 최대, 최소값으로 산출하여 치료의 정확성을 보장합니다.</span>
+                                <strong style="font-size: 1.1rem; color: #3b0764; display: block; margin-bottom: 0.3rem;">빔 켜짐 · 꺼짐 시간차와 그 변동</strong>
+                                <span style="color: #5b21b6; line-height: 1.6;">Trajectory Log와 MV Cine 영상에서 펄스마다 빔이 켜지고 꺼지는 시각을 프레임 사이까지 보간해 비교합니다(시간 분해능 약 6 ms). 펄스별 시간차, 그 변동, 조사시간 차이를 구합니다.</span>
                             </div>
                         </li>
                         <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
                             <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
                             <div>
-                                <strong style="font-size: 1.1rem; color: #3b0764; display: block; margin-bottom: 0.3rem;">동적 위치 정확도 검증</strong>
-                                <span style="color: #5b21b6; line-height: 1.6;">호흡 패턴에 따라 움직이는 타겟(BB)의 실제 궤적을 EPID 영상으로 추적하고, 이를 치료 계획상의 위치와 비교합니다. RMS 오차 및 최대 오차 분석을 통해 움직이는 타겟에 대한 기계적인 조준 정밀도를 확인합니다.</span>
+                                <strong style="font-size: 1.1rem; color: #3b0764; display: block; margin-bottom: 0.3rem;">게이트 켜짐 · 꺼짐 위치와 재현성</strong>
+                                <span style="color: #5b21b6; line-height: 1.6;">움직이는 마커(BB)를 MV Cine에서 추적해, 빔이 켜지고 꺼지는 순간의 마커 위치와 펄스마다의 재현성을 mm 단위로 측정합니다.</span>
                             </div>
                         </li>
                         <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
                             <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
                             <div>
                                 <strong style="font-size: 1.1rem; color: #3b0764; display: block; margin-bottom: 0.3rem;">통합 데이터 분석(Trajectory Log + EPID)</strong>
-                                <span style="color: #5b21b6; line-height: 1.6;">가속기의 구동 기록(Trajectory Log)과 실제 엑스레이 영상(EPID DICOM)을 시간축상에서 동기화하여 분석합니다. 이를 통해 신호 전달 과정의 지연뿐만 아니라 빔이 켜져 있는 동안의 물리적 위치 일치성을 한눈에 파악할 수 있습니다.</span>
+                                <span style="color: #5b21b6; line-height: 1.6;">가속기 구동 기록(Trajectory Log)과 MV Cine(EPID DICOM)을 함께 읽어 배율을 보정하고 시간축을 맞춥니다. 두 기록은 같은 시계를 쓰지 않으므로 절대 지연(latency)은 직접 재지 않고, 켜짐 · 꺼짐 위치 차이로부터 가정을 둔 범위로만 추정해 보여 줍니다.</span>
                             </div>
                         </li>
                         <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
@@ -1221,15 +1302,25 @@
                         <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
                             <div style="min-width: 32px; height: 32px; background: #a855f7; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
                             <div>
-                                <strong style="font-size: 1.1rem; color: #3b0764; display: block; margin-bottom: 0.3rem;">표준화된 품질 관리 및 리포트</strong>
-                                <span style="color: #5b21b6; line-height: 1.6;">Varian-RGSC 시스템 등 국제적인 표준 워크플로우를 지원하며, 분석 수치와 그래프가 포함된 전문적인 PDF 리포트를 자동으로 생성하여 호흡 동기 QA 기록을 체계적으로 관리할 수 있게 해줍니다.</span>
+                                <strong style="font-size: 1.1rem; color: #3b0764; display: block; margin-bottom: 0.3rem;">항목별 판정과 PDF 리포트</strong>
+                                <span style="color: #5b21b6; line-height: 1.6;">입력한 허용치로 항목마다 판정하고, 판정 요약과 탭별 그래프를 PDF로 저장합니다. 지금까지 TrueBeam(v5.0) 실측 데이터로 확인했습니다.</span>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div class="dm-gq-content" style="width: 100%; display: flex; justify-content: center;">
                     <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/Gating_QA.png" alt="Gating QA Analysis" style="width: 100%; display: block;">
+                        <img src="screens/gating_summary.png" alt="Gating QA Analysis" style="width: 100%; display: block;">
+                    </div>
+                </div>
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 1 조사시간 차: 펄스별 빔 켜짐 · 꺼짐 시간차 ]</p>
+                        <img src="screens/gating_timing.png" alt="1 조사시간 차: 펄스별 빔 켜짐 · 꺼짐 시간차" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 3 위치 재현성: 게이트 켜짐 · 꺼짐 순간의 마커 위치 ]</p>
+                        <img src="screens/gating_position.png" alt="3 위치 재현성: 게이트 켜짐 · 꺼짐 순간의 마커 위치" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
                     </div>
                 </div>
             </div>
@@ -1278,7 +1369,13 @@
                 </div>
                 <div class="dm-oo-content" style="width: 100%; display: flex; justify-content: center;">
                     <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/Offset_Output.png" alt="Offset Output Analysis" style="width: 100%; display: block;">
+                        <img src="screens/offset_output.png" alt="Offset Output Analysis" style="width: 100%; display: block;">
+                    </div>
+                </div>
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Offset Output PDF 리포트 1쪽 ]</p>
+                        <img src="screens/offset_report.png" alt="Offset Output PDF 리포트 1쪽" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
                     </div>
                 </div>
             </div>
@@ -1320,7 +1417,7 @@
                 </div>
                 <div class="dm-ic-content" style="width: 100%; display: flex; justify-content: center;">
                     <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/Invert color.png" alt="Invert Color Analysis" style="width: 100%; display: block;">
+                        <img src="screens/invert_color.png" alt="Invert Color Analysis" style="width: 100%; display: block;">
                     </div>
                 </div>
             </div>
@@ -1369,7 +1466,7 @@
                 </div>
                 <div class="dm-dc-content" style="width: 100%; display: flex; justify-content: center;">
                     <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/Dicom Composite.png" alt="Dicom Composite Analysis" style="width: 100%; display: block;">
+                        <img src="screens/dicom_composite.png" alt="Dicom Composite Analysis" style="width: 100%; display: block;">
                     </div>
                 </div>
             </div>
@@ -1418,7 +1515,7 @@
                 </div>
                 <div class="dm-pc-content" style="width: 100%; display: flex; justify-content: center;">
                     <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/Profile Comparison.png" alt="Profile Comparison Analysis" style="width: 100%; display: block;">
+                        <img src="screens/profile_comparison.png" alt="Profile Comparison Analysis" style="width: 100%; display: block;">
                     </div>
                 </div>
             </div>
@@ -1467,56 +1564,7 @@
                 </div>
                 <div class="dm-pd-content" style="width: 100%; display: flex; justify-content: center;">
                     <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/PDD Comparison.png" alt="PDD Comparison Analysis" style="width: 100%; display: block;">
-                    </div>
-                </div>
-            </div>
-
-            <!-- DosiMachine Convert to Accept Format View -->
-            <div id="dm-convert-to-accept-view" class="dm-convert-to-accept-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
-                <div class="dm-ca-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f0f9ff; padding: 2.5rem; border-radius: 20px; border: 1px solid #bae6fd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                    <h2 style="font-size: 1.6rem; color: #0369a1; margin-bottom: 1.5rem; border-left: 5px solid #0ea5e9; padding-left: 1.2rem; font-weight: 800;">Convert to Accept Format: 이기종 데이터 호환 솔루션</h2>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
-                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
-                            <div>
-                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">이기종 장비 간의 데이터 호환성 확보</strong>
-                                <span style="color: #0369a1; line-height: 1.6;">Varian 가속기에서 측정된 원본 데이터(Lateral Profile, PDD 등)는 보통 엑셀이나 단순 텍스트 형식으로 저장되어 타사 분석 소프트웨어에서 직접 읽기 어렵습니다. 이 도구는 이를 IBA BluePhantom의 표준 규격인 **ASC(BDS format)**로 변환하여, 전 세계적으로 널리 사용되는 myQA Accept 소프트웨어에서 즉시 분석할 수 있게 해줍니다.</span>
-                            </div>
-                        </li>
-                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
-                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">02</div>
-                            <div>
-                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">좌표계 및 단위의 자동 정규화</strong>
-                                <span style="color: #0369a1; line-height: 1.6;">Varian과 IBA는 좌표계 기준이나 단위(cm vs mm)가 다를 수 있습니다. 이 변환 도구는 파일 내의 최대 좌표값을 분석하여 cm 단위를 mm로 자동 스케일링하고, 인덱스 기반의 데이터를 물리적 거리 좌표로 정확히 매핑하여 변환 시 발생할 수 있는 휴먼 에러를 차단합니다.</span>
-                            </div>
-                        </li>
-                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
-                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">03</div>
-                            <div>
-                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">메타데이터 정밀 매핑</strong>
-                                <span style="color: #0369a1; line-height: 1.6;">단순한 수치뿐만 아니라 SSD, 측정 깊이(Depth), 에너지(Energy), 필드 사이즈(Field Size) 등의 핵심 메타데이터를 IBA 규격의 태그(%SSD, %DPTH, %FSZ 등)로 정밀하게 치환합니다. 덕분에 Accept 소프트웨어로 불러왔을 때 별도의 추가 설정 없이 바로 정확한 물리적 수치로 인식됩니다.</span>
-                            </div>
-                        </li>
-                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
-                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
-                            <div>
-                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">다중 프로파일 일괄 처리</strong>
-                                <span style="color: #0369a1; line-height: 1.6;">하나의 Varian 출력 파일에 여러 필드 사이즈나 깊이의 데이터가 포함되어 있더라도, 이를 각각의 MSR(Measurement) 섹션으로 분리하여 하나의 통합된 IBA ASC 파일로 만들어줍니다. 이는 수십 개의 파일을 일일이 수동으로 편집해야 하는 번거로움을 획기적으로 줄여줍니다.</span>
-                            </div>
-                        </li>
-                        <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
-                            <div style="min-width: 32px; height: 32px; background: #0ea5e9; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">05</div>
-                            <div>
-                                <strong style="font-size: 1.1rem; color: #0c4a6e; display: block; margin-bottom: 0.3rem;">분석 워크플로우의 연속성</strong>
-                                <span style="color: #0369a1; line-height: 1.6;">변환된 파일은 본 프로그램(Easy Machine_V2)의 Profile View로 자동 로드되어 즉시 분석이 가능할 뿐만 아니라, 병원 내에서 기존에 사용하던 IBA 전용 분석 툴들과의 완벽한 데이터 연동을 가능케 하여 품질 관리(QA) 업무의 효율성을 극대화합니다.</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="dm-ca-content" style="width: 100%; display: flex; justify-content: center;">
-                    <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/Convert to Accept Format.png" alt="Convert to Accept Format" style="width: 100%; display: block;">
+                        <img src="screens/pdd_comparison.png" alt="PDD Comparison Analysis" style="width: 100%; display: block;">
                     </div>
                 </div>
             </div>
@@ -1565,7 +1613,7 @@
                 </div>
                 <div class="dm-spa-content" style="width: 100%; display: flex; justify-content: center;">
                     <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/Save Profile to ASC.png" alt="Save Profile to ASC" style="width: 100%; display: block;">
+                        <img src="screens/save_profile_asc.png" alt="Save Profile to ASC" style="width: 100%; display: block;">
                     </div>
                 </div>
             </div>
@@ -1573,7 +1621,7 @@
             <!-- DosiMachine Vertual Gantry Starshot View -->
             <div id="dm-vertual-gantry-starshot-view" class="dm-vertual-gantry-starshot-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
                 <div class="dm-vgs-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #fdf2f8; padding: 2.5rem; border-radius: 20px; border: 1px solid #fce7f3; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                    <h2 style="font-size: 1.6rem; color: #9d174d; margin-bottom: 1.5rem; border-left: 5px solid #ec4899; padding-left: 1.2rem; font-weight: 800;">Vertual Gantry Starshot: Winston-Lutz 기반 기하학적 분석</h2>
+                    <h2 style="font-size: 1.6rem; color: #9d174d; margin-bottom: 1.5rem; border-left: 5px solid #ec4899; padding-left: 1.2rem; font-weight: 800;">Virtual Starshot: Winston-Lutz 영상으로 만드는 가상 Starshot</h2>
                     <ul style="list-style: none; padding: 0;">
                         <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
                             <div style="min-width: 32px; height: 32px; background: #ec4899; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
@@ -1614,7 +1662,7 @@
                 </div>
                 <div class="dm-vgs-content" style="width: 100%; display: flex; justify-content: center;">
                     <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/Vertual Gantry Starshot.png" alt="Vertual Gantry Starshot" style="width: 100%; display: block;">
+                        <img src="screens/virtual_starshot.png" alt="Vertual Gantry Starshot" style="width: 100%; display: block;">
                     </div>
                 </div>
             </div>
@@ -1663,7 +1711,7 @@
                 </div>
                 <div class="dm-gac-content" style="width: 100%; display: flex; justify-content: center;">
                     <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/Gantry_Angle_Cal.png" alt="Gantry Angle Cal" style="width: 100%; display: block;">
+                        <img src="screens/gantry_angle_cal.png" alt="Gantry Angle Cal" style="width: 100%; display: block;">
                     </div>
                 </div>
             </div>
@@ -1712,7 +1760,7 @@
                 </div>
                 <div class="dm-pr-content" style="width: 100%; display: flex; justify-content: center;">
                     <div style="max-width: 1100px; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15);">
-                        <img src="images2/Profile Analyze & Report(PDF).png" alt="Profile Analyze & Report(PDF)" style="width: 100%; display: block;">
+                        <img src="screens/profile_report.png" alt="Profile Analyze & Report(PDF)" style="width: 100%; display: block;">
                     </div>
                 </div>
             </div>
@@ -1720,13 +1768,14 @@
             <!-- DosiMachine 3D EPID PDD Reconstruction View -->
             <div id="dm-3d-epid-pdd-view" class="dm-3d-epid-pdd-view" style="display: none; flex-direction: column; align-items: center; padding: 2rem; width: 100%;">
                 <div class="dm-epid-header" style="text-align: left; margin-bottom: 2.5rem; max-width: 1000px; background: #f0fdfa; padding: 2.5rem; border-radius: 20px; border: 1px solid #ccfbf1; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                    <h2 style="font-size: 1.6rem; color: #115e59; margin-bottom: 1.5rem; border-left: 5px solid #14b8a6; padding-left: 1.2rem; font-weight: 800;">3D EPID PDD Reconstruction: 입체적 선량 평가 솔루션</h2>
+                    <h2 style="font-size: 1.6rem; color: #115e59; margin-bottom: 1.5rem; border-left: 5px solid #14b8a6; padding-left: 1.2rem; font-weight: 800;">3D EPID PDD Reconstruction: 입체적 선량 평가 솔루션 <span class="dm-beta-badge">개발 중</span></h2>
+                    <div class="dm-note" style="margin-bottom: 1.5rem;"><strong>알아 두실 점</strong>아직 합성 데이터로만 확인한 기능입니다. 깊이에 따른 신호 감소가 없는 영상(예: 영상마다 따로 정규화되어 저장된 영상)은 PDD를 잴 수 없어 받지 않습니다. 물 팬텀 측정을 대신하지 않으며, 물 팬텀 PDD로 교정한 뒤 변화를 보는 용도입니다.</div>
                     <ul style="list-style: none; padding: 0;">
                         <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
                             <div style="min-width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">01</div>
                             <div>
                                 <strong style="font-size: 1.1rem; color: #134e4a; display: block; margin-bottom: 0.3rem;">EPID 영상을 이용한 가상 심부선량(PDD) 재구성</strong>
-                                <span style="color: #115e59; line-height: 1.6;">물 팬텀(Water Phantom)과 전리함(Ion Chamber)을 이용한 복잡한 측정 과정 없이, 가속기의 EPID로 촬영된 여러 장의 영상을 분석하여 빔의 투과 성능인 <strong>심부선량곡선(PDD Curve)</strong>을 3차원으로 재구성합니다.</span>
+                                <span style="color: #115e59; line-height: 1.6;">EPID로 찍은 여러 장의 영상을 쌓아 심부선량곡선(PDD)과 3차원 선량 분포를 재구성합니다.</span>
                             </div>
                         </li>
                         <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
@@ -1747,7 +1796,7 @@
                             <div style="min-width: 32px; height: 32px; background: #14b8a6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">04</div>
                             <div>
                                 <strong style="font-size: 1.1rem; color: #134e4a; display: block; margin-bottom: 0.3rem;">정밀한 캘리브레이션 및 보정 시스템</strong>
-                                <span style="color: #115e59; line-height: 1.6;">실제 물 팬텀 측정 데이터(Reference PDD)를 불러와 EPID 기반 데이터와 매칭하는 캘리브레이션 기능을 지원합니다. 이를 통해 EPID 센서의 특성에 따른 오차를 보정하고, 실제 치료 환경에 근접한 정확한 선량 재구성을 가능케 합니다.</span>
+                                <span style="color: #115e59; line-height: 1.6;">실제 물 팬텀 측정 데이터(Reference PDD)를 불러와 EPID 기반 데이터와 매칭하는 캘리브레이션 기능을 지원합니다. 이를 통해 EPID 센서의 특성에 따른 차이를 보정합니다. 교정 데이터의 깊이 범위를 벗어나는 값은 지어내지 않고 거부합니다.</span>
                             </div>
                         </li>
                         <li style="margin-bottom: 0; display: flex; gap: 1rem; align-items: flex-start;">
@@ -1781,30 +1830,36 @@
                         <div style="padding: 0 1.2rem 1.2rem; font-size: 1.1rem; font-weight: 700; color: #94a3b8; border-bottom: 1px solid #2d4a6f; margin-bottom: 0.8rem; text-align: center;">
                             설정 메뉴
                         </div>
-                        <div class="config-menu-btn active" onclick="switchConfigTab(this, 'Image3/장비 기본 정보.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid #38bdf8; background: #2b4c7e; color: #ffffff;">
+                        <div class="config-menu-btn active" onclick="switchConfigTab(this, 'screens/config_machine.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid #38bdf8; background: #2b4c7e; color: #ffffff;">
                             장비 기본 정보
                         </div>
-                        <div class="config-menu-btn" onclick="switchConfigTab(this, 'Image3/리포트 폴드 설정.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid transparent; color: #cbd5e1;">
+                        <div class="config-menu-btn" onclick="switchConfigTab(this, 'screens/config_report_folders.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid transparent; color: #cbd5e1;">
                             리포트 폴더 설정
                         </div>
-                        <div class="config-menu-btn" onclick="switchConfigTab(this, 'Image3/일반 프로토콜 설정.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid transparent; color: #cbd5e1;">
+                        <div class="config-menu-btn" onclick="switchConfigTab(this, 'screens/config_general.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid transparent; color: #cbd5e1;">
                             일반 및 프로토콜
                         </div>
-                        <div class="config-menu-btn" onclick="switchConfigTab(this, 'Image3/데모 및 보안 설정.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid transparent; color: #cbd5e1;">
+                        <div class="config-menu-btn" onclick="switchConfigTab(this, 'screens/config_demo.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid transparent; color: #cbd5e1;">
                             데모 및 비밀번호
                         </div>
-                        <div class="config-menu-btn" onclick="switchConfigTab(this, 'Image3/선량 교정 및 에너지 설정.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid transparent; color: #cbd5e1;">
+                        <div class="config-menu-btn" onclick="switchConfigTab(this, 'screens/config_calibration.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid transparent; color: #cbd5e1;">
                             선량 교정 및 에너지
                         </div>
-                        <div class="config-menu-btn" onclick="switchConfigTab(this, 'Image3/분석 프로토콜 설정.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid transparent; color: #cbd5e1;">
+                        <div class="config-menu-btn" onclick="switchConfigTab(this, 'screens/config_protocols.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid transparent; color: #cbd5e1;">
                             분석 프로토콜 설정
+                        </div>
+                        <div class="config-menu-btn" onclick="switchConfigTab(this, 'screens/config_tolerances.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid transparent; color: #cbd5e1;">
+                            허용오차 관리 (TG-142)
+                        </div>
+                        <div class="config-menu-btn" onclick="switchConfigTab(this, 'screens/config_ai.png')" style="padding: 0.9rem 1.2rem; cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: all 0.2s ease; border-left: 4px solid transparent; color: #cbd5e1;">
+                            AI 분석 및 API 설정
                         </div>
                     </div>
 
                     <!-- Right Display Image Area -->
                     <div style="flex: 1; background: #f8fafc; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; overflow-y: auto;">
                         <div style="width: 100%; max-width: 950px; background: #ffffff; border-radius: 12px; padding: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center;">
-                            <img id="config-tab-img" src="Image3/장비 기본 정보.png" alt="Configuration Tab" style="max-width: 100%; height: auto; display: block; border-radius: 6px;">
+                            <img id="config-tab-img" src="screens/config_machine.png" alt="Configuration Tab" style="max-width: 100%; height: auto; display: block; border-radius: 6px;">
                         </div>
                     </div>
                 </div>
@@ -2547,7 +2602,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/file_open.png" alt="File Open View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/file_open.png" alt="File Open View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -2583,7 +2638,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/file_adddata.png" alt="File Add Data View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/add_data.png" alt="File Add Data View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -2664,28 +2719,28 @@
                                 <div class="item-num">01</div>
                                 <div class="item-title">Primus L 팬텀 기반 해상도 & 공간 선형성 분석</div>
                             </div>
-                            <div class="item-desc">IBA Primus L 테스트 팬텀의 EPID 획득 영상을 분석하여 공간 분해능(Spatial Resolution) 및 기하학적 왜곡을 0.1mm 정밀도로 검증합니다.</div>
+                            <div class="item-desc">IBA Primus L 팬텀의 kV 영상에서 MTF(f50)로 공간 분해능을, 220 mm 기준 사각형으로 기하학적 크기 · 왜곡을 측정합니다.</div>
                         </li>
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
                                 <div class="item-num">02</div>
                                 <div class="item-title">대조도(Contrast) & 신호 대 잡음비(SNR) 정량 평가</div>
                             </div>
-                            <div class="item-desc">고대조도 및 저대조도 영역의 ROI를 자동 탐지하여 대비잡음비(CNR), 노이즈 레벨, 빔 노광 균일도를 객관적 수치로 산출합니다.</div>
+                            <div class="item-desc">계단(step wedge) 영역을 자동으로 찾아 단계별 대비잡음비(CNR)를 구하고, 균일 영역의 노이즈 · 균일도를 계산합니다.</div>
                         </li>
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
                                 <div class="item-num">03</div>
                                 <div class="item-title">임상 품질 기준(Pass/Fail) & PDF 보고서 자동 생성</div>
                             </div>
-                            <div class="item-desc">국제 화질 표준 기준을 적용해 Pass/Fail을 자동 판정하고, 수치와 맵이 포함된 공식 영상 QA PDF 리포트를 생성합니다.</div>
+                            <div class="item-desc">설정한 허용치로 Pass/Fail을 판정하고, 수치와 분석 영상이 담긴 PDF 리포트를 만듭니다.</div>
                         </li>
                     </ul>
                 </div>
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/iba primus l analysis.png" alt="IBA Primus L Analysis View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/primus_l.png" alt="IBA Primus L Analysis View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -2698,30 +2753,30 @@
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
                                 <div class="item-num">01</div>
-                                <div class="item-title">EPID 영상 도시메트리 정밀 캘리브레이션</div>
+                                <div class="item-title">RIT EPID 팬텀 영상 자동 인식</div>
                             </div>
-                            <div class="item-desc">RIT 알고리즘을 결합하여 EPID 패널의 응답 민감도를 자동 교정하고 빔 노광 선량의 시공간적 변동성을 정밀하게 모니터링합니다.</div>
+                            <div class="item-desc">RIT EPID 팬텀을 찍은 EPID 영상을 열면 팬텀의 위치와 기준 사각형을 자동으로 찾아 분석 영역을 놓습니다.</div>
                         </li>
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
                                 <div class="item-num">02</div>
-                                <div class="item-title">2D/3D 감마 인덱스(Gamma Index) 분석</div>
+                                <div class="item-title">노이즈 · 중심 위치 측정</div>
                             </div>
-                            <div class="item-desc">계획 선량 및 이전 획득 기준 영상과 실시간 대조하여 2%/2mm, 3%/3mm 감마 통과율(Pass Rate) 및 오차 맵을 시각화합니다.</div>
+                            <div class="item-desc">균일 영역의 평균 · 표준편차로 영상 노이즈를 재고, 팬텀 중심 위치를 측정합니다. 그 밖의 항목은 현재 'not measured'로 표시됩니다.</div>
                         </li>
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
                                 <div class="item-num">03</div>
-                                <div class="item-title">통합 화질 평가 & 품질 결과지 자동 생성</div>
+                                <div class="item-title">결과 PDF</div>
                             </div>
-                            <div class="item-desc">EPID 선형성, 픽셀 맵 결함, 빔 대칭도 지표를 일괄 검증하고 임상 품질 기준 Pass/Fail 판정 결과지(PDF)를 자동 생성합니다.</div>
+                            <div class="item-desc">측정값과 분석 영역을 표시한 영상을 PDF로 저장합니다.</div>
                         </li>
                     </ul>
                 </div>
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/rit epid analysis.png" alt="RIT EPID Analysis View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/rit_epid.png" alt="RIT EPID Analysis View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -2736,7 +2791,7 @@
                                 <div class="item-num">01</div>
                                 <div class="item-title">CTP486 모듈 기반 CT 넘버(HU) 균일도 평가</div>
                             </div>
-                            <div class="item-desc">Catphan 500/600 CTP486 모듈 단면을 정밀 자동 탐지하여 중심 및 주변 4방향 ROI의 Hounsfield Unit(HU) 평균 편차와 균일도(Uniformity)를 검증합니다.</div>
+                            <div class="item-desc">Catphan 503/504/600/604 중 맞는 모델을 자동으로 판별하고 CTP486 모듈 단면을 찾아 중심 및 주변 4방향 ROI의 Hounsfield Unit(HU) 평균 편차와 균일도(Uniformity)를 검증합니다.</div>
                         </li>
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
@@ -2750,14 +2805,14 @@
                                 <div class="item-num">03</div>
                                 <div class="item-title">임상 톨러런스(Pass/Fail) 판정 & PDF 문서화</div>
                             </div>
-                            <div class="item-desc">CT 수치 허용 한계(예: ±5 HU 균일도 기준) 자동 평가 및 종합 분석 결과가 담긴 퀄리티 QA 리포트(PDF)를 즉시 생성 및 아카이빙합니다.</div>
+                            <div class="item-desc">CT 수치 허용 한계(예: ±5 HU 균일도 기준)로 판정하고, 분석 결과가 담긴 QA 리포트(PDF)를 만듭니다.</div>
                         </li>
                     </ul>
                 </div>
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/uniformity.png" alt="Catphan Uniformity View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/catphan_ctp486.png" alt="Catphan Uniformity View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -2786,7 +2841,7 @@
                                 <div class="item-num">03</div>
                                 <div class="item-title">물질 교정 통과율(Pass/Fail) & PDF 리포팅 자동화</div>
                             </div>
-                            <div class="item-desc">각 조직 등가 물질별 톨러런스 기준 자동 검증 및 시각적 산출 결과가 작성된 퀄리티 리포트(PDF)를 즉시 출력하고 데이터베이스에 아카이빙합니다.</div>
+                            <div class="item-desc">물질별 허용 기준으로 판정하고, 결과 표와 분석 영상이 담긴 리포트(PDF)를 만듭니다.</div>
                         </li>
                     </ul>
                 </div>
@@ -2829,7 +2884,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/smoothing.png" alt="Data Handling Smoothing View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/smoothing.png" alt="Data Handling Smoothing View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -2865,7 +2920,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/ionization to dose.png" alt="Ionization to Dose View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/ionization_to_dose.png" alt="Ionization to Dose View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -2901,7 +2956,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/edit curve.png" alt="Edit Curve View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/edit_curve.png" alt="Edit Curve View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -2937,7 +2992,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/make symetric.png" alt="Make Symmetric View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/make_symmetric.png" alt="Make Symmetric View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -2973,7 +3028,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/move.png" alt="Move View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/move.png" alt="Move View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -3009,7 +3064,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/resample.png" alt="Resample View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/resample.png" alt="Resample View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -3045,7 +3100,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/rescale.png" alt="Rescale View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/rescale.png" alt="Rescale View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -3081,7 +3136,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/cax correction1.png" alt="CAX Correction View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/cax_correction.png" alt="CAX Correction View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -3094,30 +3149,30 @@
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
                                 <div class="item-num">01</div>
-                                <div class="item-title">주요 RTPS(Eclipse, Monaco, RayStation) 커스텀 데이터 익스포트</div>
+                                <div class="item-title">8개 RTPS 벤더별 빔 데이터 변환 (Eclipse · Monaco · RayStation · Pinnacle 등)</div>
                             </div>
-                            <div class="item-desc">분석 완료된 PDD, 빔 프로파일, 기계 성능 검증 데이터를 치료 계획 시스템(RTPS) 호환 표준 파일 포맷(ASC, DICOM RT, XML)으로 원클릭 변환 전송합니다.</div>
+                            <div class="item-desc">CMS, Eclipse, Monaco, Multiplan/Precision, Oncentra, Pinnacle, RayStation, TomoTherapy 중 대상 RTPS를 고르고, 측정한 PDD·프로파일을 선택해 ASC 파일로 변환합니다. 파일 이름에 벤더·에너지·필드 크기·측정 종류·시각이 자동으로 붙습니다.</div>
                         </li>
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
                                 <div class="item-num">02</div>
-                                <div class="item-title">실시간 전송 큐(RTPS Queue) 모니터링 & 무결성 자동 검증</div>
+                                <div class="item-title">변환 전 프로파일 미리보기 & 전송 설정</div>
                             </div>
-                            <div class="item-desc">네트워크 전송 대기열을 실시간 추적하고, 체크섬(Checksum) 및 포맷 헤더 검증을 통해 데이터 손실 없는 안전한 네트워크 이관을 보장합니다.</div>
+                            <div class="item-desc">변환할 커브를 그래프로 미리 확인한 뒤 내보냅니다. Transfer Settings 탭과 RTPS Setup에서 저장 폴더와 사용할 벤더 목록을 정해 두면 다음부터 그대로 적용됩니다.</div>
                         </li>
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
                                 <div class="item-num">03</div>
-                                <div class="item-title">원내 중앙 QA 서버 & 전자 차트(EMR/PACS) 자동 아카이빙</div>
+                                <div class="item-title">지정 폴더로 일괄 저장 — 커미셔닝 데이터 정리</div>
                             </div>
-                            <div class="item-desc">품질 검증 보고서 및 전송 기록 로그를 원내 중앙 데이터베이스 및 병원 PACS/EMR 환경으로 연동하여 아카이빙합니다.</div>
+                            <div class="item-desc">여러 프로파일을 한 번에 변환해 RTPS 전송 폴더에 저장합니다. 빔 커미셔닝이나 데이터 재입력 때 수작업 편집을 줄여 줍니다.</div>
                         </li>
                     </ul>
                 </div>
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/transfer dat.png" alt="Transfer Data View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/transfer_data.png" alt="Transfer Data View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -3153,7 +3208,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/rtps data.png" alt="RTPS Setup View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/rtps_setup.png" alt="RTPS Setup View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -3189,7 +3244,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/total report.png" alt="Total Report View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/total_report.png" alt="Total Report View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -3225,7 +3280,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/period report.png" alt="Period Report View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/period_report.png" alt="Period Report View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -3261,7 +3316,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/dosi report.png" alt="DosiReport View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/dosireport.png" alt="DosiReport View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -3297,7 +3352,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/about.png" alt="About DosiCare View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/about.png" alt="About DosiCare View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -3333,7 +3388,7 @@
 
                 <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
                     <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/demo.png" alt="Demo Status View Screen" style="position: relative; z-index: 10;">
+                        <img src="screens/demo_status.png" alt="Demo Status View Screen" style="position: relative; z-index: 10;">
                     </div>
                 </div>
             </div>
@@ -3341,35 +3396,571 @@
             <!-- DosiMachine Plan View -->
             <div id="dm-plan-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
                 <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
-                    <h2><span class="icon">🖥️</span> Plan View: 환자 치료 계획 3D 선량 & 기계 파라미터 시각화</h2>
+                    <h2><span class="icon">🖥️</span> Plan View: 치료계획 CT · 구조물 · 선량을 한 화면에서 검토</h2>
                     <ul class="myqa-premium-list">
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
                                 <div class="item-num">01</div>
-                                <div class="item-title">DICOM RT Plan 및 RT Dose 3D 등선량면(Isodose) 3축 가시화</div>
+                                <div class="item-title">CT · 구조물 · 선량 3방향 동시 보기</div>
                             </div>
-                            <div class="item-desc">치료 계획 데이터의 3차원 선량 분포를 Axial, Sagittal, Coronal 단면 뷰어로 즉시 열람하고 50%~100% Isodose 곡선을 인터랙티브 분석합니다.</div>
+                            <div class="item-desc">DICOM CT, RT Structure, RT Plan, RT Dose를 불러 축상(Axial)·시상(Sagittal)·관상(Coronal) 단면을 함께 봅니다. 선량은 컬러워시(colorwash)나 등선량선(isodose)으로, 단위는 cGy·%·Gy 중에서 고릅니다.</div>
                         </li>
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
                                 <div class="item-num">02</div>
-                                <div class="item-title">다엽콜리메이터(MLC) 구동 궤적 & Beam Delivery 빔 파라미터 검증</div>
+                                <div class="item-title">DVH와 Plan Points</div>
                             </div>
-                            <div class="item-desc">Gantry Angle, Collimator Angle, Couch Position 및 MLC Leaf 궤적 파라미터를 그래픽 뷰어로 정밀 검증하여 치료 조사 타당성을 점검합니다.</div>
+                            <div class="item-desc">구조물별 누적·미분 DVH를 그리고, 아이소센터·최대선량점·직접 찍은 점의 선량과 CT 값을 표로 보여 줍니다. 표는 CSV로 저장됩니다. 선량 격자가 같은 플랜끼리는 Plan Sum으로 합쳐 볼 수 있습니다.</div>
                         </li>
                         <li class="myqa-premium-item">
                             <div class="item-top-row">
                                 <div class="item-num">03</div>
-                                <div class="item-title">계획 선량 대 실측 검증 선량(Planned vs Delivered) 대조 분석</div>
+                                <div class="item-title">Beam's Eye View와 MLC 재생</div>
                             </div>
-                            <div class="item-desc">RTPS 수립 계획 선량과 실제 검증 장비 측정 선량 맵을 원클릭으로 오버레이 대조하여 감마 평가 파이프라인으로 전송합니다.</div>
+                            <div class="item-desc">플랜의 빔마다 Beam's Eye View 창을 열어 MLC 모양이 컨트롤 포인트를 따라 바뀌는 모습을 재생합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item" onclick="showDMView('dm-log-recon-view')" style="cursor: pointer;">
+                            <div class="item-top-row">
+                                <div class="item-num">04</div>
+                                <div class="item-title">계획 선량과 재구성 선량 비교</div>
+                            </div>
+                            <div class="item-desc">선량 원본을 계획(Plan) · 로그 재구성(Recon) · 차이(Diff) · 감마(Gamma) · 합(Sum) 중에서 바꿔 가며 같은 단면에서 비교합니다. 재구성 선량은 'Eclipse 로그 선량 재구성' 기능으로 만듭니다.</div>
+                        </li>
+                        <li class="myqa-premium-item" onclick="showDMView('dm-plan-check-view')" style="cursor: pointer;">
+                            <div class="item-top-row">
+                                <div class="item-num">05</div>
+                                <div class="item-title">Plan Check: 치료계획 자동 점검 <span class="dm-new-badge">NEW</span></div>
+                            </div>
+                            <div class="item-desc">Plan View 아래 Plan Check 탭에서 선량 제약, 구조물, 계획 규칙, 갠트리 충돌 위험을 한 번에 점검합니다. 눌러서 자세히 보기.</div>
+                        </li>
+                    </ul>
+                    <div class="myqa-content" style="position: relative; z-index: 10; margin-top: 2rem;">
+                        <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
+                            <img src="screens/plan_view.png" alt="Plan View Screen" style="position: relative; z-index: 10;">
+                        </div>
+                    </div>
+                </div>
+                <div class="dm-note">
+                    <strong>알아 두실 점</strong>
+                    <ul>
+                        <li>Eclipse에서 계산한 값과 자체 비교(한 병원 4개 케이스)에서 Dmean·D95·D2는 거의 모두 ±1%, Dmax는 ±2% 안이었습니다. 1 cc 미만의 작은 구조물은 차이가 더 날 수 있습니다.</li>
+                        <li>영상은 CT만 받습니다(MR·PET 미지원). Plan Sum은 선량 격자가 같은 플랜만 더합니다.</li>
+                        <li>Eclipse에서 플랜을 바로 가져오는 연동은 Varian Eclipse 15.x와 ESAPI 환경이 필요하며, 지금까지 15.6에서 확인했습니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DosiMachine Plan Check View -->
+            <div id="dm-plan-check-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
+                    <h2><span class="icon">🩺</span> Plan Check: 치료계획 자동 점검 <span class="dm-new-badge">NEW</span></h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">선량 제약(Constraints) 판정</div>
+                            </div>
+                            <div class="item-desc">RTOG/NRG, QUANTEC, TG-101 같은 문헌 기준을 담은 제약 템플릿을 골라 플랜의 DVH에 바로 대 봅니다. 장기마다 기준값 · 실제값 · 합격/불합격이 표로 나옵니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">구조물(Structures) 점검</div>
+                            </div>
+                            <div class="item-desc">구조물별 부피, 0.1 cc보다 작게 떨어져 나간 조각, 중간에 빠진 슬라이스를 찾아 알려 줍니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">계획 규칙(Policy) 점검</div>
+                            </div>
+                            <div class="item-desc">장비, 에너지, MU, 갠트리·카우치 각도, 처방, 표적 커버리지 등 23가지 규칙을 확인합니다. 병원 기준값을 넣어 필요한 규칙만 켜서 씁니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">04</div>
+                                <div class="item-title">충돌 예측(Collision) <span class="dm-beta-badge">개발 중</span></div>
+                            </div>
+                            <div class="item-desc">갠트리가 도는 동안 헤드와 몸 · 카우치 · 고정구 사이의 여유 거리를 계산하고, 같은 카우치 각도의 필드 사이 이동 구간까지 확인합니다. 3D 화면에서 고정구를 추가·이동하고 헤드 크기를 입력할 수 있습니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">05</div>
+                                <div class="item-title">점검 결과 리포트</div>
+                            </div>
+                            <div class="item-desc">점검 결과를 A4 PDF 리포트로, DVH를 CSV로 저장합니다.</div>
                         </li>
                     </ul>
                 </div>
+                <div class="dm-note">
+                    <strong>알아 두실 점</strong>
+                    <ul>
+                        <li>충돌 예측은 갠트리 헤드를 원기둥으로 단순화한 <b>추정</b>입니다. 장비의 실측 치수를 넣어야 정확해지고, 3D 화면의 장비 모양은 보기용 그림입니다. CT 범위 밖의 몸은 가정으로 채우므로, 최종 확인은 실제 드라이런으로 해야 합니다. 실제 장비·플랜으로 하는 검증은 진행 중입니다.</li>
+                        <li>지원하지 않는 형식의 제약은 N/A로 표시됩니다. 처방이 여러 개인 플랜(SIB)은 첫 처방을 기준으로 봅니다.</li>
+                        <li>열기: 상단 Plan View → 아래쪽 Plan Check 탭.</li>
+                    </ul>
+                </div>
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Constraints 탭: 유방 템플릿 적용 예 — 템플릿 처방(26 Gy)과 플랜 처방(20 Gy)이 달라 V95%가 불합격으로 표시됨 ]</p>
+                        <img src="screens/plan_check.png" alt="Constraints 탭: 유방 템플릿 적용 예 — 템플릿 처방(26 Gy)과 플랜 처방(20 Gy)이 달라 V95%가 불합격으로 표시됨" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Collision 3D 창: 헤드 · 몸 · 카우치 여유 거리 (장비 모양은 보기용 그림) ]</p>
+                        <img src="screens/plan_check_collision3d.png" alt="Collision 3D 창: 헤드 · 몸 · 카우치 여유 거리 (장비 모양은 보기용 그림)" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
 
-                <div class="myqa-content" style="position: relative; z-index: 10; margin-top: -1rem;">
-                    <div style="position: relative; z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.18);">
-                        <img src="Image3/plan view.png" alt="Plan View Screen" style="position: relative; z-index: 10;">
+            <!-- DosiMachine Eclipse Log Dose Reconstruction View -->
+            <div id="dm-log-recon-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
+                    <h2><span class="icon">🔁</span> Eclipse 로그 선량 재구성: 실제 조사된 그대로 선량 다시 계산 <span class="dm-new-badge">NEW</span></h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">TrajectoryLog로 '실제로 조사된 플랜' 만들기</div>
+                            </div>
+                            <div class="item-desc">Varian TrajectoryLog(.bin)에서 치료 중 실제 MLC · 갠트리 위치를 읽어, Eclipse가 계산할 수 있는 작업 파일을 만듭니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">선량 계산은 Eclipse가 합니다</div>
+                            </div>
+                            <div class="item-desc">사용자가 Eclipse에서 플러그인을 실행하면 병원의 Eclipse 계산 엔진으로 선량을 다시 계산합니다. 프로그램은 그 결과를 MU 비율에 맞춰 가져옵니다.</div>
+                        </li>
+                        <li class="myqa-premium-item" onclick="showDMPlanView()" style="cursor: pointer;">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">계획 선량과 3D 비교</div>
+                            </div>
+                            <div class="item-desc">Plan View에서 계획 선량과 재구성 선량의 3D 감마, 선량 차이 지도, DVH를 겹쳐 봅니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-note">
+                    <strong>알아 두실 점</strong>
+                    <ul>
+                        <li>필요 환경: Varian Eclipse 15.6 + ESAPI(스크립트 승인 필요). 120엽 MLC 장비의 TrajectoryLog만 지원하며, Halcyon 로그와 Dynalog는 지원하지 않습니다.</li>
+                        <li>Plan View에 해당 플랜이 먼저 열려 있어야 합니다.</li>
+                        <li>실제 플랜·로그로 확인한 사례는 아직 1건(TrueBeam VMAT)이며, 사례를 늘려 가는 중입니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DosiMachine CBCT Anatomy Dose View -->
+            <div id="dm-cbct-dose-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
+                    <h2><span class="icon">🫁</span> CBCT 조직변화 선량: 치료 중 몸이 변했을 때 선량 다시 보기 <span class="dm-beta-badge">개발 중</span></h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">변형 정합한 CT 활용</div>
+                            </div>
+                            <div class="item-desc">Eclipse SmartAdapt에서 그날의 CBCT에 맞춰 변형 정합한 CT를 내보내면, 프로그램이 이를 ARIA로 보내 재계산을 준비합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">새 해부학 위에서 같은 플랜 계산</div>
+                            </div>
+                            <div class="item-desc">같은 플랜을 바뀐 해부학 위에서 Eclipse로 다시 계산합니다(Eclipse 계산 2회, 사용자가 실행).</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">원래 계획과 비교</div>
+                            </div>
+                            <div class="item-desc">재계산 선량 · 차이 · 감마와 구조물별 DVH로, 몸의 변화가 선량에 준 영향을 봅니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-note">
+                    <strong>알아 두실 점</strong>
+                    <ul>
+                        <li><b>개발 중인 기능입니다.</b> 공개 데이터 1세트로 작업 흐름만 확인했고, 실제 환자 데이터로 낸 결과 수치는 아직 없습니다.</li>
+                        <li>프로그램이 직접 영상 정합을 하지는 않습니다. 몸 모양의 변화만 반영하고, 조직 밀도 변화는 반영하지 않습니다.</li>
+                        <li>필요 환경: Varian Eclipse 15.6 + ESAPI, SmartAdapt.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DosiMachine EPID Output Constancy View -->
+            <div id="dm-epid-output-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
+                    <h2><span class="icon">📏</span> EPID Output Constancy / Wedge Factor: EPID 영상으로 출력 항상성 점검 <span class="dm-new-badge">NEW</span></h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">오픈 필드 출력 항상성</div>
+                            </div>
+                            <div class="item-desc">RT Image 중심 ROI의 신호를 MU로 나눈 값(CU/MU)을 저장해 둔 기준값과 비교해 차이(%)를 판정합니다. 허용치는 장비별로 바꿀 수 있습니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">쐐기 영상 신호비</div>
+                            </div>
+                            <div class="item-desc">쐐기 영상과 오픈 영상의 신호 비를 구해, 쐐기 조사의 변화를 매번 같은 방법으로 추적합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item" onclick="showDMView('dm-qa-trend-view')" style="cursor: pointer;">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">기준값 · 추세 · PDF</div>
+                            </div>
+                            <div class="item-desc">기준 영상을 저장해 두고, 결과는 추세로 쌓아 QA Trend & SPC에서 볼 수 있습니다. 결과는 PDF로 저장합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-note">
+                    <strong>알아 두실 점</strong>
+                    <ul>
+                        <li>쐐기 신호비는 EPID 신호의 비율입니다. 치료계획에 쓰는 쐐기 계수(전리함 측정값)를 대신하지 않습니다.</li>
+                        <li>EDW(동적 쐐기) 영상은 건너뛰고, 50 MU 미만은 신뢰도 경고가 붙습니다. CU 정보가 없는 영상은 받지 않습니다.</li>
+                    </ul>
+                </div>
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Halcyon 6xFFF 10×10 영상의 CU/MU 측정 (기준값 저장 전이라 NO BASELINE으로 표시) ]</p>
+                        <img src="screens/epid_output.png" alt="Halcyon 6xFFF 10×10 영상의 CU/MU 측정 (기준값 저장 전이라 NO BASELINE으로 표시)" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine QA Trend & SPC View -->
+            <div id="dm-qa-trend-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
+                    <h2><span class="icon">📈</span> QA Trend &amp; SPC: 장비 QA 결과의 시간 흐름과 관리한계 <span class="dm-new-badge">NEW</span></h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">9가지 QA 결과를 날짜순으로</div>
+                            </div>
+                            <div class="item-desc">Starshot, Picket Fence, Winston-Lutz, Field Analysis, BeamCheck, Profile, PDD, TRS-398 출력, EPID 출력 결과 중 장비와 지표를 골라 날짜별 그래프로 그리고, 허용오차 선을 함께 표시합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">SPC 관리한계</div>
+                            </div>
+                            <div class="item-desc">기준 구간(처음 N개 또는 날짜 범위)을 골라 I-MR 관리도의 상·하한(평균 ± 2.66 × 이동범위)을 계산합니다. 허용오차 안이지만 평소와 다른 변화를 일찍 알아차리는 데 씁니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">PDF · CSV 내보내기</div>
+                            </div>
+                            <div class="item-desc">그래프와 수치를 PDF와 CSV로 저장합니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-note">
+                    <strong>알아 두실 점</strong>
+                    <ul>
+                        <li>Linac QA HUB에 저장된 결과만 읽습니다.</li>
+                        <li>기준 구간의 점이 8개보다 적으면 관리한계가 불안정하다는 경고가 나옵니다.</li>
+                    </ul>
+                </div>
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Starshot 반경 추세와 관리한계 (샘플 데이터 3점) ]</p>
+                        <img src="screens/qa_trend.png" alt="Starshot 반경 추세와 관리한계 (샘플 데이터 3점)" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine AI Consult View -->
+            <div id="dm-ai-consult-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
+                    <h2><span class="icon">🤖</span> AI Consult: QA 리포트를 읽고 질문에 답하는 도우미 <span class="dm-beta-badge">개발 중</span></h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">리포트 폴더를 그대로 질문 자료로</div>
+                            </div>
+                            <div class="item-desc">리포트 폴더의 PDF · Word · Excel 내용과 허용오차 표를 AI에게 넘겨, 질문에 한국어로 답하고 항목마다 Pass / 주의 / Fail 표시를 붙입니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">AI 엔진 선택</div>
+                            </div>
+                            <div class="item-desc">Gemini, Claude, OpenAI(API 키), Ollama(PC 안에서 실행), ChatGPT · Claude Code(사용자 계정) 중에서 고릅니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">기간 리포트</div>
+                            </div>
+                            <div class="item-desc">일 · 주 · 월 · 연 단위로 기간을 고르면 그 기간의 QA 결과를 정리한 PDF를 만듭니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-note">
+                    <strong>알아 두실 점</strong>
+                    <ul>
+                        <li>AI의 답은 참고용입니다. 수치 해석을 틀린 사례가 있으니, 판정은 반드시 원본 리포트 수치로 확인하세요.</li>
+                        <li>API 키나 AI 서비스 계정이 필요합니다. 자료가 외부 AI 서비스로 전송되므로 원내 정보보호 정책을 먼저 확인하고, 환자 정보가 든 파일은 넣지 마세요.</li>
+                    </ul>
+                </div>
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ AI Consult 시작 화면 (질문 전) ]</p>
+                        <img src="screens/ai_consult.png" alt="AI Consult 시작 화면 (질문 전)" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Dicom Header Editor View -->
+            <div id="dm-dicom-header-editor-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
+                    <h2><span class="icon">🏷️</span> Dicom Header Editor: DICOM 태그 확인 · 수정 <span class="dm-new-badge">NEW</span></h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">여러 파일을 탭으로 열어 편집</div>
+                            </div>
+                            <div class="item-desc">DICOM 파일을 탭으로 열고 태그를 찾기 · 추가 · 수정 · 삭제합니다. 입력값은 VR(값 형식) 규칙으로 검사하고, 되돌리기가 됩니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">일괄 적용</div>
+                            </div>
+                            <div class="item-desc">한 파일에서 바꾼 내용을 열려 있는 다른 파일에도 한 번에 적용합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">UID 새로 만들기 · 내보내기</div>
+                            </div>
+                            <div class="item-desc">UID를 새로 발급해 겹치지 않게 하고, 헤더를 텍스트나 XML로 내보냅니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-note">
+                    <strong>알아 두실 점</strong>
+                    <ul>
+                        <li>저장하면 원본 파일을 덮어쓰고 백업을 따로 만들지 않습니다. 복사본에서 작업하세요.</li>
+                        <li>픽셀(영상) 데이터는 고칠 수 없습니다.</li>
+                    </ul>
+                </div>
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 공개 팬텀 데모 파일을 연 화면 (기관명은 가림) ]</p>
+                        <img src="screens/dicom_header_editor.png" alt="공개 팬텀 데모 파일을 연 화면 (기관명은 가림)" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Image QA Overview -->
+            <div id="dm-image-qa-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
+                    <h2><span class="icon">🧪</span> Image QA: 지원하는 영상 품질 팬텀 한눈에 보기</h2>
+                    <ul class="myqa-premium-list">
+                    </ul>
+                    <div class="dm-table-scroll">
+                        <table class="dm-phantom-table">
+                            <thead>
+                                <tr><th>분류</th><th>팬텀</th><th>무엇을 재나</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>CT</td><td>ACR CT (Module 1~4) <span class="dm-beta-badge">개발 중</span></td><td>CT 값 선형성, 저대조 CNR, 균일도 · 노이즈, 해상도(MTF)</td></tr>
+                                <tr><td>CT</td><td><a href="javascript:void(0)" onclick="showDMCatphanMaterial()">CATPHAN CTP404</a></td><td>물질별 HU, 슬라이스 두께</td></tr>
+                                <tr><td>CT</td><td><a href="javascript:void(0)" onclick="showDMCatphanUniformity()">CATPHAN CTP486</a></td><td>균일도, 노이즈</td></tr>
+                                <tr><td>CT</td><td>CATPHAN CTP515</td><td>저대조 원판 검출</td></tr>
+                                <tr><td>CT</td><td>CATPHAN CTP528</td><td>공간 해상도(lp/cm)</td></tr>
+                                <tr><td>CT 전자밀도</td><td>Gammex 467 · CIRS 062 <span class="dm-beta-badge">개발 중</span></td><td>전자밀도 플러그별 HU (CT-전자밀도 변환 곡선 점검)</td></tr>
+                                <tr><td>CT 전자밀도</td><td>Tomotherapy Cheese 3종 <span class="dm-beta-badge">개발 중</span></td><td>물질 플러그 HU / 해상도(보이는 가장 작은 구멍) / 노이즈 · 균일도</td></tr>
+                                <tr><td>EPID</td><td>PTW EPID QC <span class="dm-beta-badge">개발 중</span></td><td>구리 · 황동 계단 대조, 기하, 해상도, 저대조</td></tr>
+                                <tr><td>EPID</td><td>Las Vegas <span class="dm-beta-badge">개발 중</span></td><td>구멍 28개의 대조 대 잡음비(CNR)</td></tr>
+                                <tr><td>EPID</td><td><a href="javascript:void(0)" onclick="showDMRITEPID()">RIT EPID</a></td><td>노이즈, 중심 위치</td></tr>
+                                <tr><td>kV 영상</td><td><a href="javascript:void(0)" onclick="showDMIBAPrimusL()">IBA Primus L</a></td><td>계단 CNR, MTF(f50), 220 mm 기하</td></tr>
+                                <tr><td>kV 영상</td><td>Leeds TOR18 <span class="dm-beta-badge">개발 중</span></td><td>CNR, 원판 · 막대 검출 개수, MTF</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="dm-note">
+                    <strong>알아 두실 점</strong>
+                    <ul>
+                        <li>'개발 중' 팬텀은 데모 영상으로 분석 방법을 맞춘 단계이며, 병원 실측 영상으로 검증하는 중입니다.</li>
+                        <li>RIT EPID 팬텀은 현재 노이즈와 중심 위치만 측정합니다.</li>
+                        <li>CTP515 저대조는 CBCT 영상에 기본 허용치를 그대로 쓰면 FAIL이 잦습니다. 장비에 맞게 허용치를 정해 쓰세요.</li>
+                    </ul>
+                </div>
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ ACR CT Module 1: CT 값 선형성 ]</p>
+                        <img src="screens/imgqa_acr_ct.png" alt="ACR CT Module 1: CT 값 선형성" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ CATPHAN CTP515: 저대조 검출 ]</p>
+                        <img src="screens/imgqa_ctp515.png" alt="CATPHAN CTP515: 저대조 검출" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ CATPHAN CTP528: 공간 해상도 ]</p>
+                        <img src="screens/imgqa_ctp528.png" alt="CATPHAN CTP528: 공간 해상도" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Tomotherapy Cheese: 물질 플러그 HU ]</p>
+                        <img src="screens/imgqa_tomo_cheese.png" alt="Tomotherapy Cheese: 물질 플러그 HU" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Las Vegas EPID: 구멍별 대조 대 잡음비 ]</p>
+                        <img src="screens/imgqa_las_vegas.png" alt="Las Vegas EPID: 구멍별 대조 대 잡음비" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Leeds TOR18: kV 영상 대조 · 해상도 ]</p>
+                        <img src="screens/imgqa_tor18.png" alt="Leeds TOR18: kV 영상 대조 · 해상도" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine Small Tools View -->
+            <div id="dm-small-tools-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
+                    <h2><span class="icon">🧰</span> 보조 도구: Collimator Angle Cal · Image_Rotate · Move PDD Data</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">Collimator Angle Cal</div>
+                            </div>
+                            <div class="item-desc">콜리메이터 스타샷 영상에서 빔 선을 찾아, 회전 중심 반경(ISO radius)과 선마다 측정한 각도를 영상 위에 표시합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">Image_Rotate</div>
+                            </div>
+                            <div class="item-desc">회전 각도를 숫자로 넣으면 DICOM 영상을 돌려 새 파일로 저장합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item" onclick="showDMMove()" style="cursor: pointer;">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">Move PDD Data</div>
+                            </div>
+                            <div class="item-desc">선택한 곡선을 mm 단위로 평행 이동합니다(Data Handling > Move와 같은 기능).</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-note">
+                    <strong>알아 두실 점</strong>
+                    <ul>
+                        <li>Collimator Angle Cal은 측정값을 보여 주는 도구이며, 장비 보정값을 계산해 주지는 않습니다.</li>
+                    </ul>
+                </div>
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Image_Rotate: 원본과 15° 회전 결과 ]</p>
+                        <img src="screens/image_rotate.png" alt="Image_Rotate: 원본과 15° 회전 결과" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Collimator Angle Cal: 콜리메이터 스타샷의 회전 중심 반경 ]</p>
+                        <img src="screens/colli_angle_cal.png" alt="Collimator Angle Cal: 콜리메이터 스타샷의 회전 중심 반경" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine TG-51 Calibration View -->
+            <div id="dm-tg52-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
+                    <h2><span class="icon">⚛️</span> Calibration(TG52): AAPM TG-51 기반 광자선 절대선량 교정</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">AAPM TG-51 프로토콜 계산</div>
+                            </div>
+                            <div class="item-desc">전리함 읽음값, 온도·기압, 두 전압 측정값, 측정 PDD(10)을 넣으면 P<sub>TP</sub>, P<sub>ion</sub>, P<sub>pol</sub>, P<sub>elec</sub>, k<sub>Q</sub>를 구해 기준 조건의 물 흡수선량을 계산합니다(pylinac TG-51 모듈).</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">입력값 범위 검사</div>
+                            </div>
+                            <div class="item-desc">P<sub>elec</sub>, P<sub>ion</sub> 등이 TG-51 허용 범위를 벗어나거나 두 전압이 같으면 계산을 멈추고 이유를 알려 줍니다. 직접 잰 값은 Override 칸에 넣을 수 있습니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">교정 리포트</div>
+                            </div>
+                            <div class="item-desc">측정 조건, 보정 계수, 최종 선량을 PDF로 남깁니다.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-note">
+                    <strong>알아 두실 점</strong>
+                    <ul>
+                        <li>메뉴 이름은 'TG52'이지만 계산은 AAPM TG-51을 따릅니다.</li>
+                        <li>FFF 빔 보정은 적용하지 않으며, 화면에도 그렇게 표시됩니다.</li>
+                    </ul>
+                </div>
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ TG-51 교정 계산 화면 (입력값은 예시) ]</p>
+                        <img src="screens/tg52_window.png" alt="TG-51 교정 계산 화면 (입력값은 예시)" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="max-width: 1100px; width: 100%;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ 교정 리포트 PDF 1쪽 ]</p>
+                        <img src="screens/tg52_report.png" alt="교정 리포트 PDF 1쪽" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DosiMachine PDD Report View -->
+            <div id="dm-pdd-report-view" class="myqa-summary-view" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+                <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
+                    <h2><span class="icon">📉</span> PDD Report: 광자선 · 전자선 심부선량 지표 자동 계산 리포트</h2>
+                    <ul class="myqa-premium-list">
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">01</div>
+                                <div class="item-title">Auto PDD Report</div>
+                            </div>
+                            <div class="item-desc">불러온 PDD 곡선이 광자선인지 전자선인지 알아서 판단해 맞는 지표로 리포트를 만듭니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">02</div>
+                                <div class="item-title">Photon PDD Report</div>
+                            </div>
+                            <div class="item-desc">광자선 PDD에서 d<sub>max</sub>, R90 · R80 · R50, 표면선량 D<sub>s</sub>, D50 · D100 · D200, 품질지수 Qi = D100 / D200 중 선택한 프로토콜(Varian, Siemens 등)이 정한 지표를 리포트에 싣습니다.</div>
+                        </li>
+                        <li class="myqa-premium-item">
+                            <div class="item-top-row">
+                                <div class="item-num">03</div>
+                                <div class="item-title">Electron PDD Report</div>
+                            </div>
+                            <div class="item-desc">전자선 PDD에서 R100 · R90 · R80 · R50, R<sub>ref</sub> = 0.6 × R50 − 1 mm, I50, 평균에너지 E<sub>0</sub>, 실용비정 R<sub>p</sub>, 제동복사 꼬리 선량 D<sub>x</sub> 중 프로토콜이 정한 지표를 싣습니다. 예: IAEA TRS-398 프로토콜은 R<sub>ref</sub> · I50 · R50.</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dm-note">
+                    <strong>알아 두실 점</strong>
+                    <ul>
+                        <li>Rxx 깊이는 최대점 이후 내려가는 구간에서 선형보간으로 구합니다. 측정할 수 없는 항목은 0이 아니라 INVALID로 표시됩니다.</li>
+                    </ul>
+                </div>
+                <div style="width: 100%; max-width: 1100px; display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+                    <div style="flex: 1 1 420px; max-width: 540px;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Photon PDD Report (Siemens 프로토콜) ]</p>
+                        <img src="screens/photon_pdd_report.png" alt="Photon PDD Report" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    </div>
+                    <div style="flex: 1 1 420px; max-width: 540px;">
+                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Electron PDD Report (IAEA TRS-398 프로토콜) ]</p>
+                        <img src="screens/electron_pdd_report.png" alt="Electron PDD Report" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
                     </div>
                 </div>
             </div>
@@ -3814,15 +4405,6 @@
             document.getElementById('dm-pdd-comparison-view').style.display = 'flex';
         }
 
-        function showDMConvertToAccept() {
-            console.log('Showing DosiMachine Convert to Accept Format');
-            // Hide all potential views
-            hideAllDMViews();
-            
-            // Show Convert to Accept Format view
-            document.getElementById('dm-convert-to-accept-view').style.display = 'flex';
-        }
-
         function showDMSaveProfileToASC() {
             console.log('Showing DosiMachine Save Profile to ASC');
             // Hide all potential views
@@ -4044,8 +4626,30 @@
             }
         }
 
+        // Views added for features that were missing from the site; one helper instead of one function each
+        const DM_EXTRA_VIEWS = [
+            'dm-plan-check-view',
+            'dm-log-recon-view',
+            'dm-cbct-dose-view',
+            'dm-epid-output-view',
+            'dm-qa-trend-view',
+            'dm-ai-consult-view',
+            'dm-dicom-header-editor-view',
+            'dm-image-qa-view',
+            'dm-small-tools-view',
+            'dm-tg52-view',
+            'dm-pdd-report-view'
+        ];
+
+        function showDMView(id) {
+            hideAllDMViews();
+            document.getElementById(id).style.display = 'flex';
+            document.getElementById('content-area').scrollTop = 0;
+            window.scrollTo(0, 0);
+        }
+
         function hideAllDMViews() {
-            const views = [
+            const views = DM_EXTRA_VIEWS.concat([
                 'dashboard-home',
                 'dosimachine-home', 
                 'sample-screen', 
@@ -4087,7 +4691,6 @@
                 'dm-dicom-composite-view',
                 'dm-profile-comparison-view',
                 'dm-pdd-comparison-view',
-                'dm-convert-to-accept-view',
                 'dm-save-profile-asc-view',
                 'dm-vertual-gantry-starshot-view',
                 'dm-gantry-angle-cal-view',
@@ -4116,7 +4719,7 @@
                 'gangle-summary-view',
                 'myqa-sql-summary-view',
                 'quickcheck-summary-view'
-            ];
+            ]);
             views.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.style.display = 'none';
