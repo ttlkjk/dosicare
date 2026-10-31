@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linac QA Hub Dashboard | DosiCare</title>
-    <link rel="stylesheet" href="dashboard.css?v=6.6">
+    <link rel="stylesheet" href="dashboard.css?v=6.7">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -3455,59 +3455,165 @@
                 <div class="myqa-premium-header" style="width: 100%; position: relative; z-index: 1;">
                     <h2><span class="icon">🩺</span> Plan Check: 치료계획 자동 점검 <span class="dm-new-badge">NEW</span></h2>
                     <ul class="myqa-premium-list">
-                        <li class="myqa-premium-item">
+                        <li class="myqa-premium-item" onclick="document.getElementById('pc-step-01').scrollIntoView({behavior: 'smooth', block: 'start'})" style="cursor: pointer;">
                             <div class="item-top-row">
                                 <div class="item-num">01</div>
-                                <div class="item-title">선량 제약(Constraints) 판정</div>
+                                <div class="item-title">선량 제약 판정 (Constraints)</div>
                             </div>
-                            <div class="item-desc">RTOG/NRG, QUANTEC, TG-101 같은 문헌 기준을 담은 제약 템플릿을 골라 플랜의 DVH에 바로 대 봅니다. 장기마다 기준값 · 실제값 · 합격/불합격이 표로 나옵니다.</div>
+                            <div class="item-desc">문헌 기준 템플릿 47종을 골라 플랜 DVH에 바로 대 봅니다.</div>
                         </li>
-                        <li class="myqa-premium-item">
+                        <li class="myqa-premium-item" onclick="document.getElementById('pc-step-02').scrollIntoView({behavior: 'smooth', block: 'start'})" style="cursor: pointer;">
                             <div class="item-top-row">
                                 <div class="item-num">02</div>
-                                <div class="item-title">구조물(Structures) 점검</div>
+                                <div class="item-title">DVH 그래프와 제약 지점</div>
                             </div>
-                            <div class="item-desc">구조물별 부피, 0.1 cc보다 작게 떨어져 나간 조각, 중간에 빠진 슬라이스를 찾아 알려 줍니다.</div>
+                            <div class="item-desc">DVH 곡선 위에 각 제약의 위치를 결과 색으로 찍어 보여 줍니다.</div>
                         </li>
-                        <li class="myqa-premium-item">
+                        <li class="myqa-premium-item" onclick="document.getElementById('pc-step-03').scrollIntoView({behavior: 'smooth', block: 'start'})" style="cursor: pointer;">
                             <div class="item-top-row">
                                 <div class="item-num">03</div>
-                                <div class="item-title">계획 규칙(Policy) 점검</div>
+                                <div class="item-title">Eclipse DVH 교차 확인</div>
                             </div>
-                            <div class="item-desc">장비, 에너지, MU, 갠트리·카우치 각도, 처방, 표적 커버리지 등 23가지 규칙을 확인합니다. 병원 기준값을 넣어 필요한 규칙만 켜서 씁니다.</div>
+                            <div class="item-desc">Eclipse에서 내보낸 DVH와 프로그램이 계산한 DVH가 맞는지 구조물별로 비교합니다.</div>
                         </li>
-                        <li class="myqa-premium-item">
+                        <li class="myqa-premium-item" onclick="document.getElementById('pc-step-04').scrollIntoView({behavior: 'smooth', block: 'start'})" style="cursor: pointer;">
                             <div class="item-top-row">
                                 <div class="item-num">04</div>
-                                <div class="item-title">충돌 예측(Collision) <span class="dm-beta-badge">개발 중</span></div>
+                                <div class="item-title">구조물 점검 (Structure Checks)</div>
                             </div>
-                            <div class="item-desc">갠트리가 도는 동안 헤드와 몸 · 카우치 · 고정구 사이의 여유 거리를 계산하고, 같은 카우치 각도의 필드 사이 이동 구간까지 확인합니다. 3D 화면에서 고정구를 추가·이동하고 헤드 크기를 입력할 수 있습니다.</div>
+                            <div class="item-desc">윤곽의 빈틈, 떨어진 조각, 이름 규칙, BODY 밖 윤곽 등을 찾아냅니다.</div>
                         </li>
-                        <li class="myqa-premium-item">
+                        <li class="myqa-premium-item" onclick="document.getElementById('pc-step-05').scrollIntoView({behavior: 'smooth', block: 'start'})" style="cursor: pointer;">
                             <div class="item-top-row">
                                 <div class="item-num">05</div>
-                                <div class="item-title">점검 결과 리포트</div>
+                                <div class="item-title">계획 점검 (Plan Checks)</div>
                             </div>
-                            <div class="item-desc">점검 결과를 A4 PDF 리포트로, DVH를 CSV로 저장합니다.</div>
+                            <div class="item-desc">장비, 에너지, MU, 각도, 처방, 커버리지, 핫스팟, 선량 격자 등을 규칙으로 확인합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item" onclick="document.getElementById('pc-step-06').scrollIntoView({behavior: 'smooth', block: 'start'})" style="cursor: pointer;">
+                            <div class="item-top-row">
+                                <div class="item-num">06</div>
+                                <div class="item-title">병원 기준 편집 (Site Policy)</div>
+                            </div>
+                            <div class="item-desc">23가지 규칙의 기준값과 켜기 · 끄기를 병원에 맞게 고쳐 저장합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item" onclick="document.getElementById('pc-step-07').scrollIntoView({behavior: 'smooth', block: 'start'})" style="cursor: pointer;">
+                            <div class="item-top-row">
+                                <div class="item-num">07</div>
+                                <div class="item-title">충돌 예측 (Collision Check) <span class="dm-beta-badge">개발 중</span></div>
+                            </div>
+                            <div class="item-desc">갠트리가 도는 동안 헤드와 몸 · 카우치 · 고정구 사이 여유 거리를 추정합니다.</div>
+                        </li>
+                        <li class="myqa-premium-item" onclick="document.getElementById('pc-step-08').scrollIntoView({behavior: 'smooth', block: 'start'})" style="cursor: pointer;">
+                            <div class="item-top-row">
+                                <div class="item-num">08</div>
+                                <div class="item-title">PDF 리포트</div>
+                            </div>
+                            <div class="item-desc">모든 구역의 결과와 DVH 그림을 PDF 한 부로 저장합니다.</div>
                         </li>
                     </ul>
                 </div>
                 <div class="dm-note">
                     <strong>알아 두실 점</strong>
                     <ul>
-                        <li>충돌 예측은 갠트리 헤드를 원기둥으로 단순화한 <b>추정</b>입니다. 장비의 실측 치수를 넣어야 정확해지고, 3D 화면의 장비 모양은 보기용 그림입니다. CT 범위 밖의 몸은 가정으로 채우므로, 최종 확인은 실제 드라이런으로 해야 합니다. 실제 장비·플랜으로 하는 검증은 진행 중입니다.</li>
-                        <li>지원하지 않는 형식의 제약은 N/A로 표시됩니다. 처방이 여러 개인 플랜(SIB)은 첫 처방을 기준으로 봅니다.</li>
-                        <li>열기: 상단 Plan View → 아래쪽 Plan Check 탭.</li>
+                        <li>충돌 예측은 갠트리 헤드를 원기둥으로 단순화한 <b>추정</b>입니다. 장비의 실측 치수를 넣어야 정확해지고, 3D 화면의 장비 모양은 보기용 그림입니다. CT 범위 밖의 몸은 가정으로 채우므로, 최종 확인은 실제 드라이런으로 해야 합니다. 실제 장비 · 플랜으로 하는 검증은 진행 중입니다.</li>
+                        <li>N/A는 자동 합격이 아닙니다. 데이터가 없거나 지원하지 않는 형식의 제약이면 N/A로 표시됩니다. 처방이 여러 개인 플랜(SIB)은 첫 처방을 기준으로 봅니다.</li>
+                        <li>계산 알고리즘 이름은 Eclipse DICOM 내보내기에 들어 있지 않아 이 규칙은 항상 N/A입니다.</li>
+                        <li>DVH를 CSV로 저장하는 기능은 Plan View의 DVH 탭에 있습니다.</li>
+                        <li>열기: 상단 Plan View → 아래쪽 Plan Check 탭 → 리포트 창. 아래 화면은 익명 처리된 샘플 유방 플랜입니다.</li>
                     </ul>
                 </div>
-                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
-                    <div style="max-width: 1100px; width: 100%;">
-                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Constraints 탭: 유방 템플릿 적용 예 — 템플릿 처방(26 Gy)과 플랜 처방(20 Gy)이 달라 V95%가 불합격으로 표시됨 ]</p>
-                        <img src="screens/plan_check.png" alt="Constraints 탭: 유방 템플릿 적용 예 — 템플릿 처방(26 Gy)과 플랜 처방(20 Gy)이 달라 V95%가 불합격으로 표시됨" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <div class="dm-steps">
+                    <div id="pc-step-01" class="dm-step">
+                        <div class="dm-step-head"><span class="dm-step-num">01</span><span class="dm-step-title">선량 제약 판정 (Constraints)</span></div>
+                        <div class="dm-step-desc">RTOG · NRG, QUANTEC, TG-101, Timmerman 등 <b>47종</b>의 제약 템플릿이 들어 있습니다. 각 제약은 <b>목표값과 한계값</b> 두 단계로 판정합니다.
+                        <ul>
+                            <li>✓ 합격: 목표값까지 만족</li>
+                            <li>△ Variation: 한계값은 지켰지만 목표값에는 못 미침</li>
+                            <li>✗ 불합격: 한계값을 넘음</li>
+                            <li>⚠ 플랜에 해당 구조물이 없음</li>
+                        </ul>
+                        구조물 이름이 병원마다 달라도 별칭(Aliases)으로 찾아 연결합니다. 칸을 더블클릭해 고치고, 행을 더하거나 지운 뒤 새 템플릿으로 저장할 수 있습니다.</div>
+                        <figure>
+                            <img src="screens/pc_constraints.png" alt="Constraints: FAST-Forward 유방 템플릿을 샘플 플랜에 적용 (PTV 별칭을 샘플의 PTV_EVAL_EZ1로 고쳐 연결)" loading="lazy">
+                            <figcaption>Constraints: FAST-Forward 유방 템플릿을 샘플 플랜에 적용 (PTV 별칭을 샘플의 PTV_EVAL_EZ1로 고쳐 연결)</figcaption>
+                        </figure>
                     </div>
-                    <div style="max-width: 1100px; width: 100%;">
-                        <p style="margin-bottom: 0.8rem; font-weight: 600; color: #64748b;">[ Collision 3D 창: 헤드 · 몸 · 카우치 여유 거리 (장비 모양은 보기용 그림) ]</p>
-                        <img src="screens/plan_check_collision3d.png" alt="Collision 3D 창: 헤드 · 몸 · 카우치 여유 거리 (장비 모양은 보기용 그림)" style="width: 100%; display: block; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    <div id="pc-step-02" class="dm-step">
+                        <div class="dm-step-head"><span class="dm-step-num">02</span><span class="dm-step-title">DVH 그래프와 제약 지점</span></div>
+                        <div class="dm-step-desc">구조물마다 DVH 곡선을 그리고, 그 위에 V · D 제약 지점을 결과 색(초록 합격, 파랑 Variation, 빨강 불합격)으로 표시합니다. 오른쪽 목록에서 구조물을 켜고 끌 수 있고, 그래프를 클릭하면 가장 가까운 곡선의 선량과 부피를 읽어 줍니다.</div>
+                        <figure>
+                            <img src="screens/pc_dvh.png" alt="DVH: 제약 지점이 결과 색으로 표시됨" loading="lazy">
+                            <figcaption>DVH: 제약 지점이 결과 색으로 표시됨</figcaption>
+                        </figure>
+                    </div>
+                    <div id="pc-step-03" class="dm-step">
+                        <div class="dm-step-head"><span class="dm-step-num">03</span><span class="dm-step-title">Eclipse DVH 교차 확인</span></div>
+                        <div class="dm-step-desc">Eclipse의 <i>Export DVH in Tabular Format</i> 파일을 불러와 구조물마다 부피, Dmax, Dmean, D95, D2와 곡선 차이를 비교합니다. 플랜 폴더 옆에 같은 플랜의 파일이 있으면 자동으로 찾습니다.
+                        <br>허용 기준: 부피 2 %, Dmean · D95 · D2 1 %, Dmax 2 %, 곡선 2 %p.
+                        <br>이 구역은 <b>플랜의 좋고 나쁨이 아니라, 프로그램 계산이 Eclipse와 맞는지</b>를 확인하는 곳입니다.</div>
+                        <figure>
+                            <img src="screens/pc_eclipse.png" alt="Eclipse DVH Cross-check: 같은 샘플 플랜의 Eclipse 내보내기 파일과 비교" loading="lazy">
+                            <figcaption>Eclipse DVH Cross-check: 같은 샘플 플랜의 Eclipse 내보내기 파일과 비교</figcaption>
+                        </figure>
+                    </div>
+                    <div id="pc-step-04" class="dm-step">
+                        <div class="dm-step-head"><span class="dm-step-num">04</span><span class="dm-step-title">구조물 점검 (Structure Checks)</span></div>
+                        <div class="dm-step-desc">구조물마다 아래 항목을 확인합니다. 구조물 이름을 클릭하면 3D로 볼 수 있습니다.
+                        <ul>
+                            <li>부피, 0.1 cc보다 작게 떨어져 나간 조각, 구멍, 중간에 빠진 슬라이스</li>
+                            <li>이름 규칙(예: PTV.* · CTV.*), 밀도 오버라이드 허용 여부</li>
+                            <li>BODY 밖으로 나간 윤곽, CT 첫 · 끝 슬라이스에 너무 가까운 윤곽</li>
+                        </ul></div>
+                        <figure>
+                            <img src="screens/pc_structures.png" alt="Structure Checks: 구조물별 점검 결과" loading="lazy">
+                            <figcaption>Structure Checks: 구조물별 점검 결과</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="screens/pc_structure3d.png" alt="구조물 이름을 클릭하면 열리는 3D 보기" loading="lazy">
+                            <figcaption>구조물 이름을 클릭하면 열리는 3D 보기</figcaption>
+                        </figure>
+                    </div>
+                    <div id="pc-step-05" class="dm-step">
+                        <div class="dm-step-head"><span class="dm-step-num">05</span><span class="dm-step-title">계획 점검 (Plan Checks)</span></div>
+                        <div class="dm-step-desc">빔 · 처방 · 플랜 설정을 병원 규칙에 대 봅니다. 기대값, 플랜 값, 결과가 한 줄씩 나옵니다.
+                        <ul>
+                            <li>빔: 장비, 에너지, 도스레이트, 빔당 MU, 정수 각도, 허용표(Tolerance Table), 같은 장비, 단일 아이소센터, 셋업 필드 직교</li>
+                            <li>처방: 템플릿 처방과 일치, 분할 횟수, 타깃 커버리지(D95), 핫스팟</li>
+                            <li>플랜: 선량 격자 크기, 불균질 보정, CT 슬라이스 두께 · 개수, 지지대(카우치) 구조물</li>
+                        </ul></div>
+                        <figure>
+                            <img src="screens/pc_plan.png" alt="Plan Checks: 규칙별 기대값과 플랜 값" loading="lazy">
+                            <figcaption>Plan Checks: 규칙별 기대값과 플랜 값</figcaption>
+                        </figure>
+                    </div>
+                    <div id="pc-step-06" class="dm-step">
+                        <div class="dm-step-head"><span class="dm-step-num">06</span><span class="dm-step-title">병원 기준 편집 (Site Policy)</span></div>
+                        <div class="dm-step-desc">계획 점검과 구조물 점검에 쓰는 <b>23가지 규칙</b>의 기준값을 표에서 바로 고칩니다. 쓰지 않는 규칙은 끄고, 저장하면 다음 점검부터 적용됩니다. 템플릿마다 일부 규칙을 따로 정해 병원 기준을 덮어쓸 수도 있습니다.</div>
+                        <figure>
+                            <img src="screens/pc_policy.png" alt="Site Policy: 규칙, 기준값, 사용 여부, 입력 형식" loading="lazy">
+                            <figcaption>Site Policy: 규칙, 기준값, 사용 여부, 입력 형식</figcaption>
+                        </figure>
+                    </div>
+                    <div id="pc-step-07" class="dm-step">
+                        <div class="dm-step-head"><span class="dm-step-num">07</span><span class="dm-step-title">충돌 예측 (Collision Check) <span class="dm-beta-badge">개발 중</span></span></div>
+                        <div class="dm-step-desc">필드마다 가장 가까워지는 거리와 그때의 갠트리 각도, 필드 사이 이동 구간의 거리, 가장 가까운 물체를 표로 보여 줍니다. 경고 거리(기본 3 cm)는 왼쪽에서 바꿉니다. 3D 화면에서 고정구를 추가 · 이동하고 헤드 크기를 입력할 수 있습니다.</div>
+                        <figure>
+                            <img src="screens/pc_collision.png" alt="Collision Check: 필드별 최소 여유 거리" loading="lazy">
+                            <figcaption>Collision Check: 필드별 최소 여유 거리</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="screens/pc_collision3d.png" alt="Collision 3D: 헤드 · 몸 · 카우치 여유 거리 (장비 모양은 보기용 그림)" loading="lazy">
+                            <figcaption>Collision 3D: 헤드 · 몸 · 카우치 여유 거리 (장비 모양은 보기용 그림)</figcaption>
+                        </figure>
+                    </div>
+                    <div id="pc-step-08" class="dm-step">
+                        <div class="dm-step-head"><span class="dm-step-num">08</span><span class="dm-step-title">PDF 리포트</span></div>
+                        <div class="dm-step-desc">Export PDF 버튼 하나로 제약 판정, DVH 그림, Eclipse 비교, 구조물 · 계획 점검, 병원 기준, 충돌 예측을 A4 리포트로 저장합니다.</div>
+                        <figure class="dm-fig-narrow">
+                            <img src="screens/pc_report.png" alt="Plan Check PDF 리포트 1쪽" loading="lazy">
+                            <figcaption>Plan Check PDF 리포트 1쪽</figcaption>
+                        </figure>
                     </div>
                 </div>
             </div>
