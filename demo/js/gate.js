@@ -30,9 +30,22 @@
     return send(v).then(() => { v.sent = true; save(v); }, (err) => { console.warn('[gate] not sent yet, will retry next visit:', err.message); });
   }
 
+  // The demo is laid out for 1366 x 768 or more. On a phone, once past the popup (which is itself sized for phones):
+  // opened on its own, the page asks the browser for a 1366-px-wide layout and zooms out to fit; inside the homepage's
+  // Demo tab, the homepage scales the frame instead and only needs to hear that the popup is done.
+  function desktopLayout() {
+    if (window.parent !== window) {
+      try { window.parent.postMessage('dm-gate-done', '*'); } catch (e) { /* ignore */ }
+    } else if (Math.min(screen.width, screen.height) < 600) {
+      const vp = document.querySelector('meta[name="viewport"]');
+      if (vp) vp.setAttribute('content', 'width=1366');
+    }
+  }
+
   const known = load();
   if (known && known.name) {
     if (!known.sent) sendAndMark(known);
+    desktopLayout();
     return;
   }
 
@@ -95,7 +108,7 @@
     sendAndMark(v);
     guard(false);
     back.classList.remove('show');
-    setTimeout(() => back.remove(), 300);
+    setTimeout(() => { back.remove(); desktopLayout(); }, 300);
   });
 
   guard(true);

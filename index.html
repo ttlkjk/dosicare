@@ -21,7 +21,7 @@
     <meta name="twitter:description" content="DosiMachine은 선형가속기(Linac) 품질관리를 위한 통합 소프트웨어입니다. Field Analysis, Starshot, Winston-Lutz, Picket Fence, TRS-398 선량교정, MLC/Trajectory Log 분석과 PDF 리포트 자동화를 하나의 워크플로우로 제공합니다.">
     <meta name="twitter:image" content="https://dosicare.co.kr/images/main.png">
     <title>DosiMachine | 방사선 치료 품질관리(QA) 통합 솔루션 — DosiCare</title>
-    <link rel="stylesheet" href="dashboard.css?v=7.3">
+    <link rel="stylesheet" href="dashboard.css?v=7.4">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -253,6 +253,7 @@
     <!-- Demo tab: the DosiMachine click-through demo (demo/index.html) fills the page under the tab bar; it is the first view -->
     <div class="demo-frame-wrap" id="demo-frame-wrap">
         <iframe id="demo-frame" title="DosiMachine Demo" allow="fullscreen" allowfullscreen></iframe>
+        <div class="demo-fit-hint" id="demo-fit-hint">📱 PC 화면을 줄여서 보여 드리고 있습니다.<br>휴대폰을 <b>가로로 돌리면</b> 더 크게 보이고,<br>두 손가락으로 벌리면 확대됩니다.</div>
     </div>
 
     <!-- Top Navigation Bar -->
@@ -4981,6 +4982,34 @@
             switchMainTab({ '#dm': 'dm', '#hub': 'hub' }[location.hash] || 'demo');
         });
 
+        // Phones and narrow windows: the demo is laid out for 1366 x 768 or more. Once the visitor is past its
+        // registration popup (itself sized for phones), the frame is drawn at 1366 x 768 and scaled down to fit.
+        const DEMO_W = 1366, DEMO_H = 768;
+        function demoRegistered() {
+            try { return !!JSON.parse(localStorage.getItem('dm_visitor_v1') || 'null'); } catch (e) { return false; }
+        }
+        function fitDemoFrame() {
+            const wrap = document.getElementById('demo-frame-wrap');
+            const frame = document.getElementById('demo-frame');
+            const hint = document.getElementById('demo-fit-hint');
+            if (wrap.style.display === 'none') return;
+            const W = wrap.clientWidth, H = wrap.clientHeight;
+            const s = W < 1000 && demoRegistered() ? Math.min(W / DEMO_W, H / DEMO_H) : 0;
+            wrap.classList.toggle('fit', s > 0);
+            wrap.classList.toggle('portrait', s > 0 && H > W);
+            if (s > 0) {
+                Object.assign(frame.style, { width: DEMO_W + 'px', height: DEMO_H + 'px',
+                    transform: 'scale(' + s + ')', left: Math.round((W - DEMO_W * s) / 2) + 'px' });
+                hint.style.top = Math.round(DEMO_H * s + 20) + 'px';
+            } else {
+                Object.assign(frame.style, { width: '', height: '', transform: '', left: '' });
+            }
+        }
+        window.addEventListener('resize', fitDemoFrame);
+        window.addEventListener('message', (e) => {
+            if (e.origin === location.origin && e.data === 'dm-gate-done') fitDemoFrame();
+        });
+
         function switchMainTab(tab) {
             console.log('Switching main tab to:', tab);
             const body = document.body;
@@ -5002,6 +5031,7 @@
                 tabDm.classList.remove('active');
                 topNav.style.display = 'none';
                 sidebar.style.display = 'none';
+                fitDemoFrame();
                 frame.focus();
                 return;
             }

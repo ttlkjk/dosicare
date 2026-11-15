@@ -366,6 +366,8 @@
       || (window.innerHeight >= screen.height - 1 && window.innerWidth >= screen.width - 1);
     const isF = e.type === 'keydown' && (e.key === 'f' || e.key === 'F' || e.code === 'KeyF');
     if (alreadyFull || isF || e.key === 'Escape') return;   // F is handled by onKey; Esc grants no gesture
+    // phones / tablets: the homepage shows the demo scaled down to fit; fullscreen would drop that scaling
+    if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
     const r = document.documentElement.requestFullscreen();
     if (r && r.catch) r.catch(() => {});
   }

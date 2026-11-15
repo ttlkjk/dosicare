@@ -1045,9 +1045,45 @@ body.active-dosimachine .main-tab.dosimachine.active {
     border: 0;
     display: block;
 }
-body.active-demo .utility-left .menu-items,
-body.active-demo .utility-left .menu-icon {
-    visibility: hidden;
+body.active-demo .utility-left {
+    display: none;
+}
+/* Small screens (index.html fitDemoFrame): the demo is drawn at 1366 x 768 and scaled down to fit */
+.demo-frame-wrap.fit {
+    position: relative;
+    overflow: hidden;
+    background: #0f172a;
+}
+.demo-frame-wrap.fit iframe {
+    position: absolute;
+    top: 0;
+    flex: none;
+    transform-origin: 0 0;
+    background: #fff;
+}
+.demo-fit-hint {
+    display: none;
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+    word-break: keep-all;
+}
+.demo-frame-wrap.fit.portrait .demo-fit-hint {
+    display: block;
+}
+/* Phones: the three tabs and the icons fit on one row */
+@media (max-width: 600px) {
+    .main-tab {
+        padding: 6px 12px;
+        font-size: 12.5px;
+    }
+    .utility-center {
+        flex-wrap: nowrap;
+    }
 }
 
 .main-tab:hover {
