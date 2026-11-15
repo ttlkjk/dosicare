@@ -21,7 +21,7 @@
     <meta name="twitter:description" content="DosiMachine은 선형가속기(Linac) 품질관리를 위한 통합 소프트웨어입니다. Field Analysis, Starshot, Winston-Lutz, Picket Fence, TRS-398 선량교정, MLC/Trajectory Log 분석과 PDF 리포트 자동화를 하나의 워크플로우로 제공합니다.">
     <meta name="twitter:image" content="https://dosicare.co.kr/images/main.png">
     <title>DosiMachine | 방사선 치료 품질관리(QA) 통합 솔루션 — DosiCare</title>
-    <link rel="stylesheet" href="dashboard.css?v=7.4">
+    <link rel="stylesheet" href="dashboard.css?v=7.5">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -4988,26 +4988,59 @@
         function demoRegistered() {
             try { return !!JSON.parse(localStorage.getItem('dm_visitor_v1') || 'null'); } catch (e) { return false; }
         }
+        // fit scale s0, the visitor's two-finger zoom z (1-5x on top of s0) and the frame offset tx/ty in px
+        const demoView = { s0: 0, z: 1, tx: 0, ty: 0, W: 0, H: 0 };
         function fitDemoFrame() {
             const wrap = document.getElementById('demo-frame-wrap');
-            const frame = document.getElementById('demo-frame');
-            const hint = document.getElementById('demo-fit-hint');
             if (wrap.style.display === 'none') return;
             const W = wrap.clientWidth, H = wrap.clientHeight;
             const s = W < 1000 && demoRegistered() ? Math.min(W / DEMO_W, H / DEMO_H) : 0;
             wrap.classList.toggle('fit', s > 0);
             wrap.classList.toggle('portrait', s > 0 && H > W);
-            if (s > 0) {
-                Object.assign(frame.style, { width: DEMO_W + 'px', height: DEMO_H + 'px',
-                    transform: 'scale(' + s + ')', left: Math.round((W - DEMO_W * s) / 2) + 'px' });
-                hint.style.top = Math.round(DEMO_H * s + 20) + 'px';
-            } else {
+            if (W !== demoView.W) demoView.z = 1;   // turning the phone starts over; the address bar hiding (height only) does not
+            Object.assign(demoView, { s0: s, W: W, H: H });
+            if (demoView.z === 1) { demoView.tx = (W - DEMO_W * s) / 2; demoView.ty = 0; }
+            applyDemoView();
+        }
+        function applyDemoView() {
+            const v = demoView;
+            const frame = document.getElementById('demo-frame');
+            const hint = document.getElementById('demo-fit-hint');
+            if (!v.s0) {
                 Object.assign(frame.style, { width: '', height: '', transform: '', left: '' });
+                return;
             }
+            const S = v.s0 * v.z, cw = DEMO_W * S, ch = DEMO_H * S;
+            // keep the demo on screen: centred while smaller than the screen, edges no further in than the screen's
+            v.tx = cw <= v.W ? (v.W - cw) / 2 : Math.min(0, Math.max(v.W - cw, v.tx));
+            v.ty = ch <= v.H ? 0 : Math.min(0, Math.max(v.H - ch, v.ty));
+            Object.assign(frame.style, { width: DEMO_W + 'px', height: DEMO_H + 'px', left: '0px',
+                transform: 'translate(' + v.tx + 'px,' + v.ty + 'px) scale(' + S + ')' });
+            hint.style.top = Math.round(DEMO_H * v.s0 + 20) + 'px';
+            hint.style.visibility = v.z > 1.02 ? 'hidden' : '';
+        }
+        // Two-finger zoom / move, reported by demo/js/pinch.js (touches on the frame never reach this page).
+        // x, y, d are the finger midpoint and spread in the demo's own 1366 x 768 coordinates.
+        let demoPinch = null;
+        function onDemoPinch(m) {
+            const v = demoView;
+            if (!v.s0) return;
+            if (m.phase === 'end') { demoPinch = null; return; }
+            if (m.d == null) return;
+            const S = v.s0 * v.z;
+            const qx = v.tx + m.x * S, qy = v.ty + m.y * S, d = m.d * S;   // the same, in screen px
+            if (m.phase === 'start' || !demoPinch) { demoPinch = { S0: S, d0: d, px: m.x, py: m.y }; return; }
+            v.z = Math.min(5, Math.max(1, demoPinch.S0 * (d / demoPinch.d0) / v.s0));
+            const S2 = v.s0 * v.z;
+            v.tx = qx - demoPinch.px * S2;   // the demo point first under the fingers stays under them
+            v.ty = qy - demoPinch.py * S2;
+            applyDemoView();
         }
         window.addEventListener('resize', fitDemoFrame);
         window.addEventListener('message', (e) => {
-            if (e.origin === location.origin && e.data === 'dm-gate-done') fitDemoFrame();
+            if (e.origin !== location.origin) return;
+            if (e.data === 'dm-gate-done') fitDemoFrame();
+            else if (e.data && e.data.type === 'dm-pinch') onDemoPinch(e.data);
         });
 
         function switchMainTab(tab) {
