@@ -34,6 +34,7 @@
   // opened on its own, the page asks the browser for a 1366-px-wide layout and zooms out to fit; inside the homepage's
   // Demo tab, the homepage scales the frame instead and only needs to hear that the popup is done.
   function desktopLayout() {
+    window.dispatchEvent(new Event('dm-gate-done'));   // js/guide.js shows the first-visit guide after the popup
     if (window.parent !== window) {
       try { window.parent.postMessage('dm-gate-done', '*'); } catch (e) { /* ignore */ }
     } else if (Math.min(screen.width, screen.height) < 600) {

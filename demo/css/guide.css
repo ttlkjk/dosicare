@@ -1,0 +1,18 @@
+/* First-visit guide (js/guide.js) - not in the original program. Colours follow why.css / gate.css. */
+.dmg-back { position: fixed; inset: 0; z-index: 8000; pointer-events: none; opacity: 0; transition: opacity .25s; }
+.dmg-back.show { opacity: 1; }
+/* the lit menu bar: everything around it is dimmed by its shadow */
+.dmg-hole { position: absolute; border-radius: 6px; box-shadow: 0 0 0 9999px rgba(10, 25, 50, .55); outline: 2.5px solid #14B8A6;
+  animation: dmg-pulse 1.4s ease-in-out infinite; }
+@keyframes dmg-pulse { 50% { outline-color: #F7D774; outline-offset: 3px; } }
+.dmg-tip { position: absolute; width: 330px; max-width: calc(100vw - 16px); box-sizing: border-box; padding: 16px 18px 14px; border-radius: 12px;
+  background: #fff; color: #17325C; box-shadow: 0 16px 40px rgba(0, 0, 0, .35); transform-origin: 0 0; pointer-events: auto;
+  font-family: "Pretendard", "Malgun Gothic", "Segoe UI", sans-serif; word-break: keep-all; }
+.dmg-arrow { position: absolute; top: -8px; left: 22px; width: 16px; height: 16px; background: #fff; transform: rotate(45deg); }
+.dmg-title { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+.dmg-line { font-size: 13px; line-height: 1.55; color: #33475F; }
+.dmg-dot { display: inline-block; width: 7px; height: 7px; margin: 0 5px 1px 1px; border-radius: 50%; background: #2E8BEF; }
+.dmg-line b { color: #0A5BC4; }
+.dmg-ex { margin-top: 6px; padding: 6px 10px; border-radius: 6px; background: #EEF5FF; font-size: 12.5px; color: #17325C; }
+.dmg-ok { display: block; margin: 12px 0 0 auto; padding: 6px 18px; border: 0; border-radius: 16px; cursor: pointer;
+  background: linear-gradient(135deg, #14B8A6, #1E40AF); color: #fff; font: 700 13px inherit; font-family: inherit; }

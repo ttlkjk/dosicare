@@ -5010,7 +5010,7 @@
             if (!v.s0) {
                 Object.assign(frame.style, { width: '', height: '', transform: '', left: '' });
                 tellDemoZoomed(false);
-                placeDemoBarToggle(0, 0, 0, 0);
+                placeDemoBarToggle(0, 0, 0, 0, 0, 1);
                 return;
             }
             const S = v.s0 * v.z, cw = DEMO_W * S, ch = DEMO_H * S;
@@ -5024,7 +5024,7 @@
                 const S1 = v.s0 * v.z;
                 Object.assign(frame.style, { width: DEMO_W + 'px', height: DEMO_H + 'px', left: '0px',
                     transform: 'translate(' + v.tx + 'px,' + v.ty + 'px) scale(' + S1 + ')' });
-                const below = placeDemoBarToggle(v.W, v.H, DEMO_W * S1, v.ty + DEMO_H * S1);
+                const below = placeDemoBarToggle(v.W, v.H, DEMO_W * S1, v.ty + DEMO_H * S1, v.tx + DEMO_W * S1, S1);
                 hint.style.top = Math.round(DEMO_H * v.s0 + (below ? 44 : 20)) + 'px';
                 hint.style.visibility = v.z > 1.02 ? 'hidden' : '';
             };
@@ -5037,11 +5037,13 @@
             requestAnimationFrame(draw);
         }
         let demoDrawPending = false;
-        // "☰ 메뉴" goes where it hides nothing of the demo (the demo's own window close buttons sit top right):
-        // in the side margins beside a scaled demo, else in the empty space under it, else top centre, where the
-        // demo's menu bar is empty. W, H: screen area; cw: drawn demo width; bottom: drawn demo bottom edge.
+        // "☰ 메뉴" goes where it hides nothing of the demo: in the side margins beside a scaled demo, else in the empty
+        // space under it, else on the demo's menu bar, right of its last menu (Help) and left of the three title-bar
+        // buttons (minimise / maximise / close, 3 x 46 px) of a demo window opened full size.
+        // W, H: screen area (0 = demo not scaled); cw: drawn demo width; bottom / right: drawn demo edges; S: its scale.
         // Returns true when it went under the demo.
-        function placeDemoBarToggle(W, H, cw, bottom) {
+        const DEMO_WIN_BUTTONS = 150;
+        function placeDemoBarToggle(W, H, cw, bottom, right, S) {
             const btn = document.getElementById('demo-bar-toggle');
             const bw = btn.offsetWidth || 70, bh = btn.offsetHeight || 26;
             const side = W ? (W - cw) / 2 : 0;
@@ -5054,7 +5056,8 @@
                 Object.assign(s, { top: Math.round(bottom + 6) + 'px', right: '8px', left: 'auto', transform: 'none' });
                 return true;
             }
-            Object.assign(s, { top: '2px', right: 'auto', left: '50%', transform: 'translateX(-50%)' });
+            const fromRight = W ? (W - right) + DEMO_WIN_BUTTONS * S : DEMO_WIN_BUTTONS;
+            Object.assign(s, { top: '2px', right: Math.round(Math.max(8, fromRight)) + 'px', left: 'auto', transform: 'none' });
             return false;
         }
         // During a gesture the frame is moved as a ready-made picture (no redraw of the whole demo at every new size,
