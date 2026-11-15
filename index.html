@@ -5123,10 +5123,69 @@
         window.addEventListener('resize', fitDemoFrame);
         window.addEventListener('message', (e) => {
             if (e.origin !== location.origin) return;
-            if (e.data === 'dm-gate-done') fitDemoFrame();
+            if (e.data === 'dm-gate-done') { fitDemoFrame(); setTimeout(sendVisit, 1500); }
+            else if (e.data === 'dm-click') siteVisit.clicks++;
             else if (e.data && e.data.type === 'dm-pinch') onDemoPinch(e.data);
             else if (e.data && e.data.type === 'dm-pan') onDemoPan(e.data);
         });
+
+        // Visit log (user, 2026-11-16): one row per visit in the sheet's "방문 기록" tab - who (from the guest book the
+        // demo's popup saved in this browser), first visit or return visit and which one, when, how long the page was
+        // actually on screen, and how many clicks on the site (this page + the demo, whose clicks demo/js/visit.js
+        // reports). The row is written on arrival (a returning visitor sees no popup but is still logged) and updated
+        // when the visitor hides or leaves the page and every 5 minutes. Coming back within 30 minutes (a reload, a
+        // second tab) continues the same visit. Visitors who never signed the guest book are not logged.
+        const VISIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyCL7n0dHESNfi60R3mkRackrIJwzsc9LuDI8DtwbU3dxGk141ygFct_BxFjPEZSxPr/exec';
+        const VISIT_KEY = 'dm_visit_v1', VISIT_GAP_MS = 30 * 60 * 1000;
+        const siteVisit = (() => {
+            let prev = null;
+            try { prev = JSON.parse(localStorage.getItem(VISIT_KEY) || 'null'); } catch (e) { /* ignore */ }
+            const goOn = prev && prev.id && Date.now() - prev.last < VISIT_GAP_MS;
+            return {
+                id: goOn ? prev.id : Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+                no: goOn ? prev.no : ((prev && prev.no) || 0) + 1,   // this browser's visit number: 1 = first visit
+                startedAt: goOn ? prev.startedAt : new Date().toISOString(),
+                baseSecs: goOn ? prev.secs || 0 : 0, baseClicks: goOn ? prev.clicks || 0 : 0,
+                clicks: 0, shownMs: 0, shownSince: document.visibilityState === 'visible' ? Date.now() : null, lastSent: '',
+            };
+        })();
+        document.addEventListener('click', () => { siteVisit.clicks++; }, true);
+        function visitShownSeconds() {
+            const v = siteVisit;
+            return v.baseSecs + Math.round((v.shownMs + (v.shownSince != null ? Date.now() - v.shownSince : 0)) / 1000);
+        }
+        function sendVisit() {
+            let who = null;
+            try { who = JSON.parse(localStorage.getItem('dm_visitor_v1') || 'null'); } catch (e) { /* ignore */ }
+            if (!who || !who.name) return;
+            const v = siteVisit, secs = visitShownSeconds(), clicks = v.baseClicks + v.clicks;
+            try {
+                localStorage.setItem(VISIT_KEY, JSON.stringify({ id: v.id, no: v.no, startedAt: v.startedAt,
+                    secs: secs, clicks: clicks, last: Date.now() }));
+            } catch (e) { /* ignore */ }
+            const key = secs + '/' + clicks;
+            if (key === v.lastSent) return;
+            v.lastSent = key;
+            const body = new URLSearchParams({ kind: 'visit', visitId: v.id, visitNo: String(v.no), startedAt: v.startedAt,
+                seconds: String(secs), clicks: String(clicks),
+                name: who.name || '', hospital: who.hospital || '', company: who.company || '', source: location.host || 'local file' });
+            // sendBeacon still goes out while the page closes; fetch keepalive if the browser has no beacon
+            if (!(navigator.sendBeacon && navigator.sendBeacon(VISIT_ENDPOINT, body))) {
+                fetch(VISIT_ENDPOINT, { method: 'POST', mode: 'no-cors', body: body, keepalive: true }).catch(() => {});
+            }
+        }
+        function visitHidden() {
+            if (siteVisit.shownSince != null) { siteVisit.shownMs += Date.now() - siteVisit.shownSince; siteVisit.shownSince = null; }
+            sendVisit();
+        }
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') visitHidden();
+            else if (siteVisit.shownSince == null) siteVisit.shownSince = Date.now();
+        });
+        window.addEventListener('pagehide', visitHidden);
+        setInterval(() => { if (document.visibilityState === 'visible') sendVisit(); }, 5 * 60 * 1000);
+        // on arrival: a visitor who signed before is logged right away; a new one once the guest book is signed
+        setTimeout(sendVisit, 1500);
 
         function switchMainTab(tab) {
             console.log('Switching main tab to:', tab);

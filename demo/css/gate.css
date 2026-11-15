@@ -14,10 +14,14 @@
 .gate-f input { width: 100%; height: 40px; padding: 0 12px; border: 1px solid #C9D6E8; border-radius: 8px; font: 14px inherit; font-family: inherit; color: #17325C; background: #F8FBFF; }
 .gate-f input:focus { outline: none; border-color: #1E40AF; box-shadow: 0 0 0 3px rgba(30,64,175,.15); background: #fff; }
 .gate-f.bad input { border-color: #D93838; }
-.gate-agree { display: flex; gap: 8px; align-items: flex-start; margin: 6px 0 4px; font-size: 13px; cursor: pointer; }
-.gate-agree input { margin-top: 3px; flex: none; }
-.gate-agree small { display: block; margin-top: 2px; font-size: 11.5px; color: #6B7A90; }
-.gate-agree.bad span { color: #D93838; }
+.gate-f span small { font-weight: 400; color: #6B7A90; }
+/* "[ 서울대 ] 병원   회사 [ 도시케어 ]" on one row; one of the two is enough */
+.gate-org-row { display: flex; align-items: center; gap: 8px; }
+.gate-or { flex: none; font-style: normal; font-size: 11.5px; color: #8A98AD; }
+.gate-org-box { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; }
+.gate-org-box input { flex: 1; min-width: 0; }
+.gate-org-box em { font-style: normal; font-size: 14px; font-weight: 700; color: #17325C; white-space: nowrap; }
+.gate-note { margin: 10px 0 0; text-align: center; font-size: 11.5px; color: #6B7A90; }
 .gate-err { min-height: 20px; margin: 6px 0 4px; font-size: 13px; color: #D93838; }
 .gate-go { width: 100%; height: 46px; border: 0; border-radius: 10px; cursor: pointer; color: #fff; font: 700 15px inherit; font-family: inherit;
   background: linear-gradient(135deg, #14B8A6, #1E40AF); box-shadow: 0 8px 22px rgba(30,64,175,.3); }

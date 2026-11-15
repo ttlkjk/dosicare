@@ -1,5 +1,7 @@
 /* Visitor registration gate - not part of the original program.
-   On the first visit a popup asks for name / hospital / email / phone over a blurred demo; the demo is blocked until it is filled.
+   On the first visit a popup asks for a name and a hospital or a company (one of the two is enough; user 2026-11-16, was
+   name / hospital / email / phone) over a blurred demo; the demo is blocked until it is filled. The hospital box has
+   "병원" after it, so "서울대" is recorded as "서울대병원".
    The answers are kept in this browser's localStorage, so the same browser on the same computer is never asked again.
    Each registration is POSTed to a Google Apps Script web app that appends a row to a Google Sheet (docs/gate/apps-script.gs).
    Offline or not yet configured: the visitor still gets in, the row stays "pending" and is re-sent on a later visit. */
@@ -21,7 +23,8 @@
   function send(v) {
     if (!SHEET_ENDPOINT) return Promise.reject(new Error('SHEET_ENDPOINT not set'));
     const body = new URLSearchParams({
-      name: v.name, hospital: v.hospital, email: v.email, phone: v.phone,
+      name: v.name || '', hospital: v.hospital || '', company: v.company || '',
+      email: v.email || '', phone: v.phone || '',   // only rows saved by the old four-box popup still carry these
       registeredAt: v.registeredAt, source: location.protocol === 'file:' ? 'local file' : location.host,
     });
     return fetch(SHEET_ENDPOINT, { method: 'POST', mode: 'no-cors', body });
@@ -56,20 +59,19 @@
   back.innerHTML =
     '<form class="gate-card" novalidate>' +
       '<img class="gate-logo" src="assets/dosimachine2.png" alt="DosiMachine">' +
-      '<h2>데모를 시작하기 전에</h2>' +
-      '<p class="gate-sub">처음 한 번만 입력하면, 이 컴퓨터에서는 다시 묻지 않습니다.</p>' +
-      field('name', '이름', 'text', '홍길동', 'name') +
-      field('hospital', '병원명', 'text', '○○대학교병원', 'organization') +
-      field('email', '이메일', 'email', 'name@hospital.com', 'email') +
-      field('phone', '핸드폰', 'tel', '010-1234-5678', 'tel') +
-      '<label class="gate-agree"><input type="checkbox" name="agree"> ' +
-        '<span>개인정보 수집 · 이용에 동의합니다.<small>수집 항목: 이름, 병원명, 이메일, 핸드폰 · 목적: 데모 이용 안내와 연락 · 보관: 동의 철회 시까지</small></span></label>' +
+      '<h2>방명록</h2>' +
+      '<p class="gate-sub">두 칸만 남겨 주시면 데모가 열립니다. 이 컴퓨터에서는 다시 묻지 않습니다.</p>' +
+      '<label class="gate-f"><span>이름</span><input name="name" type="text" placeholder="홍길동" autocomplete="name" maxlength="60"></label>' +
+      '<div class="gate-f gate-org"><span>병원 또는 회사 <small>(둘 중 하나)</small></span>' +
+        '<div class="gate-org-row">' +
+          '<label class="gate-org-box"><input name="hospital" type="text" placeholder="서울대" autocomplete="off" maxlength="60"><em>병원</em></label>' +
+          '<i class="gate-or">또는</i>' +
+          '<label class="gate-org-box"><em>회사:</em><input name="company" type="text" placeholder="도시케어" autocomplete="organization" maxlength="60"></label>' +
+        '</div></div>' +
       '<div class="gate-err" role="alert"></div>' +
       '<button type="submit" class="gate-go">데모 시작하기</button>' +
+      '<p class="gate-note">시작하면 이름과 소속을 데모 안내 목적으로 수집·이용하는 데 동의하는 것으로 봅니다.</p>' +
     '</form>';
-  function field(name, label, type, ph, ac) {
-    return '<label class="gate-f"><span>' + label + '</span><input name="' + name + '" type="' + type + '" placeholder="' + ph + '" autocomplete="' + ac + '" maxlength="100"></label>';
-  }
 
   const form = back.querySelector('form');
   const err = back.querySelector('.gate-err');
@@ -84,23 +86,17 @@
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const f = form.elements;
-    const v = {
-      name: f.name.value.trim(), hospital: f.hospital.value.trim(),
-      email: f.email.value.trim(), phone: f.phone.value.trim(),
-    };
-    const digits = v.phone.replace(/\D/g, '');
+    // the box already says 병원: "서울대" -> "서울대병원"; a visitor who typed "서울대병원" does not get "병원병원"
+    const hosp = f.hospital.value.trim().replace(/\s*병원$/, '');
+    const v = { name: f.name.value.trim(), hospital: hosp ? hosp + '병원' : '', company: f.company.value.trim() };
     let bad = null;
-    if (!v.name) bad = ['name', '이름을 입력해 주세요.'];
-    else if (!v.hospital) bad = ['hospital', '병원명을 입력해 주세요.'];
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email)) bad = ['email', '이메일 주소를 확인해 주세요.'];
-    else if (digits.length < 9 || digits.length > 13) bad = ['phone', '핸드폰 번호를 확인해 주세요.'];
-    else if (!f.agree.checked) bad = ['agree', '개인정보 수집 · 이용에 동의해 주세요.'];
+    if (!v.name) bad = [f.name, f.name.closest('label'), '이름을 입력해 주세요.'];
+    else if (!v.hospital && !v.company) bad = [f.hospital, form.querySelector('.gate-org'), '병원 또는 회사 중 하나를 적어 주세요.'];
     form.querySelectorAll('.bad').forEach((n) => n.classList.remove('bad'));
     if (bad) {
-      err.textContent = bad[1];
-      const n = f[bad[0]];
-      (n.closest('label') || n).classList.add('bad');
-      n.focus();
+      err.textContent = bad[2];
+      bad[1].classList.add('bad');
+      bad[0].focus();
       return;
     }
     v.registeredAt = new Date().toISOString();
