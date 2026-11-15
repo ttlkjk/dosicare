@@ -17,13 +17,18 @@
   });
 
   // ---- two fingers (touch events: both fingers in one event) ----
+  // x, y: finger midpoint in this page's own (unscaled) coordinates - used once, to find the demo point under the
+  // fingers. sx, sy, sd: midpoint and spread on the phone screen. The homepage moves this page while the fingers
+  // move, so page coordinates shift under them; screen coordinates do not, and following them avoids a shake.
   function sendPinch(phase, e) {
     const msg = { type: 'dm-pinch', phase };
     const a = e.touches[0], b = e.touches[1];
-    if (a && b) {   // midpoint and spread of the two fingers, in this page's own (unscaled) coordinates
+    if (a && b) {
       msg.x = (a.clientX + b.clientX) / 2;
       msg.y = (a.clientY + b.clientY) / 2;
-      msg.d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+      msg.sx = (a.screenX + b.screenX) / 2;
+      msg.sy = (a.screenY + b.screenY) / 2;
+      msg.sd = Math.hypot(a.screenX - b.screenX, a.screenY - b.screenY);
     }
     post(msg);
   }
@@ -72,7 +77,7 @@
     if (e.pointerType !== 'touch') return;
     pointers.set(e.pointerId, e.target);
     if (pointers.size === 1) {
-      if (zoomed) pan = { id: e.pointerId, x0: e.clientX, y0: e.clientY, on: false };
+      if (zoomed) pan = { id: e.pointerId, x0: e.screenX, y0: e.screenY, on: false };
       return;
     }
     // second finger: a pinch; the demo gets neither finger
@@ -87,12 +92,12 @@
     const lifted = e.type === 'pointerup' || e.type === 'pointercancel';
     if (pan && e.pointerId === pan.id) {
       if (e.type === 'pointermove') {
-        if (!pan.on && Math.hypot(e.clientX - pan.x0, e.clientY - pan.y0) > 8) {
+        if (!pan.on && Math.hypot(e.screenX - pan.x0, e.screenY - pan.y0) > 8) {
           pan.on = true;
           takeOver(e.pointerId);
-          post({ type: 'dm-pan', phase: 'start', x: e.clientX, y: e.clientY });
+          post({ type: 'dm-pan', phase: 'start', sx: e.screenX, sy: e.screenY });
         } else if (pan.on) {
-          post({ type: 'dm-pan', phase: 'move', x: e.clientX, y: e.clientY });
+          post({ type: 'dm-pan', phase: 'move', sx: e.screenX, sy: e.screenY });   // screen, not page: see sendPinch
         }
       } else if (lifted) {
         endPan();

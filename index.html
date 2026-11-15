@@ -5003,7 +5003,7 @@
             if (demoView.z === 1) { demoView.tx = (W - DEMO_W * s) / 2; demoView.ty = 0; }
             applyDemoView();
         }
-        function applyDemoView() {
+        function applyDemoView(byFinger) {
             const v = demoView;
             const frame = document.getElementById('demo-frame');
             const hint = document.getElementById('demo-fit-hint');
@@ -5016,12 +5016,22 @@
             // keep the demo on screen: centred while smaller than the screen, edges no further in than the screen's
             v.tx = cw <= v.W ? (v.W - cw) / 2 : Math.min(0, Math.max(v.W - cw, v.tx));
             v.ty = ch <= v.H ? 0 : Math.min(0, Math.max(v.H - ch, v.ty));
-            Object.assign(frame.style, { width: DEMO_W + 'px', height: DEMO_H + 'px', left: '0px',
-                transform: 'translate(' + v.tx + 'px,' + v.ty + 'px) scale(' + S + ')' });
-            hint.style.top = Math.round(DEMO_H * v.s0 + 20) + 'px';
-            hint.style.visibility = v.z > 1.02 ? 'hidden' : '';
             tellDemoZoomed(cw > v.W + 1 || ch > v.H + 1);
+            const draw = () => {
+                demoDrawPending = false;
+                if (!v.s0) return;
+                Object.assign(frame.style, { width: DEMO_W + 'px', height: DEMO_H + 'px', left: '0px',
+                    transform: 'translate(' + v.tx + 'px,' + v.ty + 'px) scale(' + (v.s0 * v.z) + ')' });
+                hint.style.top = Math.round(DEMO_H * v.s0 + 20) + 'px';
+                hint.style.visibility = v.z > 1.02 ? 'hidden' : '';
+            };
+            // finger events can arrive several times per screen refresh: while fingers move, draw once per frame
+            if (!byFinger) { draw(); return; }
+            if (demoDrawPending) return;
+            demoDrawPending = true;
+            requestAnimationFrame(draw);
         }
+        let demoDrawPending = false;
         // Demo tab: the tab bar is hidden to give the demo the whole screen; the small "☰ 메뉴" button brings it back
         function toggleDemoBar(open) {
             const body = document.body;
@@ -5039,37 +5049,39 @@
             demoZoomedTold = zoomed;
             frame.contentWindow.postMessage({ type: 'dm-zoom', zoomed: zoomed }, location.origin);
         }
-        // One-finger move while zoomed in, reported by demo/js/pinch.js; x, y are the finger in demo coordinates
+        // Finger positions come from demo/js/pinch.js in phone-screen coordinates (sx, sy, sd): the frame moves under
+        // the fingers while they move, so the demo's own coordinates would shift and make the view shake.
+        // One-finger move while zoomed in: the view follows the finger's screen movement.
         let demoPan = null;
         function onDemoPan(m) {
-            const v = demoView;
-            if (!v.s0) return;
+            if (!demoView.s0) return;
             if (m.phase === 'end') { demoPan = null; return; }
-            const S = v.s0 * v.z;
-            const qx = v.tx + m.x * S, qy = v.ty + m.y * S;   // where the finger is on screen
             if (m.phase === 'move' && demoPan) {
-                v.tx += qx - demoPan.qx;
-                v.ty += qy - demoPan.qy;
-                applyDemoView();
+                demoView.tx += m.sx - demoPan.sx;
+                demoView.ty += m.sy - demoPan.sy;
+                applyDemoView(true);
             }
-            demoPan = { qx: qx, qy: qy };
+            demoPan = { sx: m.sx, sy: m.sy };
         }
-        // Two-finger zoom / move, reported by demo/js/pinch.js (touches on the frame never reach this page).
-        // x, y, d are the finger midpoint and spread in the demo's own 1366 x 768 coordinates.
+        // Two-finger zoom / move. At the start, x, y (demo coordinates) tell which demo point is under the fingers;
+        // from then on that point is kept under the fingers' screen midpoint, scaled by their screen spread.
         let demoPinch = null;
         function onDemoPinch(m) {
             const v = demoView;
             if (!v.s0) return;
             if (m.phase === 'end') { demoPinch = null; return; }
-            if (m.d == null) return;
+            if (m.sd == null) return;
             const S = v.s0 * v.z;
-            const qx = v.tx + m.x * S, qy = v.ty + m.y * S, d = m.d * S;   // the same, in screen px
-            if (m.phase === 'start' || !demoPinch) { demoPinch = { S0: S, d0: d, px: m.x, py: m.y }; return; }
-            v.z = Math.min(5, Math.max(1, demoPinch.S0 * (d / demoPinch.d0) / v.s0));
+            if (m.phase === 'start' || !demoPinch) {
+                demoPinch = { S0: S, sd0: m.sd || 1, px: m.x, py: m.y, sx0: m.sx, sy0: m.sy,
+                    qx0: v.tx + m.x * S, qy0: v.ty + m.y * S };   // midpoint in page px, nothing is moving yet
+                return;
+            }
+            v.z = Math.min(5, Math.max(1, demoPinch.S0 * (m.sd / demoPinch.sd0) / v.s0));
             const S2 = v.s0 * v.z;
-            v.tx = qx - demoPinch.px * S2;   // the demo point first under the fingers stays under them
-            v.ty = qy - demoPinch.py * S2;
-            applyDemoView();
+            v.tx = demoPinch.qx0 + (m.sx - demoPinch.sx0) - demoPinch.px * S2;
+            v.ty = demoPinch.qy0 + (m.sy - demoPinch.sy0) - demoPinch.py * S2;
+            applyDemoView(true);
         }
         window.addEventListener('resize', fitDemoFrame);
         window.addEventListener('message', (e) => {
