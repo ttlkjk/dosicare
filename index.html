@@ -5008,6 +5008,7 @@
             const hint = document.getElementById('demo-fit-hint');
             if (!v.s0) {
                 Object.assign(frame.style, { width: '', height: '', transform: '', left: '' });
+                tellDemoZoomed(false);
                 return;
             }
             const S = v.s0 * v.z, cw = DEMO_W * S, ch = DEMO_H * S;
@@ -5018,6 +5019,31 @@
                 transform: 'translate(' + v.tx + 'px,' + v.ty + 'px) scale(' + S + ')' });
             hint.style.top = Math.round(DEMO_H * v.s0 + 20) + 'px';
             hint.style.visibility = v.z > 1.02 ? 'hidden' : '';
+            tellDemoZoomed(cw > v.W + 1 || ch > v.H + 1);
+        }
+        // pinch.js lets one finger move the view only while there is somewhere to move to
+        let demoZoomedTold = null;
+        function tellDemoZoomed(zoomed) {
+            if (zoomed === demoZoomedTold) return;
+            const frame = document.getElementById('demo-frame');
+            if (!frame.contentWindow) return;
+            demoZoomedTold = zoomed;
+            frame.contentWindow.postMessage({ type: 'dm-zoom', zoomed: zoomed }, location.origin);
+        }
+        // One-finger move while zoomed in, reported by demo/js/pinch.js; x, y are the finger in demo coordinates
+        let demoPan = null;
+        function onDemoPan(m) {
+            const v = demoView;
+            if (!v.s0) return;
+            if (m.phase === 'end') { demoPan = null; return; }
+            const S = v.s0 * v.z;
+            const qx = v.tx + m.x * S, qy = v.ty + m.y * S;   // where the finger is on screen
+            if (m.phase === 'move' && demoPan) {
+                v.tx += qx - demoPan.qx;
+                v.ty += qy - demoPan.qy;
+                applyDemoView();
+            }
+            demoPan = { qx: qx, qy: qy };
         }
         // Two-finger zoom / move, reported by demo/js/pinch.js (touches on the frame never reach this page).
         // x, y, d are the finger midpoint and spread in the demo's own 1366 x 768 coordinates.
@@ -5041,6 +5067,7 @@
             if (e.origin !== location.origin) return;
             if (e.data === 'dm-gate-done') fitDemoFrame();
             else if (e.data && e.data.type === 'dm-pinch') onDemoPinch(e.data);
+            else if (e.data && e.data.type === 'dm-pan') onDemoPan(e.data);
         });
 
         function switchMainTab(tab) {
