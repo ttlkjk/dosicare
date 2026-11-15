@@ -1,0 +1,56 @@
+/* Plan Check report window (js/windows/plancheck.js): captured chrome + scrolling captured page.
+   Also the Plan View bottom "Plan Check" sub-view in the main window (shell.js, .pv-pc-*). */
+.pc-app { position: absolute; inset: 0; overflow: hidden; background: #F3F4F6; font-family: 'Segoe UI', sans-serif; }
+.pc-frame { position: absolute; left: 0; top: 0; width: 1707px; height: 996px; display: block; }
+.pc-page { position: absolute; overflow: hidden; background: #fff; }
+.pc-doc { position: relative; }
+.pc-doc img { display: block; }
+.pc-spot { position: absolute; border-radius: 4px; }
+.pc-spot.flash, .pc-hot.flash { animation: pc-flash 1.4s ease; }
+@keyframes pc-flash { 0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); } 25%, 70% { box-shadow: 0 0 0 3px rgba(245,158,11,.95); } }
+.pc-doc .pc-spot[style] { cursor: default; }
+.pc-thumb { position: absolute; background: #bab5ab; border: 1px solid #9e9a91; box-sizing: border-box; pointer-events: none; }
+.pc-hot { position: absolute; border-radius: 4px; cursor: pointer; }
+.pc-hot.hot, .pc-spot.hot, .pc-popx.hot { background: rgba(245,158,11,.22); box-shadow: 0 0 0 2px #f59e0b; }
+.pc-msg { padding: 40px; font-size: 16px; }
+
+.pc-over { position: absolute; inset: 0; z-index: 60; background: rgba(0,0,0,.55); display: none; align-items: center; justify-content: center; }
+.pc-over.on { display: flex; animation: pc-fade .15s ease; }
+@keyframes pc-fade { from { opacity: 0; } to { opacity: 1; } }
+.pc-popwin { position: relative; box-shadow: 0 24px 60px rgba(0,0,0,.55); border: 1px solid #6b7280; }
+.pc-popwin img { display: block; }
+.pc-popx { position: absolute; cursor: pointer; }
+.pc-pdf { width: 1060px; height: 92%; background: #1e293b; border-radius: 10px; box-shadow: 0 24px 60px rgba(0,0,0,.6); display: flex; flex-direction: column; overflow: hidden; }
+.pc-pdf-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; background: #0f172a; color: #94a3b8; font-size: 13px; font-weight: 600; }
+.pc-pdf-x { font-size: 22px; line-height: 1; padding: 2px 8px; border-radius: 6px; cursor: pointer; }
+.pc-pdf-x.hot { background: rgba(248,113,113,.15); color: #f87171; }
+.pc-pdf-body { flex: 1; background: #525659; overflow: hidden; padding: 16px 0; }
+.pc-pdf-body img { display: block; width: 910px; margin: 0 auto; box-shadow: 0 2px 8px rgba(0,0,0,.5); background: #fff; }
+
+/* Plan View bottom pane: the "Plan Check" sub-view (main.py setup_plan_check_frame). Drawn at the capture's own px
+   size (1247 x 219) and stretched like the Plan View capture under it. */
+.pv-pc-hit { position: absolute; cursor: pointer; }
+.pv-pc { position: absolute; left: 0; top: 0; width: 1247px; height: 219px; transform-origin: 0 0; display: none; background: #fff; font: 10.6px 'Segoe UI', sans-serif; color: #000; }
+.pv-pc.on { display: block; }
+.pv-pc-tabs { height: 26px; background: #d6eaf8; display: flex; align-items: center; padding-left: 4px; border-top: 1px solid #8f9ca6; box-sizing: border-box; }
+.pv-pc-tab { height: 22px; padding: 0 15px; margin: 0 2px; display: flex; align-items: center; font-weight: 700; color: #1a5276; cursor: pointer; }
+.pv-pc-tab.on { background: #fff; color: #000; }
+.pv-pc-tab.prof { margin-left: auto; margin-right: 6px; background: #1d76ed; color: #fff; }
+.pv-pc-bar { height: 27px; background: #dbe1f1; display: flex; align-items: center; padding: 0 4px; border-top: 1px solid #c0c7cb; }
+.pv-pc-bar .lab { color: #333; margin: 0 2px 0 6px; }
+.pv-pc-bar .combo { width: 214px; height: 19px; border: 1px solid #acacac; background: #fff; margin: 0 2px; display: flex; align-items: center; justify-content: space-between; padding: 0 4px; box-sizing: border-box; }
+.pv-pc-bar .combo::after { content: '▾'; color: #444; }
+.pv-pc-bar .b { padding: 2px 8px; margin: 0 2px; background: #fff; cursor: pointer; }
+.pv-pc-bar .b.acc { background: #1d76ed; color: #fff; font-weight: 700; padding: 2px 10px; margin-left: 10px; }
+.pv-pc-bar .b.acc:hover { background: #1560c4; }
+.pv-pc-bar .rx { margin-left: auto; margin-right: 8px; color: #666; }
+.pv-pc-nb { height: 22px; background: #dcdad5; display: flex; align-items: flex-end; padding-left: 2px; }
+.pv-pc-nb span { padding: 2px 10px; margin-right: 1px; background: #d0cec9; border: 1px solid #9e9a91; border-bottom: 0; color: #000; }
+.pv-pc-nb span.on { background: #dcdad5; padding-top: 4px; }
+.pv-pc-grid { height: 143px; overflow: hidden; }
+.pv-pc-grid table { border-collapse: collapse; table-layout: fixed; width: 1230px; font-size: 12px; }
+.pv-pc-grid th { height: 24px; background: #dbe1f1; color: #333; font-weight: 700; text-align: left; padding: 0 6px; border-right: 1px solid #b5b5b5; }
+.pv-pc-grid td { height: 24px; padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pv-pc-grid th.c, .pv-pc-grid td.c { text-align: center; }
+.pv-pc-grid tr.Passed td { color: #059669; }
+.pv-pc-grid tr.NotFound td { color: #F59E0B; }

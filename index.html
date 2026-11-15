@@ -236,6 +236,7 @@
             </div>
         </div>
         <div class="utility-center">
+            <button class="main-tab demo" id="tab-demo" onclick="switchMainTab('demo')">Demo</button>
             <button class="main-tab dosimachine active" id="tab-dm" onclick="switchMainTab('dm')">DosiMachine</button>
             <button class="main-tab" id="tab-hub" onclick="switchMainTab('hub')">Linac QA Hub</button>
         </div>
@@ -248,6 +249,11 @@
         </div>
     </div>
 
+
+    <!-- Demo tab: the DosiMachine click-through demo (demo/index.html) fills the page under the tab bar; it is the first view -->
+    <div class="demo-frame-wrap" id="demo-frame-wrap">
+        <iframe id="demo-frame" title="DosiMachine Demo" allow="fullscreen" allowfullscreen></iframe>
+    </div>
 
     <!-- Top Navigation Bar -->
     <nav class="top-nav" style="display: none;">
@@ -4971,8 +4977,8 @@
                 });
             });
 
-            // Set default active main tab to DosiMachine
-            switchMainTab('dm');
+            // First view is the Demo tab; #dm / #hub open those tabs directly (the demo's homepage link uses #dm)
+            switchMainTab({ '#dm': 'dm', '#hub': 'hub' }[location.hash] || 'demo');
         });
 
         function switchMainTab(tab) {
@@ -4982,6 +4988,23 @@
             const tabDm = document.getElementById('tab-dm');
             const topNav = document.querySelector('.top-nav');
             const sidebar = document.getElementById('sidebar');
+
+            const isDemo = tab === 'demo';
+            body.classList.toggle('active-demo', isDemo);
+            document.getElementById('tab-demo').classList.toggle('active', isDemo);
+            document.getElementById('demo-frame-wrap').style.display = isDemo ? 'flex' : 'none';
+            document.getElementById('main-container').style.display = isDemo ? 'none' : '';
+            if (isDemo) {
+                const frame = document.getElementById('demo-frame');
+                if (!frame.getAttribute('src')) frame.src = 'demo/index.html';   // load once, keep its state across tab switches
+                body.classList.remove('active-dosimachine');
+                tabHub.classList.remove('active');
+                tabDm.classList.remove('active');
+                topNav.style.display = 'none';
+                sidebar.style.display = 'none';
+                frame.focus();
+                return;
+            }
 
             if (tab === 'dm') {
                 body.classList.add('active-dosimachine');

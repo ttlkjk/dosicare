@@ -1,0 +1,20 @@
+/* Demo overlay for self-playing live windows (js/demo-overlay.js): fake cursor, click ripple, caption, step card.
+   Not part of any original program. Class names keep the dr- prefix they were born with in the DosiReport window. */
+.dr-steps, .dr-steps *, .dr-cap, .dr-cap * { box-sizing: border-box; }
+.dr-steps h4 { margin-top: 0; }
+.dr-cursor { position: absolute; left: 0; top: 0; width: 30px; height: 40px; z-index: 90; pointer-events: none; opacity: 0; transition: opacity .25s; filter: drop-shadow(1px 2px 2px rgba(0,0,0,.45)); }
+.dr-cursor.on { opacity: 1; }
+.dr-ripple { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 3px solid #f59e0b; z-index: 89; pointer-events: none; animation: dr-ripple .5s ease-out forwards; }
+@keyframes dr-ripple { from { transform: scale(.3); opacity: 1; } to { transform: scale(1.4); opacity: 0; } }
+.dr-cap { position: absolute; z-index: 91; pointer-events: none; max-width: 420px; background: #111827; color: #fff; font-size: 17px; font-weight: 600; line-height: 1.45; padding: 10px 14px; border-radius: 8px; border: 2px solid #f59e0b; box-shadow: 0 6px 20px rgba(0,0,0,.35); opacity: 0; transition: opacity .25s; }
+.dr-cap.on { opacity: 1; }
+.dr-cap small { display: block; font-size: 13px; font-weight: 400; color: #cbd5e1; margin-top: 2px; }
+.dr-steps { position: absolute; right: 18px; bottom: 18px; z-index: 80; width: 300px; background: rgba(17,24,39,.92); color: #e5e7eb; border-radius: 10px; padding: 12px 14px; font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,.3); pointer-events: none; }
+.dr-steps h4 { font-size: 12px; color: #f59e0b; letter-spacing: .5px; margin-bottom: 8px; font-weight: 700; }
+.dr-step { display: flex; align-items: center; gap: 10px; padding: 4px 0; color: #9ca3af; transition: color .2s; }
+.dr-step i { font-style: normal; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #4b5563; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.dr-step.done { color: #d1d5db; }
+.dr-step.done i { background: #16a34a; border-color: #16a34a; color: #fff; }
+.dr-step.now { color: #fff; font-weight: 700; }
+.dr-step.now i { border-color: #f59e0b; background: #f59e0b; color: #111827; }
+.dr-steps .hint { margin-top: 8px; font-size: 11px; color: #9ca3af; }

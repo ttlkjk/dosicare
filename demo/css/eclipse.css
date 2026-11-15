@@ -1,0 +1,125 @@
+/* Eclipse log dose reconstruction (js/windows/logrecon.js) and CBCT anatomy dose (js/windows/cbct.js) windows,
+   the Plan View "Calculation Models" sub-view (js/calcmodels.js), and the shared demo pieces (js/eclipse-ui.js).
+   Window colours are the Tk originals (log_recon_window.py / cbct_window.py: BG #F2F4F4, CARD #fff, ACCENT #0284C7,
+   OK #059669, ERR #EF4444, MUTED #64748B). */
+.ec-app { position: absolute; inset: 0; overflow: hidden; background: #F2F4F4; color: #1E293B;
+  font: 12px 'Malgun Gothic', 'Segoe UI', sans-serif; display: flex; flex-direction: column; padding: 10px; box-sizing: border-box; gap: 6px; }
+.ec-app * { box-sizing: border-box; }
+.ec-row { display: flex; gap: 8px; min-height: 0; }
+.ec-box { border: 2px groove #d9dde1; background: #fff; margin: 0; padding: 6px 10px 8px; min-width: 0; position: relative; }
+.ec-box > legend { color: #0284C7; font-weight: 700; font-size: 13px; padding: 0 3px; }
+.ec-grid { display: grid; grid-template-columns: auto auto auto; gap: 4px 8px; align-items: center; }
+.ec-lab { color: #64748B; white-space: nowrap; }
+.ec-ent { height: 21px; border: 1px solid #7a7a7a; background: #fff; padding: 1px 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; }
+.ec-combo { height: 21px; border: 1px solid #acacac; background: #fff; padding: 0 4px; display: inline-flex; align-items: center; justify-content: space-between; gap: 6px; white-space: nowrap; }
+.ec-combo::after { content: '▾'; color: #444; font-size: 10px; }
+.ec-btn { height: 23px; padding: 0 9px; border: 1px solid #adadad; background: #e1e1e1; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; cursor: default; }
+.ec-btn.acc { background: #0284C7; color: #fff; border-color: #0284C7; font-weight: 700; }
+.ec-btn.ok { background: #059669; color: #fff; border-color: #059669; font-weight: 700; }
+.ec-btn.alt { background: #E2E8F0; border-color: #E2E8F0; color: #1E293B; }
+.ec-btn.big { height: 31px; padding: 0 14px; font-size: 13px; }
+.ec-btn.dis { opacity: .45; }
+.ec-btn.hot, .ec-hot.hot { box-shadow: 0 0 0 3px #f59e0b; }
+.ec-chk, .ec-rad { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.ec-chk i { width: 13px; height: 13px; border: 1px solid #333; background: #fff; display: inline-block; position: relative; }
+.ec-chk.on i::after { content: '✓'; position: absolute; left: 1px; top: -3px; font-size: 12px; font-style: normal; font-weight: 700; }
+.ec-rad i { width: 13px; height: 13px; border: 1px solid #333; border-radius: 50%; background: #fff; display: inline-block; position: relative; }
+.ec-rad.on i::after { content: ''; position: absolute; left: 3px; top: 3px; width: 5px; height: 5px; border-radius: 50%; background: #111; }
+.ec-muted { color: #64748B; }
+.ec-small { font-size: 11px; color: #64748B; }
+
+/* Treeview-like tables */
+.ec-tv { border: 1px solid #a0a0a0; background: #fff; overflow: hidden; flex: 1; min-height: 0; }
+.ec-tv table { border-collapse: collapse; width: 100%; table-layout: fixed; }
+.ec-tv th { height: 22px; background: #fff; border-right: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5; font-weight: 400; text-align: left; padding: 0 5px; white-space: nowrap; overflow: hidden; }
+.ec-tv td { height: 22px; padding: 0 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ec-tv td.r, .ec-tv th.r { text-align: right; } .ec-tv td.c, .ec-tv th.c { text-align: center; }
+.ec-tv tr.new td { animation: ec-new 1.2s ease; }
+@keyframes ec-new { from { background: #fef3c7; } to { background: transparent; } }
+.ec-tv tr.sel td { background: #0078d7; color: #fff; }
+.ec-list { border: 1px solid #a0a0a0; background: #fff; font: 12px Consolas, monospace; padding: 2px 3px; overflow: hidden; flex: 1; white-space: pre; }
+.ec-list div { height: 18px; line-height: 18px; }
+.ec-log { border: 1px solid #a0a0a0; background: #fff; font: 12px Consolas, 'Malgun Gothic', monospace; padding: 3px 5px; overflow: hidden; flex: 1; white-space: pre-wrap; word-break: break-all; line-height: 17px; }
+.ec-log .ok { color: #059669; } .ec-log .err { color: #EF4444; } .ec-log .warn { color: #B45309; }
+.ec-prog { width: 260px; height: 18px; border: 1px solid #bcbcbc; background: #e6e6e6; position: relative; }
+.ec-prog b { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: #06b025; }
+.ec-glab { font-weight: 700; font-size: 13.3px; line-height: 19px; white-space: pre-wrap; min-height: 42px; }
+.ec-glab.ok { color: #059669; } .ec-glab.err { color: #EF4444; }
+
+/* demo-only: "예시" badge, Eclipse panel, 3-view Plan View viewer */
+.ec-ex { display: inline-block; background: #dc2626; color: #fff; font-weight: 800; font-size: 12px; padding: 1px 7px; border-radius: 4px; margin-left: 6px; letter-spacing: .5px; vertical-align: middle; }
+.ec-exbox { outline: 3px dashed #dc2626; outline-offset: 2px; }
+.ec-ecl { position: absolute; z-index: 60; width: 900px; height: 560px; left: 50%; top: 50%; margin: -280px 0 0 -450px; background: #1f2329; color: #e5e7eb;
+  border: 1px solid #4b5563; border-radius: 6px; box-shadow: 0 24px 60px rgba(0,0,0,.55); display: none; flex-direction: column; overflow: hidden; font: 12px 'Segoe UI', 'Malgun Gothic', sans-serif; }
+.ec-ecl.on { display: flex; animation: ec-pop .2s ease; }
+@keyframes ec-pop { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: none; } }
+.ec-ecl-head { height: 34px; background: #111418; display: flex; align-items: center; padding: 0 12px; gap: 10px; border-bottom: 1px solid #374151; }
+.ec-ecl-head b { color: #fbbf24; font-size: 13px; }
+.ec-ecl-head span { color: #9ca3af; }
+.ec-ecl-head .x { margin-left: auto; font-size: 18px; color: #9ca3af; }
+.ec-ecl-menu { height: 26px; background: #2b3038; display: flex; align-items: center; gap: 2px; padding: 0 6px; }
+.ec-ecl-menu span { padding: 3px 10px; color: #d1d5db; }
+.ec-ecl-menu span.on { background: #3b82f6; color: #fff; border-radius: 3px; }
+.ec-ecl-body { flex: 1; display: flex; gap: 10px; padding: 10px; min-height: 0; }
+.ec-ecl-scripts { width: 330px; background: #f3f4f6; color: #111; border-radius: 4px; display: flex; flex-direction: column; padding: 8px; gap: 6px; }
+.ec-ecl-scripts h5 { margin: 0; font-size: 12px; color: #374151; }
+.ec-ecl-scripts .lst { flex: 1; background: #fff; border: 1px solid #9ca3af; }
+.ec-ecl-scripts .lst div { padding: 4px 6px; border-bottom: 1px solid #f1f5f9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ec-ecl-scripts .lst div.sel { background: #0078d7; color: #fff; }
+.ec-ecl-scripts .lst div small { color: inherit; opacity: .7; margin-left: 6px; }
+.ec-ecl-scripts .btns { display: flex; justify-content: flex-end; gap: 6px; }
+.ec-ecl-con { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.ec-ecl-step { height: 54px; background: #111418; border-radius: 4px; padding: 7px 10px; display: flex; flex-direction: column; justify-content: space-between; }
+.ec-ecl-step .t { font-size: 15px; font-weight: 700; color: #fff; }
+.ec-ecl-step .bar { height: 7px; background: #374151; border-radius: 4px; overflow: hidden; }
+.ec-ecl-step .bar b { display: block; height: 100%; width: 0; background: #22c55e; transition: width .3s; }
+.ec-ecl-out { flex: 1; background: #0b0d10; border-radius: 4px; padding: 8px 10px; font: 11.5px Consolas, monospace; color: #cbd5e1; overflow: hidden; white-space: pre-wrap; line-height: 16px; }
+.ec-ecl-out .j { color: #93c5fd; } .ec-ecl-out .ok { color: #4ade80; } .ec-ecl-out .i { color: #fcd34d; } .ec-ecl-out .ex { color: #fca5a5; }
+.ec-ecl-foot { height: 24px; background: #111418; color: #9ca3af; font-size: 11px; display: flex; align-items: center; padding: 0 12px; }
+
+.ec-view { position: absolute; z-index: 55; left: 50%; top: 50%; width: 1240px; height: 560px; margin: -280px 0 0 -620px; background: #000; border: 1px solid #4b5563;
+  box-shadow: 0 24px 60px rgba(0,0,0,.55); display: none; flex-direction: column; color: #e5e7eb; font: 12px 'Segoe UI', 'Malgun Gothic', sans-serif; }
+.ec-view.on { display: flex; animation: ec-pop .2s ease; }
+.ec-view-head { height: 34px; background: #1A5276; display: flex; align-items: center; padding: 0 10px; gap: 6px; }
+.ec-view-head .ttl { font-weight: 700; color: #fff; font-size: 13px; margin-right: 10px; }
+.ec-view-head .tab { padding: 3px 12px; border-radius: 3px; background: #2471A3; color: #d6eaf8; font-weight: 600; }
+.ec-view-head .tab.on { background: #fff; color: #1A5276; }
+.ec-view-head .x { margin-left: auto; font-size: 18px; color: #d6eaf8; padding: 0 6px; }
+.ec-view-cells { flex: 1; display: flex; gap: 6px; padding: 8px; min-height: 0; }
+.ec-view-cell { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; min-width: 0; }
+.ec-view-cell .lab { position: absolute; left: 6px; top: 4px; color: #fbbf24; font-weight: 700; font-size: 12px; z-index: 1; }
+.ec-view-cell img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.ec-view-cell.two img { max-height: 49%; }
+.ec-view-foot { height: 52px; background: #111; display: flex; align-items: center; gap: 14px; padding: 0 12px; }
+.ec-view-foot .bar { width: 260px; height: 12px; border: 1px solid #555; }
+.ec-view-foot .txt { flex: 1; font-size: 13px; line-height: 17px; color: #e5e7eb; }
+.ec-view-foot .txt small { display: block; color: #9ca3af; font-size: 11.5px; }
+
+/* Plan View bottom pane: "Calculation Models" sub-view (main.py setup_calc_models_frame), drawn at the capture's px
+   size (1247 x 219) and stretched like the capture under it (same as .pv-pc in plancheck.css). */
+.pv-cm-hit { position: absolute; cursor: pointer; }
+.pv-cm { position: absolute; left: 0; top: 0; width: 1247px; height: 219px; transform-origin: 0 0; display: none; background: #fff; font: 12px 'Segoe UI', sans-serif; color: #0F172A; overflow: hidden; z-index: 3; }
+.pv-cm.on { display: block; }
+.pv-cm .pv-pc-tab.on { background: #fff; color: #000; }
+.pv-cm-body { position: absolute; left: 0; right: 0; top: 26px; bottom: 0; display: flex; gap: 10px; padding: 8px; box-sizing: border-box; }
+.pv-cm-tbl { flex: 1; border: 1px solid #000; display: flex; flex-direction: column; min-width: 0; }
+.pv-cm-tr { display: flex; align-items: center; height: 26px; border-bottom: 1px solid #F1F5F9; }
+.pv-cm-tr.h { background: #F1F5F9; font-weight: 700; height: 25px; }
+.pv-cm-tr.alt { background: #F8FAFC; }
+.pv-cm-tr > span { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pv-cm-tr .task { width: 150px; font-weight: 700; padding-left: 8px; }
+.pv-cm-tr .name { flex: 1; color: #334155; }
+.pv-cm-tr.h .name { color: #0F172A; }
+.pv-cm-tr .ver { width: 92px; text-align: center; color: #334155; }
+.pv-cm-tr .grid { width: 104px; text-align: center; color: #334155; }
+.pv-cm-tr .mod { width: 92px; text-align: center; color: #334155; }
+.pv-cm-tr.h span { color: #0F172A; }
+.pv-cm-combo { height: 20px; border: 1px solid #acacac; background: #e5e5e5; display: flex; align-items: center; justify-content: space-between; padding: 0 0 0 4px; }
+.pv-cm-combo::after { content: '▾'; width: 16px; text-align: center; background: #fff; border-left: 1px solid #acacac; height: 100%; line-height: 18px; }
+.pv-cm-card { width: 280px; border: 1px solid #000; background: #F8FAFC; padding: 10px 12px; box-sizing: border-box; flex-shrink: 0; display: flex; flex-direction: column; gap: 6px; overflow: hidden; }
+.pv-cm-card h6 { margin: 0; font-size: 13px; color: #0284C7; font-weight: 700; }
+.pv-cm-card .run { height: 34px; background: #0284C7; color: #fff; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.pv-cm-card .row2 { display: flex; gap: 3px; flex-shrink: 0; }
+.pv-cm-card .row2 span { flex: 1; height: 24px; background: #E2E8F0; font-weight: 700; font-size: 11px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.pv-cm-card .reload { font-size: 11px; color: #64748B; cursor: pointer; flex-shrink: 0; }
+.pv-cm-card .desc { font-size: 10.6px; color: #64748B; line-height: 14px; }
