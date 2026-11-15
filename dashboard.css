@@ -1048,6 +1048,35 @@ body.active-dosimachine .main-tab.dosimachine.active {
 body.active-demo .utility-left {
     display: none;
 }
+/* Demo tab: no tab bar, the demo gets the whole screen; "☰ 메뉴" (top right, over the demo's empty
+   menu-bar end) brings the bar back as an ordinary row above the demo */
+body.active-demo .utility-bar {
+    display: none;
+}
+body.active-demo.demo-bar-open .utility-bar {
+    display: flex;
+}
+.demo-frame-wrap {
+    position: relative;
+}
+.demo-bar-toggle {
+    position: absolute;
+    top: 2px;
+    right: 6px;
+    z-index: 20;
+    min-height: 26px;
+    padding: 3px 12px;
+    border: 0;
+    border-radius: 13px;
+    background: rgba(15, 23, 42, 0.72);
+    color: #fff;
+    font: 600 12px/1.6 'Inter', 'Malgun Gothic', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+.demo-bar-toggle:hover {
+    background: rgba(15, 23, 42, 0.9);
+}
 /* Small screens (index.html fitDemoFrame): the demo is drawn at 1366 x 768 and scaled down to fit */
 .demo-frame-wrap.fit {
     position: relative;

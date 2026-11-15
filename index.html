@@ -21,7 +21,7 @@
     <meta name="twitter:description" content="DosiMachine은 선형가속기(Linac) 품질관리를 위한 통합 소프트웨어입니다. Field Analysis, Starshot, Winston-Lutz, Picket Fence, TRS-398 선량교정, MLC/Trajectory Log 분석과 PDF 리포트 자동화를 하나의 워크플로우로 제공합니다.">
     <meta name="twitter:image" content="https://dosicare.co.kr/images/main.png">
     <title>DosiMachine | 방사선 치료 품질관리(QA) 통합 솔루션 — DosiCare</title>
-    <link rel="stylesheet" href="dashboard.css?v=7.5">
+    <link rel="stylesheet" href="dashboard.css?v=7.6">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -253,6 +253,7 @@
     <!-- Demo tab: the DosiMachine click-through demo (demo/index.html) fills the page under the tab bar; it is the first view -->
     <div class="demo-frame-wrap" id="demo-frame-wrap">
         <iframe id="demo-frame" title="DosiMachine Demo" allow="fullscreen" allowfullscreen></iframe>
+        <button class="demo-bar-toggle" id="demo-bar-toggle" type="button" onclick="toggleDemoBar()">☰ 메뉴</button>
         <div class="demo-fit-hint" id="demo-fit-hint">📱 PC 화면을 줄여서 보여 드리고 있습니다.<br>휴대폰을 <b>가로로 돌리면</b> 더 크게 보이고,<br>두 손가락으로 벌리면 확대됩니다.</div>
     </div>
 
@@ -5021,6 +5022,14 @@
             hint.style.visibility = v.z > 1.02 ? 'hidden' : '';
             tellDemoZoomed(cw > v.W + 1 || ch > v.H + 1);
         }
+        // Demo tab: the tab bar is hidden to give the demo the whole screen; the small "☰ 메뉴" button brings it back
+        function toggleDemoBar(open) {
+            const body = document.body;
+            if (open === undefined) open = !body.classList.contains('demo-bar-open');
+            body.classList.toggle('demo-bar-open', open);
+            document.getElementById('demo-bar-toggle').textContent = open ? '✕ 닫기' : '☰ 메뉴';
+            fitDemoFrame();   // the frame got shorter or taller
+        }
         // pinch.js lets one finger move the view only while there is somewhere to move to
         let demoZoomedTold = null;
         function tellDemoZoomed(zoomed) {
@@ -5080,6 +5089,8 @@
 
             const isDemo = tab === 'demo';
             body.classList.toggle('active-demo', isDemo);
+            body.classList.remove('demo-bar-open');
+            document.getElementById('demo-bar-toggle').textContent = '☰ 메뉴';
             document.getElementById('tab-demo').classList.toggle('active', isDemo);
             document.getElementById('demo-frame-wrap').style.display = isDemo ? 'flex' : 'none';
             document.getElementById('main-container').style.display = isDemo ? 'none' : '';
