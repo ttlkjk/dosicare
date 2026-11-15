@@ -5010,6 +5010,7 @@
             if (!v.s0) {
                 Object.assign(frame.style, { width: '', height: '', transform: '', left: '' });
                 tellDemoZoomed(false);
+                placeDemoBarToggle(0, 0, 0, 0);
                 return;
             }
             const S = v.s0 * v.z, cw = DEMO_W * S, ch = DEMO_H * S;
@@ -5020,9 +5021,11 @@
             const draw = () => {
                 demoDrawPending = false;
                 if (!v.s0) return;
+                const S1 = v.s0 * v.z;
                 Object.assign(frame.style, { width: DEMO_W + 'px', height: DEMO_H + 'px', left: '0px',
-                    transform: 'translate(' + v.tx + 'px,' + v.ty + 'px) scale(' + (v.s0 * v.z) + ')' });
-                hint.style.top = Math.round(DEMO_H * v.s0 + 20) + 'px';
+                    transform: 'translate(' + v.tx + 'px,' + v.ty + 'px) scale(' + S1 + ')' });
+                const below = placeDemoBarToggle(v.W, v.H, DEMO_W * S1, v.ty + DEMO_H * S1);
+                hint.style.top = Math.round(DEMO_H * v.s0 + (below ? 44 : 20)) + 'px';
                 hint.style.visibility = v.z > 1.02 ? 'hidden' : '';
             };
             // While fingers move, change the frame only at a screen refresh (once per frame). The browser maps each touch
@@ -5034,6 +5037,26 @@
             requestAnimationFrame(draw);
         }
         let demoDrawPending = false;
+        // "☰ 메뉴" goes where it hides nothing of the demo (the demo's own window close buttons sit top right):
+        // in the side margins beside a scaled demo, else in the empty space under it, else top centre, where the
+        // demo's menu bar is empty. W, H: screen area; cw: drawn demo width; bottom: drawn demo bottom edge.
+        // Returns true when it went under the demo.
+        function placeDemoBarToggle(W, H, cw, bottom) {
+            const btn = document.getElementById('demo-bar-toggle');
+            const bw = btn.offsetWidth || 70, bh = btn.offsetHeight || 26;
+            const side = W ? (W - cw) / 2 : 0;
+            const s = btn.style;
+            if (W && side >= bw + 8) {
+                Object.assign(s, { top: '4px', right: Math.round((side - bw) / 2) + 'px', left: 'auto', transform: 'none' });
+                return false;
+            }
+            if (W && H - bottom >= bh + 12) {
+                Object.assign(s, { top: Math.round(bottom + 6) + 'px', right: '8px', left: 'auto', transform: 'none' });
+                return true;
+            }
+            Object.assign(s, { top: '2px', right: 'auto', left: '50%', transform: 'translateX(-50%)' });
+            return false;
+        }
         // During a gesture the frame is moved as a ready-made picture (no redraw of the whole demo at every new size,
         // which stuttered); when the fingers lift it is drawn sharp again at the final size.
         function demoGesture(on) {
