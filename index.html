@@ -5030,6 +5030,7 @@
             if (demoDrawPending) return;
             demoDrawPending = true;
             requestAnimationFrame(draw);
+            setTimeout(() => { if (demoDrawPending) draw(); }, 40);   // in case frames are paused or slow
         }
         let demoDrawPending = false;
         // Demo tab: the tab bar is hidden to give the demo the whole screen; the small "☰ 메뉴" button brings it back
@@ -5063,24 +5064,25 @@
             }
             demoPan = { sx: m.sx, sy: m.sy };
         }
-        // Two-finger zoom / move. At the start, x, y (demo coordinates) tell which demo point is under the fingers;
-        // from then on that point is kept under the fingers' screen midpoint, scaled by their screen spread.
+        // Two-finger zoom / move: the demo point first under the fingers' midpoint stays under it, and the view scales
+        // with the fingers' spread. sx, sy, sd are measured on this page by pinch.js at the moment of each touch.
         let demoPinch = null;
         function onDemoPinch(m) {
             const v = demoView;
             if (!v.s0) return;
             if (m.phase === 'end') { demoPinch = null; return; }
-            if (m.sd == null) return;
+            if (!(m.sd > 0)) return;
             const S = v.s0 * v.z;
             if (m.phase === 'start' || !demoPinch) {
-                demoPinch = { S0: S, sd0: m.sd || 1, px: m.x, py: m.y, sx0: m.sx, sy0: m.sy,
-                    qx0: v.tx + m.x * S, qy0: v.ty + m.y * S };   // midpoint in page px, nothing is moving yet
+                const r = document.getElementById('demo-frame-wrap').getBoundingClientRect();
+                demoPinch = { S0: S, sd0: m.sd, left: r.left, top: r.top,
+                    px: (m.sx - r.left - v.tx) / S, py: (m.sy - r.top - v.ty) / S };   // demo point under the fingers
                 return;
             }
             v.z = Math.min(5, Math.max(1, demoPinch.S0 * (m.sd / demoPinch.sd0) / v.s0));
             const S2 = v.s0 * v.z;
-            v.tx = demoPinch.qx0 + (m.sx - demoPinch.sx0) - demoPinch.px * S2;
-            v.ty = demoPinch.qy0 + (m.sy - demoPinch.sy0) - demoPinch.py * S2;
+            v.tx = (m.sx - demoPinch.left) - demoPinch.px * S2;
+            v.ty = (m.sy - demoPinch.top) - demoPinch.py * S2;
             applyDemoView(true);
         }
         window.addEventListener('resize', fitDemoFrame);
