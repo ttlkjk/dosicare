@@ -3,8 +3,8 @@
    gantry angle and the run button, then the result text box.
    The walkthrough (Space / auto-run) picks the four files one by one, then presses
    "▶ 설정한 영상 분석 시작"; the result text is the original's own (bake/bake_offset.py -> data/offset.js).
-   Data: SYNTHETIC images made by bake_offset.py (no measured 20 x 20 set at four gantry angles exists among the
-   sample data), so the table values come from made-up images - the calculation on them is the original's.
+   Data: Halcyon_Off_AX, four measured Halcyon EPID images (20 x 20, gantry 0 / 90 / 180 / 270). Their UID file
+   names are shown as Halcyon_G<angle>_20x20.dcm; the pixels and the numbers are untouched.
    Not in the original: the simplified file dialog and the slow scroll down to the tables after the run.
    PDF Report is not part of the demo. */
 (function (root) {
