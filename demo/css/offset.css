@@ -1,0 +1,26 @@
+/* Machine QA > Offset Output replica (js/windows/offset.js) = epid_offset_calculator.py OffsetApp, 900 x 750,
+   dark tk widgets. Tk scaling 1.333: Malgun Gothic 20 pt = 26.67 px, 12 = 16, 11 = 14.67, 10 = 13.33.
+   The file dialog reuses the .ep-dlg styles of css/epipdd.css. */
+.of-root { display: flex; flex-direction: column; background: #212529; font-family: "Malgun Gothic", "Segoe UI", sans-serif; color: #fff; }
+.of-head { flex: none; display: flex; align-items: center; margin: 20px 20px 10px; }
+.of-title { font-size: 26.67px; font-weight: 700; line-height: 1.3; white-space: nowrap; }
+.of-sub { font-size: 16px; color: #A0A0A0; margin: 4px 0 0 15px; white-space: nowrap; }
+.of-pdf { margin-left: auto; padding: 6px 12px; background: #D9534F; font-size: 14.67px; font-weight: 700; cursor: pointer; user-select: none; white-space: nowrap; }
+.of-pdf:hover { background: #C9302C; }
+.of-files { flex: none; margin: 10px 20px; padding: 0 0 15px; border: 1px solid #0F1113; background: #2B3035; position: relative; }
+.of-legend { position: absolute; left: 8px; top: -11px; padding: 0 2px; background: #2B3035; color: #38BDF8; font-size: 14.67px; font-weight: 700; line-height: 20px; white-space: pre; }
+.of-info { margin: 14px 20px 8px; font-size: 13.33px; color: #DCDCDC; white-space: nowrap; }
+.of-grid { display: grid; grid-template-columns: auto 1fr auto; align-items: center; row-gap: 12px; padding: 0 0 0 20px; }
+.of-lab { width: 110px; text-align: right; margin-right: 10px; font-size: 14.67px; font-weight: 700; white-space: nowrap; }
+.of-ent { height: 24px; box-sizing: border-box; margin: 0 10px; border: 1px solid #0F1113; background: #1E1E1E; color: #38BDF8;
+  font: 13.33px Consolas, "Courier New", monospace; line-height: 22px; padding: 0 3px; white-space: nowrap; overflow: hidden; }
+.of-ent.of-new { background: #23384A; transition: background .3s; }
+.of-btn { width: 130px; height: 26px; margin: 0 20px 0 10px; background: #3A6073; font-size: 13.33px; font-weight: 700; display: flex; align-items: center;
+  justify-content: center; cursor: pointer; user-select: none; white-space: nowrap; }
+.of-btn:hover, .of-btn.of-press { background: #2980B9; }
+.of-run { margin: 14px 20px 0; height: 41px; background: #2FA572; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; user-select: none; }
+.of-run:hover, .of-run.of-press { background: #207751; }
+.of-out { flex: 1; min-height: 0; margin: 10px 20px 20px; border: 1px solid #0F1113; background: #1E1E1E; display: flex; }
+.of-text { flex: 1; min-width: 0; margin: 10px; overflow-y: scroll; overflow-x: hidden; color: #DCDCDC; font: 13.33px Consolas, "Malgun Gothic", monospace;
+  line-height: 17px; white-space: pre; scrollbar-color: #C1C1C1 #F0F0F0; }

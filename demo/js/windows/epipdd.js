@@ -11,8 +11,9 @@
    window nor this replica says so on screen; this note is where it is recorded.
    Not in the original: the one slow turn after the reconstruction (shows that the figure can be turned), the
    file dialogs are simplified, and dragging turns azimuth only (matplotlib also tilts elevation).
-   The original's Export makes the main window load the curve (auto_load_profile.tmp); the demo stops at the
-   message. */
+   The original's Export makes the main window load the curve (auto_load_profile.tmp); the demo does the same
+   after the message: the window closes and the exported curve (baked through DosiMachine's own profile loader,
+   bake_beamdata.bake_file) opens in the Profile View. */
 (function (root) {
   const DM = root.DM = root.DM || {};
   DM.windows = DM.windows || {};
@@ -195,6 +196,16 @@
       };
     }
 
+    // The original's export drops auto_load_profile.tmp; the main window picks it up and opens the curve in the
+    // Profile View (load_external_profile). Here: close this window and open the baked curve the same way.
+    function showInMain() {
+      const pf = D.profile_file, BD = root.DM_DATA && root.DM_DATA.beamdata;
+      if (!pf || !BD || !DM.profileview) return;
+      if (!BD.files.some((f) => f.name === pf.name)) BD.files.push(pf);   // now in the folder, as on the PC
+      if (DM.win) DM.win.close();
+      DM.profileview.open(pf.name);
+    }
+
     /* ---------------- walkthrough ---------------- */
     const msg = (list, title) => (list.find((m) => m[1] === title) || [null, title, ''])[2];
     const steps = [
@@ -232,6 +243,8 @@
         await press(bExport, token);
         await showDialog(saveDlg('Export PDD as IBA ASC', D.export_name, 'IBA ASCII files (*.asc)'), 1300, token);
         await showDialog(infoDlg('Export Complete', msg(D.export_msgs, 'Export Complete')), 4200, token);
+        await wait(400, token);
+        showInMain();
       } },
     ];
     function setFor(k) {
