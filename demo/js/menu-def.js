@@ -29,7 +29,7 @@
       L('Calibration(TRS-398)', { action: 'live:trs398' }), S,
       L('Electron TRS-398 Calibration'), S, L('Calibration(TG-51)'), S, L('Machine Log Analysis'), S,
       L('MPC Analyzer'), S, L('Gating QA'), S,
-      L('Offset Output', { action: 'live:offset' }), L('EPID Output Constancy / Wedge Factor'), S,
+      L('Offset Output', { action: 'live:offset' }), L('EPID Output Constancy / Wedge Factor', { action: 'live:epidout' }), S,
       L('3D EPID PDD Reconstruction', { action: 'live:epipdd' }),
     ] },
     { label: 'Device QA', items: sepJoin([
