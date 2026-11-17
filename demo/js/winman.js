@@ -355,9 +355,10 @@
 
   /* Browsers only allow fullscreen from a user gesture, so a page opened by double-click
      goes fullscreen on the first click or key press (once; F toggles it after that).
-     The launcher .bat starts the browser fullscreen already, so nothing happens there.
-     Inside the homepage's Demo tab (dosicare.co.kr) it never starts on its own (user, 2026-11-15); F still works. */
-  let autoFsDone = window.parent !== window;
+     Inside the homepage's Demo tab (dosicare.co.kr) it never starts on its own (user, 2026-11-15); F still works.
+     The launcher .bat opens a maximized window with a title bar, like the original program, and must stay that way
+     (user, 2026-11-17): it adds ?win=1 to the URL, and then nothing happens here either. */
+  let autoFsDone = window.parent !== window || /[?&]win=1\b/.test(location.search);
   function autoFullscreen(e) {
     if (autoFsDone) return;
     autoFsDone = true;

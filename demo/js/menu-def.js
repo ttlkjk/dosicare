@@ -2,6 +2,7 @@
   const S = { separator: true };
   const L = (label, extra) => Object.assign({ label, action: 'screen' }, extra);
   const D = (label) => ({ label, disabled: true });
+  const Q = (label, id) => L(label, { action: 'live:iq-' + id });   // Image QA live window
   const sepJoin = (labels) => labels.flatMap((l, i) => (i ? [S, L(l)] : [L(l)]));
   const menuDef = [
     { label: 'File', items: [
@@ -34,37 +35,39 @@
     { label: 'Device QA', items: sepJoin([
       'MyQA Daily QA', 'BeamCheck(Raydose)', 'Beamcheckplus', 'Trajectory log QA', 'DosiCare Trajectory Analyzer',
     ]) },
+    // Image QA: every item opens its self-playing window (js/windows/imgqa.js, grabs baked by bake/bake_imgqa.py).
+    // PTW Electron Density / RUBY run on a synthetic phantom (no PTW image exists) and say so on screen.
     { label: 'Image QA', items: [
       { label: 'CT', items: [
         { label: 'ACR CT Phantom Analysis', items: [
-          L('Module 1 (CT Number)'), L('Module 2 (Low Contrast)'), L('Module 3 (Uniformity)'), L('Module 4 (Resolution)'),
+          Q('Module 1 (CT Number)', 'acr1'), Q('Module 2 (Low Contrast)', 'acr2'), Q('Module 3 (Uniformity)', 'acr3'), Q('Module 4 (Resolution)', 'acr4'),
         ] },
-        D('CT Water Phantom Analysis'),
+        Q('CT Water Phantom Analysis', 'ctwater'),
         { label: 'CATPHAN Analysis', items: [
-          L('Materials (CTP404)'), L('Uniformity (CTP486)'), L('Low Contrast (CTP515)'), L('Resolution (CTP528)'),
+          Q('Materials (CTP404)', 'ctp404'), Q('Uniformity (CTP486)', 'ctp486'), Q('Low Contrast (CTP515)', 'ctp515'), Q('Resolution (CTP528)', 'ctp528'),
         ] },
-        D('XVI CATPHAN Analysis'),
-        D('Siemens OBI Analysis'),
+        Q('XVI CATPHAN Analysis', 'xvi'),
+        Q('Siemens OBI Analysis', 'siemens'),
         { label: 'Electron Density Analysis', items: [
-          D('PTW Electron Density Phantom'), D('PTW RUBY Electron Density Insert'),
-          L('Gammex 467 Phantom'), L('CIRS 062 Phantom'), L('Tomotherapy Cheese Materials Phantom'),
-          L('Tomotherapy Cheese Resolution Phantom'), L('Tomotherapy Cheese Noise and Uniformity Phantom'),
+          Q('PTW Electron Density Phantom', 'ptwed'), Q('PTW RUBY Electron Density Insert', 'ptwruby'),
+          Q('Gammex 467 Phantom', 'gammex'), Q('CIRS 062 Phantom', 'cirs062'), Q('Tomotherapy Cheese Materials Phantom', 'cheese'),
+          Q('Tomotherapy Cheese Resolution Phantom', 'cheeseres'), Q('Tomotherapy Cheese Noise and Uniformity Phantom', 'cheesenu'),
         ] },
-        D('GE Phantom Analysis'),
-        D('Leeds Dental Phantom'),
+        Q('GE Phantom Analysis', 'ge'),
+        Q('Leeds Dental Phantom', 'leeds'),
       ] },
       { label: 'EPID', items: [
-        L('PTW EPID QC Phantom'), D('QC-3 EPID Phantom'), L('Las Vegas EPID Phantom'), L('RIT EPID Phantom'),
+        Q('PTW EPID QC Phantom', 'ptwepid'), Q('QC-3 EPID Phantom', 'qc3'), Q('Las Vegas EPID Phantom', 'lasvegas'), Q('RIT EPID Phantom', 'ritepid'),
       ] },
       { label: 'kV Imaging', items: [
-        L('IBA Primus L Phantom'), D('PTW NORMI 4 Phantom'), L('Leeds TOR18 Phantom'), D('QCkV-1 Phantom'),
+        Q('IBA Primus L Phantom', 'primusl'), Q('PTW NORMI 4 Phantom', 'normi4'), Q('Leeds TOR18 Phantom', 'tor18'), Q('QCkV-1 Phantom', 'qckv1'),
       ] },
       { label: 'Isocube Phantom', items: [
-        D('Isocube Test 1: kV-MV Coincidence'), D('Isocube Test 2: CBCT'), D('Isocube Test 3: kV Collimation'),
-        D('Isocube Test 4: MV Rad.- Light Coincidence'), D('Isocube 6 DOF Couch Test'),
+        Q('Isocube Test 1: kV-MV Coincidence', 'iso1'), Q('Isocube Test 2: CBCT', 'iso2'), Q('Isocube Test 3: kV Collimation', 'iso3'),
+        Q('Isocube Test 4: MV Rad.- Light Coincidence', 'iso4'), Q('Isocube 6 DOF Couch Test', 'iso6dof'),
       ] },
       { label: 'PentaGuide Phantom', items: [
-        D('PentaGuide Test 1: DRR-MV-kV Coincidence'), D('PentaGuide Test 2: CBCT'),
+        Q('PentaGuide Test 1: DRR-MV-kV Coincidence', 'pg1'), Q('PentaGuide Test 2: CBCT', 'pg2'),
       ] },
     ] },
     { label: 'Data Handling', items: [
@@ -84,7 +87,8 @@
     { label: 'ESAPI', items: [
       L('Portal Dosimetry QA Report (QAReportScript_v15)', { action: 'live:pdqa' }),
     ] },
-    { label: 'Help', items: [L('About'), S, L('Demo Status')] },
+    // About: the original's clickable feature list (js/windows/about.js, baked from main.py by bake/bake_about.py)
+    { label: 'Help', items: [L('About', { action: 'live:about' }), S, L('Demo Status')] },
   ];
   function menuPath(...labels) { return labels.join(' > '); }
   function menuLeaves() {

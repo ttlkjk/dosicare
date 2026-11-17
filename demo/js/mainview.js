@@ -3,6 +3,7 @@
 (function (root) {
   const DM = root.DM = root.DM || {};
   let doneTimer = null, ui = null, img = null, loaded = false, rt = false, pos = null, geo = null;
+  let locked = false;  // Real-time ON + a click on the image: the cursor stays where it was clicked
   let doc = null;      // what the viewer shows: { png: {w, h}, grid, img, meta() } - the field sample or a Virtual Starshot
 
   const HEAD = 'Horizontal (Crossline)', VEAD = 'Vertical (Inline)';
@@ -42,11 +43,14 @@
     if (rt && pos) {
       const px = geo.x + (pos.gx + 0.5) / shown().grid.w * geo.w;
       const py = geo.y + (pos.gy + 0.5) / shown().grid.h * geo.h;
-      c.save(); c.strokeStyle = 'yellow'; c.lineWidth = 1; c.setLineDash([4, 4]);
+      // following the mouse: yellow dashed (original); locked by a click: cyan solid with a ring at the cross
+      c.save(); c.strokeStyle = locked ? '#00E5FF' : 'yellow'; c.lineWidth = locked ? 1.5 : 1; c.setLineDash(locked ? [] : [4, 4]);
       c.beginPath();
       c.moveTo(geo.x, Math.round(py) + 0.5); c.lineTo(geo.x + geo.w, Math.round(py) + 0.5);
       c.moveTo(Math.round(px) + 0.5, geo.y); c.lineTo(Math.round(px) + 0.5, geo.y + geo.h);
-      c.stroke(); c.restore();
+      c.stroke();
+      if (locked) { c.lineWidth = 2; c.beginPath(); c.arc(Math.round(px) + 0.5, Math.round(py) + 0.5, 7, 0, Math.PI * 2); c.stroke(); }
+      c.restore();
     }
   }
 
@@ -146,9 +150,12 @@
   function moveTo(p) {
     pos = p;
     const msg = 'Pos: (' + pos.gx + ', ' + pos.gy + ') | ';
-    ui.status.textContent = msg + 'Fast Mode';
     clearTimeout(doneTimer);
-    doneTimer = setTimeout(() => { if (rt) ui.status.textContent = msg + 'Analysis Complete'; }, 300);   // debounce, main.py:4136
+    if (locked) ui.status.textContent = msg + 'LOCKED (click image to release)';
+    else {
+      ui.status.textContent = msg + 'Fast Mode';
+      doneTimer = setTimeout(() => { if (rt && !locked) ui.status.textContent = msg + 'Analysis Complete'; }, 300);   // debounce, main.py:4136
+    }
     plot(); paint();
   }
 
@@ -167,7 +174,7 @@
   }
 
   function setRealtime(on) {
-    rt = on; clearTimeout(doneTimer);
+    rt = on; locked = false; clearTimeout(doneTimer);
     ui.rtBtn.textContent = on ? 'Real-time Profile: ON' : 'Real-time Profile: OFF';
     ui.rtBtn.classList.toggle('on', on); ui.rtBtn.classList.toggle('off', !on);
     ui.status.textContent = on ? 'Real-time Profile: ACTIVE (Move mouse over image)' : 'Real-time Profile: OFF';
@@ -180,21 +187,40 @@
     setRealtime(!rt);
   }
 
-  function onMove(e) {
-    if (!loaded || !rt || !geo) return;
+  // grid cell under a mouse event, or null when it is outside the image
+  function cellAt(e) {
     const r = ui.canvas.getBoundingClientRect();
     const x = e.clientX - r.left - geo.x, y = e.clientY - r.top - geo.y;
-    if (x < 0 || y < 0 || x > geo.w || y > geo.h) return;
+    if (x < 0 || y < 0 || x > geo.w || y > geo.h) return null;
     const f = shown();
+    return DM.profile.toGrid(f.grid, f.png, (x / geo.w) * f.png.w, (y / geo.h) * f.png.h);
+  }
+
+  function onMove(e) {
+    if (!loaded || !rt || !geo || locked) return;
+    const p = cellAt(e);
+    if (!p) return;
     mouseUntil = performance.now() + MOUSE_MS;      // the mouse takes over from the auto tour
-    moveTo(DM.profile.toGrid(f.grid, f.png, (x / geo.w) * f.png.w, (y / geo.h) * f.png.h));
+    moveTo(p);
+  }
+
+  /* Demo addition: with Real-time ON, a click on the image locks the cursor there (cyan) and stops the
+     auto tour; a second click releases it, and the cursor follows the mouse again from that point. */
+  function onClick(e) {
+    if (!loaded || !rt || !geo) return;
+    const p = cellAt(e);
+    if (!p) return;
+    locked = !locked;
+    if (locked) stopTour();
+    else { mouseUntil = performance.now() + MOUSE_MS; if (!doc) startTour(); }   // tour waits 2 s, then carries on
+    moveTo(p);
   }
 
   /* A beam-data file replaced the image: stop the real-time mode (load_external_profile turns it off). */
   function leaveImage() {
     ensure();
     stopTour();
-    loaded = false; rt = false; doc = null; clearTimeout(doneTimer);
+    loaded = false; rt = false; locked = false; doc = null; clearTimeout(doneTimer);
     ui.rtBtn.textContent = 'Real-time Profile: OFF';
     ui.rtBtn.classList.remove('on'); ui.rtBtn.classList.add('off');
   }
@@ -261,6 +287,7 @@
   function init() {
     ensure();
     ui.canvas.addEventListener('mousemove', onMove);
+    ui.canvas.addEventListener('click', onClick);
     DM.shell.onRealtime(toggleRealtime);
     DM.shell.onImageResize(() => { if (loaded) paint(); else if (DM.profileview) DM.profileview.paintImage(); });
     if (DM.profileview) DM.profileview.init();

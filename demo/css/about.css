@@ -1,0 +1,23 @@
+/* Help > About replica (js/windows/about.js). Sizes from main.py show_help at Tk scaling 1.333 (1 pt = 1.333 px)
+   and the old capture screens/about.png (1707 x 1019 incl. its title bar). */
+.ab-root { display: flex; flex-direction: column; background: #F8F9FA; font-family: "Segoe UI", "Malgun Gothic", sans-serif; }
+.ab-head { flex: none; height: 137px; background: #1A5276; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.ab-title { font-size: 37px; font-weight: 700; color: #fff; line-height: 1.2; }
+.ab-sub { font-size: 16px; font-style: italic; color: #AED6F1; margin-top: 3px; white-space: pre; }
+.ab-body { flex: 1; min-height: 0; display: flex; gap: 20px; padding: 15px 20px; }
+.ab-panel { margin: 0; padding: 4px 5px 5px; border: 2px groove #D5D8DC; min-height: 0; display: flex; }
+.ab-panel legend { margin: 0 auto; padding: 0 2px; font-size: 16px; font-weight: 700; color: #1A5276; }
+.ab-left { flex: none; width: 340px; box-sizing: border-box; }
+.ab-right { flex: 1; min-width: 0; }
+.ab-list { flex: 1; overflow-y: scroll; background: #fff; outline: none; padding-top: 2px; }
+.ab-row { font-size: 12px; font-weight: 700; color: #2C3E50; line-height: 16px; white-space: pre; padding-left: 2px; cursor: default; user-select: none; }
+.ab-row.on { background: #1A5276; color: #fff; }
+.ab-box { flex: 1; min-width: 0; display: flex; background: #fff; }
+.ab-pic { flex: none; width: 450px; margin-right: 15px; background: #FBFCFC; border: 1px solid #000; display: flex; align-items: center; justify-content: center; }
+.ab-pic img { width: 450px; height: 600px; display: block; }
+.ab-text { flex: 1; min-width: 0; overflow-y: scroll; padding: 2px 4px; color: #333333; font-size: 13.3px; }
+.ab-line { line-height: 22px; margin-bottom: 4px; white-space: pre-wrap; word-break: keep-all; overflow-wrap: anywhere; }
+.ab-line.ab-blank { height: 18px; }
+.ab-foot { flex: none; padding: 15px 0; display: flex; justify-content: center; }
+.ab-close { width: 145px; height: 35px; border: 0; background: #1A5276; color: #fff; font: 700 14.7px "Segoe UI", sans-serif; cursor: pointer; }
+.ab-close:hover { background: #2980B9; }

@@ -298,56 +298,76 @@
   function paintWelcome() {
     const cv = ui.imageCanvas; const cw = cv.width, ch = cv.height;
     if (!cw || !ch) return;
-    // The original laid this screen out when the canvas was smaller (measured from the user's capture: 0.81 x 0.875 of the final area).
-    const w = Math.round(cw * 0.81), h = Math.round(ch * 0.875);
     const c = cv.getContext('2d');
     c.setTransform(1, 0, 0, 1, 0, 0);
     c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, cw, ch);
-    const logoW = Math.min(Math.max(Math.floor(w * 0.28), 420), 650);
-    // The original centres the logo column at w * 0.70; the demo moves it a little right (user, 2026-11-15) so it sits
-    // clear of the linac picture, but never so far that the logo is cut at the right edge.
-    const bx = Math.min(w * 0.77, cw - logoW / 2 - 24);
-    const titleY = Math.floor(h * 0.23);
+    // Logo width as in the original (it laid this screen out on a canvas 0.81 x the final width, measured from the user's capture).
+    const logoW = Math.min(Math.max(Math.floor(cw * 0.81 * 0.28), 420), 650);
+    /* Layout (user, 2026-11-17): the original has the linac picture on the left (centre 0.28 w) and the logo column on the
+       right (centre 0.70 w), each placed by its own fraction of the canvas. The demo shows the moving QA HUB picture from the
+       Why popup instead of the linac (a DOM layer over the canvas: a 380 x 380 crop with sphere + orbits, see why.css .dm-hero)
+       and lays the two out as ONE group: the picture is a bit taller than the logo column, both share one vertical centre, the group
+       is centred in the canvas, and the two help lines sit centred under it. */
     const draw = () => {
       if (!welcome) return;
       const px = (n) => n * 1.3333;
       c.fillStyle = '#FFFFFF'; c.fillRect(0, 0, cw, ch);
-      const L = imgCache['assets/linac_machine.png'], T = imgCache['assets/dosimachine2.png'], H = imgCache['assets/dosicare_logo.png'];
-      if (L && L.complete && L.naturalWidth) {
-        const s = Math.min(w * 0.45 / L.naturalWidth, h * 0.75 / L.naturalHeight);
-        const tw = Math.floor(L.naturalWidth * s), th = Math.floor(L.naturalHeight * s);
-        c.globalAlpha = 0.7;
-        c.drawImage(L, Math.round(w * 0.28 - tw / 2), Math.round(h * 0.5 - th / 2), tw, th);
-        c.globalAlpha = 1;
-      }
-      let subY = titleY + 45;
-      if (T && T.complete && T.naturalWidth) {
-        const th = Math.floor(T.naturalHeight * logoW / T.naturalWidth);
-        c.drawImage(T, Math.round(bx - logoW / 2), Math.round(titleY - th / 2), logoW, th);
-        subY = titleY + Math.floor(th / 2) + 12;
-      }
+      const T = imgCache['assets/dosimachine2.png'], H = imgCache['assets/dosicare_logo.png'];
+      const okT = T && T.complete && T.naturalWidth, okH = H && H.complete && H.naturalWidth;
+      const b = whyBadge();                            // lecture-only badge (opens js/why.js), not in the original
+      b.classList.add('on');
+      // logo column, measured from its own top: logo, subtitle, DosiCare logo, badge (gaps 12 / 90 / 36 px as before).
+      // The company-site link that sat under the badge was removed (user, 2026-11-17).
+      // The whole group is first laid out at full size (the look the user approved, 2026-11-17 capture). When the canvas is
+      // too narrow or short for it (small window, homepage Demo tab), the group is scaled down as ONE piece - picture, logos,
+      // gaps, badge and text by the same factor - instead of squeezing the picture next to a full-size logo.
+      const HELP_H0 = 74;                              // room kept under the group for the two help lines (full size)
+      const BH0 = b.offsetHeight || 70;                // badge height at full size
+      const th10 = okT ? Math.floor(T.naturalHeight * logoW / T.naturalWidth) : 90;
+      const tw20 = Math.floor(logoW * 0.7), th20 = okH ? Math.floor(H.naturalHeight * tw20 / H.naturalWidth) : 0;
+      const badge0 = okH ? th10 + 12 + 90 + th20 / 2 + 36 : th10 + 12 + 150;
+      const colH0 = badge0 + BH0;
+      const D0 = colH0 * 1.35;                         // the picture is about 1.35 x the column ("the moving picture is small")
+      const W0 = D0 * 1.14 + logoW, H0 = Math.max(D0, colH0) + HELP_H0;
+      const s = Math.max(0.3, Math.min(1, (cw - 32) / W0, (ch - 20) / H0));
+      const lw = Math.round(logoW * s), th1 = Math.round(th10 * s), subRel = th1 + Math.round(12 * s);
+      const tw2 = Math.round(tw20 * s), th2 = Math.round(th20 * s), kk = s;
+      const badgeRel = Math.round(badge0 * s), colH = badgeRel + BH0 * s, HELP_H = HELP_H0 * s;
+      const D = D0 * s;
+      const gap = Math.round(D * 0.14);
+      const totalW = D + gap + lw;
+      const x0 = Math.max(12, Math.round((cw - totalW) / 2));
+      const blockH = Math.max(D, colH);
+      const top = Math.max(10, Math.round((ch - blockH - HELP_H) / 2));
+      const midY = top + blockH / 2;
+      const colTop = Math.round(midY - colH / 2);
+      const bx = Math.round(x0 + D + gap + lw / 2);
+
+      const hero = heroArt();
+      if (hero) {
+        hero.style.left = Math.round(x0 + D / 2) + 'px'; hero.style.top = Math.round(midY) + 'px';
+        hero.style.transform = 'translate(-50%, -50%) scale(' + (D / 380).toFixed(3) + ')';
+        hero.classList.add('on');
+      } else setTimeout(draw, 100);   // why.js loads after shell.js
+
+      if (okT) c.drawImage(T, Math.round(bx - lw / 2), colTop, lw, th1);
       c.textAlign = 'center'; c.textBaseline = 'middle';
-      c.font = px(15) + 'px "Segoe UI","Malgun Gothic",sans-serif'; c.fillStyle = '#555555';
-      c.fillText('Medical Physics Quality Assurance Tool', bx, subY);
-      let badgeY = subY + 150;
-      if (H && H.complete && H.naturalWidth) {
-        const tw = Math.floor(logoW * 0.7), th = Math.floor(H.naturalHeight * tw / H.naturalWidth);
-        c.drawImage(H, Math.round(bx - tw / 2), Math.round(subY + 90 - th / 2), tw, th);
-        badgeY = subY + 90 + th / 2 + 36;
-      }
-      // lecture-only badge under the logos (opens js/why.js), not in the original
-      const b = whyBadge();
-      b.style.left = Math.round(bx) + 'px'; b.style.top = Math.round(badgeY) + 'px'; b.classList.add('on');
-      // link to the company site under the badge (the demo is hosted on dosicare.co.kr), not in the original
-      const sl = siteLink();
-      sl.style.left = Math.round(bx) + 'px'; sl.style.top = Math.round(badgeY + b.offsetHeight + 22) + 'px'; sl.classList.add('on');
-      const iy = h - (h >= 600 ? 100 : 60);
-      c.font = px(10) + 'px "Segoe UI","Malgun Gothic",sans-serif'; c.fillStyle = '#777777';
-      c.fillText("Click 'Open' to load DICOM images or profile files", Math.floor(w / 2), iy);
-      c.fillText('Access analysis tools from the Tools and Reports menus', Math.floor(w / 2), iy + 25);
+      c.font = px(15) * Math.min(1, logoW / 420) * s + 'px "Segoe UI","Malgun Gothic",sans-serif'; c.fillStyle = '#555555';
+      c.fillText('Medical Physics Quality Assurance Tool', bx, colTop + subRel);
+      if (okH) c.drawImage(H, Math.round(bx - tw2 / 2), Math.round(colTop + subRel + 90 * kk - th2 / 2), tw2, th2);
+      b.style.left = bx + 'px'; b.style.top = Math.round(colTop + badgeRel) + 'px';
+      b.style.transformOrigin = 'top center';
+      b.style.transform = s < 1 ? 'translate(-50%, 0) scale(' + s.toFixed(3) + ')' : '';
+
+      // help lines: shrink with the group, but not below a readable size
+      const hs = Math.max(0.75, s);
+      const ix = Math.round(x0 + totalW / 2), iy = Math.min(ch - 40 * hs, Math.round(top + blockH + 34 * s));
+      c.font = px(10) * hs + 'px "Segoe UI","Malgun Gothic",sans-serif'; c.fillStyle = '#777777';
+      c.fillText("Click 'Open' to load DICOM images or profile files", ix, iy);
+      c.fillText('Access analysis tools from the Tools and Reports menus', ix, iy + 25 * hs);
     };
     draw();
-    ['assets/linac_machine.png', 'assets/dosimachine2.png', 'assets/dosicare_logo.png'].forEach((s) => {
+    ['assets/dosimachine2.png', 'assets/dosicare_logo.png'].forEach((s) => {
       if (!imgCache[s] || !imgCache[s].complete) loadImg(s, draw);
     });
   }
@@ -358,17 +378,16 @@
   function hideWelcome() {
     welcome = false;
     if (ui && ui.whyBadge) ui.whyBadge.classList.remove('on');
-    if (ui && ui.siteLink) ui.siteLink.classList.remove('on');
+    if (ui && ui.hero) ui.hero.classList.remove('on');
   }
-  function siteLink() {
-    if (!ui.siteLink) {
-      const a = ui.siteLink = el('a', 'dm-site-link');
-      // #dm = the homepage's DosiMachine tab; the bare address opens on its Demo tab, i.e. this demo again
-      a.href = 'https://dosicare.co.kr/#dm'; a.target = '_blank'; a.rel = 'noopener';
-      a.append(el('span', 'g', '🌐'), document.createTextNode('dosicare.co.kr'), el('small', null, '도시케어 홈페이지'));
-      ui.imageCanvas.parentNode.appendChild(a);
+  function heroArt() {
+    if (!ui.hero) {
+      if (!(DM.why && DM.why.hubArt)) return null;
+      const d = ui.hero = el('div', 'dm-hero');
+      d.appendChild(DM.why.hubArt('dmhero').hub);
+      ui.imageCanvas.parentNode.appendChild(d);
     }
-    return ui.siteLink;
+    return ui.hero;
   }
   function whyBadge() {
     if (!ui.whyBadge) {
@@ -510,7 +529,7 @@
       navTabs.forEach((x, j) => x.classList.toggle('active', j === i));
       planView.classList.toggle('on', i === 2);
       profPane.classList.toggle('on', i === 1);
-      disp.classList.toggle('covered', i !== 0);   // hides the welcome badge + site link while a pane covers the image view
+      disp.classList.toggle('covered', i !== 0);   // hides the welcome badge + hub picture while a pane covers the image view
       readyLab.textContent = i === 2 ? PLAN_LOADED : PLAN_READY;
       if (ui.activeView) ui.activeView.textContent = 'Active View: ' + VIEW_NAMES[i];
       if (i === 1 && profShowCb) profShowCb();

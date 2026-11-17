@@ -25,7 +25,23 @@
     { t: '측정 데이터 통합', en: 'Data Integration', c: '#0E9F9A', icon: 'layers',
       h: '병원 곳곳의 측정 장비 데이터를<br>한 프로그램에서 비교 · 분석',
       p: '병원에는 측정 장비도, 쌓인 측정 파일도 많습니다. DosiMachine은 장비가 저장한 파일을 <b>형식 그대로</b> 읽어 한 화면에서 비교하고 분석합니다.',
-      chips: ['IBA Blue Phantom (.opab · .asc)', 'PTW (.mcc)', 'MyQA · BeamCheck', 'Varian MPC', 'Trajectory Log', 'DICOM · TIF'],
+      // extensions: the original's Open-dialog filter (main.py:3639, see js/opendialog.js) + .db / .bin from card 3 (user, 2026-11-17)
+      // A list (extension, name, one-line description) instead of chips (user, 2026-11-17). Order and names follow the table
+      // the user approved, plus Varian MPC (.xim: BeamProfileCheck.xim in screens/mpc_beam.png, read from the MPCChecks folder)
+      // and DICOM split in two (Plan View loads CT, RT Plan, RT Dose and structures). Descriptions say only what the demo shows.
+      chips: [],
+      formats: [
+        ['.dcm', 'DICOM 영상', 'EPID · CT 영상'],
+        ['.dcm', 'RT Plan · Dose', 'Eclipse 플랜·선량·구조'],
+        ['.tif·.tiff', 'TIFF 영상', '영상 파일'],
+        ['.asc', 'IBA 프로파일', 'Blue Phantom 측정'],
+        ['.opab', 'IBA myQA', 'myQA Accept 측정'],
+        ['.mcc', 'PTW', '프로파일 측정 파일'],
+        ['.csv·.asv', '프로파일', '프로파일 값 파일'],
+        ['.db', 'MyQA·BeamCheck', '장비 DB 기록'],
+        ['.bin', 'Trajectory Log', '치료 중 장비 동작'],
+        ['.xim', 'Varian MPC', 'MPC 영상 · 결과 폴더'],
+      ],
       take: '값을 손으로 옮겨 적는 단계가 줄어 → 옮겨 적는 실수도 줄어듭니다.' },
     { t: '정확한 Machine QA', en: 'EPID Machine QA', c: '#1E3A8A', icon: 'target', extra: 'epid',
       h: 'EPID에 최적화된,<br>기본에 충실한 Machine QA',
@@ -62,8 +78,8 @@
       chips: ['장비별 허용치 (TG-142)', '병원 문서 양식 반영', '한국어 · 영어 함께 표기', '인터넷 없이 동작 (클라우드 AI 제외)'],
       take: '병원이 프로그램에 맞추는 대신, 프로그램이 병원에 맞춥니다.' },
   ];
-  const STATS = [[13, 'Machine QA 기능'], [10, 'Image QA 팬텀'], [5, 'Device QA 도구'], [6, 'AI 엔진 선택']];
-
+  // counts = enabled items of each menu in menu-def.js (Image QA: 35 since every item got its window, 2026-11-17)
+  const STATS = [[13, 'Machine QA 기능'], [35, 'Image QA 기능'], [5, 'Device QA 도구'], [6, 'AI 엔진 선택']];
   const h = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
 
   let ov = null;
@@ -88,45 +104,7 @@
 
     // hub stage
     const main = h('div', 'why-main');
-    const hub = h('div', 'why-hub');
-    const NS = 'http://www.w3.org/2000/svg';
-    const arrows = document.createElementNS(NS, 'svg');
-    arrows.setAttribute('class', 'why-arrows'); arrows.setAttribute('viewBox', '0 0 720 560');
-    let defs = '<defs>';
-    ITEMS.forEach((it, i) => { defs += '<marker id="why-ah' + i + '" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="' + it.c + '"/></marker>'; });
-    defs += '</defs>';
-    const CX = 360, CY = 280, RS = 104, CW = 210, CH = 78;
-    let paths = '';
-    ITEMS.forEach((it, i) => {
-      const [px, py] = POS[i];
-      const top = py < 150, bot = py > 420;
-      const ex = top || bot ? px : (px < CX ? px + CW / 2 + 4 : px - CW / 2 - 4);
-      const ey = top ? py + CH / 2 + 4 : bot ? py - CH / 2 - 4 : py;
-      const dx = ex - CX, dy = ey - CY, L = Math.hypot(dx, dy);
-      const sx = CX + dx / L * RS, sy = CY + dy / L * RS;
-      const mx = (sx + ex) / 2, my = (sy + ey) / 2;
-      const k = 0.22 * Math.hypot(ex - sx, ey - sy);
-      const qx = mx - (ey - sy) / Math.hypot(ex - sx, ey - sy) * k, qy = my + (ex - sx) / Math.hypot(ex - sx, ey - sy) * k;
-      paths += '<path class="why-ar" data-i="' + i + '" d="M' + sx.toFixed(1) + ' ' + sy.toFixed(1) + 'Q' + qx.toFixed(1) + ' ' + qy.toFixed(1) + ' ' + ex.toFixed(1) + ' ' + ey.toFixed(1) + '" pathLength="100" stroke="' + it.c + '" marker-end="url(#why-ah' + i + ')"/>';
-    });
-    arrows.innerHTML = defs + paths;
-    hub.appendChild(arrows);
-
-    // sphere + orbits
-    const glow = h('div', 'why-glow'); hub.appendChild(glow);
-    const sphere = h('div', 'why-sphere', '<div class="why-sp-name">DosiMachine</div><div class="why-sp-hub">QA HUB</div>');
-    hub.appendChild(sphere);
-    const orb = document.createElementNS(NS, 'svg');
-    orb.setAttribute('class', 'why-orbits'); orb.setAttribute('viewBox', '0 0 720 560');
-    const RX = 168, RY = 44;
-    const ell = 'M' + (CX - RX) + ' ' + CY + 'a' + RX + ' ' + RY + ' 0 1 0 ' + (2 * RX) + ' 0a' + RX + ' ' + RY + ' 0 1 0 ' + (-2 * RX) + ' 0';
-    let o = '';
-    [[-22, 7], [22, 9], [90, 11]].forEach(([a, dur], j) => {
-      o += '<g transform="rotate(' + a + ' ' + CX + ' ' + CY + ')"><path id="why-orb' + j + '" d="' + ell + '" class="why-orb"/>' +
-        '<circle r="4.5" class="why-orb-dot"><animateMotion dur="' + dur + 's" repeatCount="indefinite"' + (j === 1 ? ' keyPoints="1;0" keyTimes="0;1" calcMode="linear"' : '') + '><mpath href="#why-orb' + j + '"/></animateMotion></circle></g>';
-    });
-    orb.innerHTML = o;
-    hub.appendChild(orb);
+    const { hub, arrows } = hubArt('why');
 
     // cards
     const cards = ITEMS.map((it, i) => {
@@ -152,6 +130,52 @@
     x.addEventListener('click', close);
     back.addEventListener('mousedown', (e) => { if (e.target === back) close(); });
     return { back, card, cards, arrows, detail, dots, idx: -1 };
+  }
+
+  /* The moving hub picture (glow, sphere, 3 orbits with travelling dots, 8 curved arrows) on a 720 x 560 stage, without the cards.
+     Used by the popup and by the welcome screen (shell.js, user 2026-11-17). pfx keeps the SVG ids unique when both exist. */
+  const CX = 360, CY = 280, CW = 210, CH = 78;
+  function hubArt(pfx) {
+    const hub = h('div', 'why-hub');
+    const NS = 'http://www.w3.org/2000/svg';
+    const arrows = document.createElementNS(NS, 'svg');
+    arrows.setAttribute('class', 'why-arrows'); arrows.setAttribute('viewBox', '0 0 720 560');
+    let defs = '<defs>';
+    ITEMS.forEach((it, i) => { defs += '<marker id="' + pfx + '-ah' + i + '" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="' + it.c + '"/></marker>'; });
+    defs += '</defs>';
+    const RS = 104;
+    let paths = '';
+    ITEMS.forEach((it, i) => {
+      const [px, py] = POS[i];
+      const top = py < 150, bot = py > 420;
+      const ex = top || bot ? px : (px < CX ? px + CW / 2 + 4 : px - CW / 2 - 4);
+      const ey = top ? py + CH / 2 + 4 : bot ? py - CH / 2 - 4 : py;
+      const dx = ex - CX, dy = ey - CY, L = Math.hypot(dx, dy);
+      const sx = CX + dx / L * RS, sy = CY + dy / L * RS;
+      const mx = (sx + ex) / 2, my = (sy + ey) / 2;
+      const k = 0.22 * Math.hypot(ex - sx, ey - sy);
+      const qx = mx - (ey - sy) / Math.hypot(ex - sx, ey - sy) * k, qy = my + (ex - sx) / Math.hypot(ex - sx, ey - sy) * k;
+      paths += '<path class="why-ar" data-i="' + i + '" d="M' + sx.toFixed(1) + ' ' + sy.toFixed(1) + 'Q' + qx.toFixed(1) + ' ' + qy.toFixed(1) + ' ' + ex.toFixed(1) + ' ' + ey.toFixed(1) + '" pathLength="100" stroke="' + it.c + '" marker-end="url(#' + pfx + '-ah' + i + ')"/>';
+    });
+    arrows.innerHTML = defs + paths;
+    hub.appendChild(arrows);
+
+    // sphere + orbits
+    const glow = h('div', 'why-glow'); hub.appendChild(glow);
+    const sphere = h('div', 'why-sphere', '<div class="why-sp-name">DosiMachine</div><div class="why-sp-hub">QA HUB</div>');
+    hub.appendChild(sphere);
+    const orb = document.createElementNS(NS, 'svg');
+    orb.setAttribute('class', 'why-orbits'); orb.setAttribute('viewBox', '0 0 720 560');
+    const RX = 168, RY = 44;
+    const ell = 'M' + (CX - RX) + ' ' + CY + 'a' + RX + ' ' + RY + ' 0 1 0 ' + (2 * RX) + ' 0a' + RX + ' ' + RY + ' 0 1 0 ' + (-2 * RX) + ' 0';
+    let o = '';
+    [[-22, 7], [22, 9], [90, 11]].forEach(([a, dur], j) => {
+      o += '<g transform="rotate(' + a + ' ' + CX + ' ' + CY + ')"><path id="' + pfx + '-orb' + j + '" d="' + ell + '" class="why-orb"/>' +
+        '<circle r="4.5" class="why-orb-dot"><animateMotion dur="' + dur + 's" repeatCount="indefinite"' + (j === 1 ? ' keyPoints="1;0" keyTimes="0;1" calcMode="linear"' : '') + '><mpath href="#' + pfx + '-orb' + j + '"/></animateMotion></circle></g>';
+    });
+    orb.innerHTML = o;
+    hub.appendChild(orb);
+    return { hub, arrows };
   }
 
   function bars() {
@@ -189,8 +213,7 @@
       html = '<div class="why-d-top"><span class="why-tag">PRODUCT OVERVIEW</span></div>' +
         '<h2>스마트한 통합 <em>QA 플랫폼</em></h2>' +
         '<p>치료 장비의 QA 영상과 병원 측정 장비의 파일을 <b>한 프로그램</b>에서 읽어 분석합니다. 결과는 PDF 리포트와 추세 그래프, 병원 점검표로 이어집니다.</p>' +
-        '<div class="why-stats">' + STATS.map(([n, l]) => '<div><b data-n="' + n + '">0</b><small>' + l + '</small></div>').join('') + '</div>' +
-        '<div class="why-flow"><span>데이터 불러오기</span><i>→</i><span>분석 · 판정</span><i>→</i><span>리포트 · 추세 · 점검표</span></div>' +
+        '<div class="why-stats">' + STATS.map(([n, l]) => '<div><b data-n="' + n + '">0</b><small>' + l + '</small></div>').join('') + '</div>' +        '<div class="why-flow"><span>데이터 불러오기</span><i>→</i><span>분석 · 판정</span><i>→</i><span>리포트 · 추세 · 점검표</span></div>' +
         '<div class="why-hint">→ 키를 누르거나 카드를 눌러 하나씩 보기</div>';
     } else if (i >= ITEMS.length) {
       html = '<div class="why-d-top"><span class="why-tag">SUMMARY</span></div>' +
@@ -206,6 +229,8 @@
         '<h2 style="--c:' + it.c + '">' + it.h + '</h2>' +
         '<p>' + it.p + '</p>' +
         (it.chips.length ? '<div class="why-chips" style="--c:' + it.c + '">' + it.chips.map((s) => '<span>' + s + '</span>').join('') + '</div>' : '') +
+        (it.formats ? '<div class="why-fmts" style="--c:' + it.c + '">' + it.formats.map(([x, n, d]) =>
+          '<div><b>' + (x || '—') + '</b><span><em>' + n + '</em><small>' + d + '</small></span></div>').join('') + '</div>' : '') +
         (it.extra === 'epid' ? epidVsFilm() : '') +
         (it.take ? '<div class="why-take" style="--c:' + it.c + '">✦ ' + it.take + '</div>' : '') +
         (it.extra === 'patient' ? bars() : '');
@@ -277,6 +302,6 @@
     setTimeout(() => b.remove(), 250);
   }
 
-  DM.why = { open, close, ITEMS };
+  DM.why = { open, close, ITEMS, hubArt };
   if (DM.shell && DM.shell.onToolbar) DM.shell.onToolbar((name) => { if (name === 'why') { open(); return true; } return false; });
 })(typeof window !== 'undefined' ? window : globalThis);
