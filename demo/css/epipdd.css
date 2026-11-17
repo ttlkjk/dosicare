@@ -1,0 +1,45 @@
+/* Machine QA > 3D EPID PDD Reconstruction replica (js/windows/epipdd.js).
+   The original (epi_3d_modeling.py) is a plain ttk window, Windows "vista" theme, every widget Arial 13 pt
+   (= 17.33 px at Tk scaling 1.333), and a matplotlib figure under two control rows. */
+.ep-root { display: flex; flex-direction: column; background: #F0F0F0; font: 17.33px Arial, sans-serif; color: #000; }
+.ep-row { flex: none; display: flex; align-items: center; white-space: nowrap; }
+.ep-row1 { padding: 10px 10px 0; }
+.ep-row2 { padding: 6px 10px 10px; }
+.ep-btn { height: 30px; box-sizing: border-box; min-width: 106px; padding: 0 9px; margin: 0 5px; border: 1px solid #ADADAD; background: #E1E1E1;
+  display: flex; align-items: center; justify-content: center; cursor: default; user-select: none; }
+.ep-btn:hover { background: #E5F1FB; border-color: #0078D7; }
+.ep-btn.ep-press { background: #CCE4F7; border-color: #005499; }
+.ep-lab { margin: 0 5px 0 20px; }
+.ep-ent { width: 62px; height: 27px; box-sizing: border-box; border: 1px solid #7A7A7A; background: #fff; padding: 0 4px; line-height: 25px; overflow: hidden; }
+.ep-ent.ep-flash { background: #FFF4C2; transition: background .2s; }
+.ep-chk { display: flex; align-items: center; gap: 5px; margin: 0 5px 0 20px; cursor: default; user-select: none; }
+.ep-chk:first-child { margin-left: 0; }
+.ep-chk i { width: 13px; height: 13px; box-sizing: border-box; border: 1px solid #333; background: #fff; font: 700 12px "Segoe UI Symbol", sans-serif;
+  line-height: 11px; text-align: center; font-style: normal; }
+.ep-chk.off i { color: transparent; }
+.ep-combo { position: relative; height: 27px; box-sizing: border-box; border: 1px solid #ADADAD; background: #fff; padding: 0 22px 0 4px; line-height: 25px; cursor: default; }
+.ep-combo.ro { background: #E1E1E1; }
+.ep-combo::after { content: ''; position: absolute; right: 6px; top: 11px; border-left: 4.5px solid transparent; border-right: 4.5px solid transparent; border-top: 4px solid #000; }
+.ep-fig { flex: 1; min-height: 0; position: relative; background: #fff; overflow: hidden; cursor: default; }
+.ep-fig img { position: absolute; left: 0; top: 0; width: 1707px; height: 885px; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+.ep-fig.can-turn { cursor: grab; }
+.ep-fig.turning { cursor: grabbing; }
+.ep-status { flex: none; height: 25px; box-sizing: border-box; border: 1px solid; border-color: #A0A0A0 #fff #fff #A0A0A0; padding: 0 3px; line-height: 23px;
+  white-space: nowrap; overflow: hidden; }
+
+/* Windows file dialogs and Tk message boxes (Segoe UI 9 pt = 12 px), drawn over the window */
+.ep-veil { position: absolute; inset: 0; z-index: 30; }
+.ep-dlg { position: absolute; background: #fff; border: 1px solid #7A7A7A; box-shadow: 0 8px 28px rgba(0,0,0,.45); font: 12px "Segoe UI", sans-serif; color: #000; }
+.ep-dlg-bar { height: 30px; line-height: 30px; padding-left: 10px; border-bottom: 1px solid #E5E5E5; }
+.ep-dlg-btn { position: absolute; width: 88px; height: 26px; box-sizing: border-box; border: 1px solid #ADADAD; background: #E1E1E1; text-align: center; line-height: 24px; cursor: pointer; }
+.ep-dlg-btn.pri { border-color: #0067C0; background: #E5F1FB; }
+.ep-dlg-btn.ep-press { background: #CCE4F7; border-color: #005499; }
+.ep-files { position: absolute; left: 14px; right: 14px; top: 44px; border: 1px solid #D9D9D9; overflow: hidden; }
+.ep-files div { height: 20px; line-height: 20px; padding-left: 26px; position: relative; white-space: nowrap; }
+.ep-files div::before { content: ''; position: absolute; left: 7px; top: 3px; width: 11px; height: 14px; border: 1px solid #8A8A8A; background: #fff; box-sizing: border-box; }
+.ep-files div.sel { background: #CCE8FF; }
+.ep-field { position: absolute; height: 24px; box-sizing: border-box; border: 1px solid #7A7A7A; background: #fff; line-height: 22px; padding-left: 5px; white-space: nowrap; overflow: hidden; }
+.ep-field.ro { border-color: #ADADAD; background: #F0F0F0; }
+.ep-field span { background: #0078D7; color: #fff; }
+.ep-icon { position: absolute; left: 22px; top: 46px; width: 36px; height: 36px; border-radius: 50%; background: #0067C0; color: #fff; font: 700 22px Georgia, serif; text-align: center; line-height: 36px; }
+.ep-msg { position: absolute; left: 72px; top: 46px; right: 20px; line-height: 18px; white-space: pre-wrap; }

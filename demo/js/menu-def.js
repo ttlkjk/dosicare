@@ -30,7 +30,7 @@
       L('Electron TRS-398 Calibration'), S, L('Calibration(TG-51)'), S, L('Machine Log Analysis'), S,
       L('MPC Analyzer'), S, L('Gating QA'), S,
       L('Offset Output'), L('EPID Output Constancy / Wedge Factor'), S,
-      L('3D EPID PDD Reconstruction'),
+      L('3D EPID PDD Reconstruction', { action: 'live:epipdd' }),
     ] },
     { label: 'Device QA', items: sepJoin([
       'MyQA Daily QA', 'BeamCheck(Raydose)', 'Beamcheckplus', 'Trajectory log QA', 'DosiCare Trajectory Analyzer',
