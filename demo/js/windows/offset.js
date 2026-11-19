@@ -146,7 +146,7 @@
     setFor(-1);
 
     return {
-      player: { toggle: go, next: () => player.next(), prev: () => player.prev() },
+      player: { toggle: go, next: () => player.next(), prev: () => player.prev(), get state() { return Object.assign({ count: steps.length }, player.state); }, },
       destroy() { destroyed = true; if (modal) modal.close(); player.destroy(); },
     };
   }

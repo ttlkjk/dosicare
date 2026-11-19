@@ -474,7 +474,7 @@
     paintAll();
 
     return {
-      player: { toggle: runClick, next: () => !vstar && player.next(), prev: () => !vstar && player.prev() },   // Space = the RUN button
+      player: { toggle: runClick, next: () => !vstar && player.next(), prev: () => !vstar && player.prev(), get state() { return Object.assign({ count: steps.length }, player.state); }, },   // Space = the RUN button
       get ready() { return readyFlag; },
       destroy() {
         destroyed = true;

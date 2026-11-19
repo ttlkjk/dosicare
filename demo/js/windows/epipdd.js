@@ -260,7 +260,7 @@
     setFor(-1);
 
     return {
-      player: { toggle: go, next: () => player.next(), prev: () => player.prev() },   // Space = the walkthrough
+      player: { toggle: go, next: () => player.next(), prev: () => player.prev(), get state() { return Object.assign({ count: steps.length }, player.state); }, },   // Space = the walkthrough
       get ready() { return empty.complete && frames.every((f) => f.im.complete); },
       destroy() {
         destroyed = true;

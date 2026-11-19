@@ -293,6 +293,7 @@
     const started = Date.now();
     const tick = () => {
       if (cur !== entry || !entry || !entry.inst) return;            // closed or replaced
+      if (win.noAutoRun) return;                                     // the Auto Tour (js/tour.js) presses the window's steps itself
       if (entry.inst.ready === false) {
         if (Date.now() - started < 10000) setTimeout(tick, 100);      // wait for images, give up after 10 s
         return;

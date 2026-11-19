@@ -16,3 +16,6 @@
 .dmg-ex { margin-top: 6px; padding: 6px 10px; border-radius: 6px; background: #EEF5FF; font-size: 12.5px; color: #17325C; }
 .dmg-ok { display: block; margin: 12px 0 0 auto; padding: 6px 18px; border: 0; border-radius: 16px; cursor: pointer;
   background: linear-gradient(135deg, #14B8A6, #1E40AF); color: #fff; font: 700 13px inherit; font-family: inherit; }
+.dmg-btns { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+.dmg-btns .dmg-ok { margin: 0; }
+.dmg-tour { padding: 6px 16px; border: 0; border-radius: 16px; cursor: pointer; background: #F7D774; color: #17325C; font: 700 13px inherit; font-family: inherit; }

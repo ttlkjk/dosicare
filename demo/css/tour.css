@@ -1,0 +1,87 @@
+/* Auto Tour (js/tour.js) - not in the original program. Colours follow why.css / guide.css.
+   --ts enlarges the pieces when the homepage shows the demo scaled down on a phone (set by tour.js fitScale). */
+.dm-tb-tour { margin: 0 8px 0 auto; flex: none; display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 14px 0 11px;
+  border-radius: 15px; cursor: pointer; background: #F7D774; color: #17325C; font: 700 10pt var(--font); white-space: nowrap; }
+.dm-tb-tour:hover { filter: brightness(1.06); }
+.dm-tb-tour .g { font-size: 9pt; line-height: 1; }
+.dm-tb-tour + .dm-tb-why { margin-left: 0; }
+.dm-tour-badge { position: absolute; display: none; align-items: center; gap: 8px; padding: 0 20px 0 14px; border: 0; border-radius: 28px;
+  cursor: pointer; background: #F7D774; color: #17325C; font: 700 13pt var(--font); white-space: nowrap; box-shadow: 0 8px 22px rgba(23, 50, 92, .22); }
+.dm-tour-badge.on { display: flex; }
+.dm-tour-badge .g { width: 30px; height: 30px; border-radius: 50%; background: rgba(23, 50, 92, .14); display: flex; align-items: center; justify-content: center; font-size: 11pt; }
+.dm-tour-badge:hover { filter: brightness(1.06); }
+.dm-display.covered .dm-tour-badge { display: none; }
+
+.tour-root { position: fixed; inset: 0; z-index: 7000; pointer-events: none; display: none;
+  font-family: "Pretendard", "Malgun Gothic", "Segoe UI", sans-serif; word-break: keep-all; }
+.tour-root.on { display: block; }
+/* while playing, the shield keeps the visitor's own mouse off the menus; pressing it pauses the tour */
+.tour-shield { position: absolute; inset: 0; display: none; pointer-events: auto; }
+.tour-root.playing .tour-shield { display: block; }
+
+.tour-cursor { position: absolute; left: 0; top: 0; width: calc(30px * var(--ts, 1)); height: calc(40px * var(--ts, 1)); opacity: 0;
+  transition: opacity .2s; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .45)); }
+.tour-cursor.on { opacity: 1; }
+.tour-ripple { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; border: 3px solid #f59e0b;
+  animation: tour-ripple .55s ease-out forwards; }
+@keyframes tour-ripple { from { transform: scale(.3); opacity: 1; } to { transform: scale(1.5); opacity: 0; } }
+.tour-ring { position: absolute; display: none; border-radius: 6px; outline: 3px solid #14B8A6; box-shadow: 0 0 0 9999px rgba(10, 25, 50, .32);
+  animation: tour-pulse 1.4s ease-in-out infinite; }
+.tour-ring.on { display: block; }
+@keyframes tour-pulse { 50% { outline-color: #F7D774; outline-offset: 3px; } }
+/* the row / menu title the tour cursor is on (a fake cursor cannot trigger :hover) */
+.dm-dd-item.tour-hot { background: #91C9F7; }
+.dm-mb-item.tour-hot { background: #E5F3FF; border-color: #CCE8FF; }
+
+/* caption bar: the demo's own teal-to-blue (Why badge, guide button) so it reads as a separate strip, slightly see-through
+   (user, 2026-11-20: the black bar hid too much; a plain glass bar did not stand out) */
+.tour-bar { position: absolute; left: 50%; bottom: 14px; display: none; align-items: center; gap: 12px; pointer-events: auto;
+  width: min(900px, calc(94vw / var(--ts, 1))); box-sizing: border-box; padding: 8px 10px 8px 18px; border-radius: 16px;
+  background: linear-gradient(135deg, rgba(15, 148, 136, .9), rgba(30, 64, 175, .9));
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, .55); color: #fff; box-shadow: 0 8px 24px rgba(23, 50, 92, .3);
+  transform: translateX(-50%) scale(var(--ts, 1)); transform-origin: bottom center; }
+.tour-bar.on { display: flex; }
+.tour-main { flex: 1; min-width: 0; }
+.tour-pos { font-size: 11px; font-weight: 700; color: #C9FBF3; margin-bottom: 1px; }
+.tour-text { font-size: 18px; line-height: 1.35; font-weight: 700; min-height: 1.35em; }
+.tour-hint { display: none; margin-top: 3px; font-size: 12.5px; color: #FDE68A; }
+.tour-bar.paused .tour-hint { display: block; }
+.tour-ctl { display: flex; gap: 3px; flex: none; }
+.tour-btn { width: 32px; height: 32px; border: 0; border-radius: 50%; cursor: pointer; background: rgba(255, 255, 255, .18); color: #fff;
+  font: 700 13px "Segoe UI Symbol", "Malgun Gothic", sans-serif; }
+.tour-btn:hover { background: rgba(255, 255, 255, .34); }
+.tour-btn.play { background: #F7D774; color: #17325C; }
+.tour-btn.snd.off { opacity: .45; text-decoration: line-through; }
+
+.tour-picker, .tour-end { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; pointer-events: auto; }
+.tour-picker { background: rgba(10, 25, 50, .55); }
+.tour-picker.on, .tour-end.on { display: flex; }
+.tour-card, .tour-end-card { box-sizing: border-box; background: #fff; color: #17325C; border-radius: 14px; box-shadow: 0 18px 50px rgba(0, 0, 0, .4);
+  transform: scale(var(--ts, 1)); }
+.tour-card { width: min(560px, calc(94vw / var(--ts, 1))); max-height: calc(90vh / var(--ts, 1)); overflow: auto; padding: 18px 18px 14px; }
+.tour-p-head { position: relative; padding-right: 34px; margin-bottom: 12px; }
+.tour-p-head b { display: block; font-size: 19px; }
+.tour-p-head span { display: block; margin-top: 3px; font-size: 13px; color: #4B5E77; }
+.tour-p-x { position: absolute; right: 0; top: 0; width: 28px; height: 28px; border: 0; border-radius: 6px; background: #EEF2F7; cursor: pointer; font-size: 13px; }
+.tour-p-all { display: block; width: 100%; margin-bottom: 10px; padding: 11px; border: 0; border-radius: 10px; cursor: pointer;
+  background: linear-gradient(135deg, #14B8A6, #1E40AF); color: #fff; font: 700 15px inherit; font-family: inherit; }
+.tour-p-row { display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 6px; padding: 9px 12px; border: 1px solid #DCE3EC; border-radius: 10px;
+  background: #fff; cursor: pointer; text-align: left; font-family: inherit; color: inherit; }
+.tour-p-row:hover { background: #EEF5FF; border-color: #9CC4F5; }
+.tour-p-row i { flex: none; width: 26px; height: 26px; border-radius: 50%; background: #17325C; color: #fff; font: 700 12px/26px sans-serif; text-align: center; font-style: normal; }
+.tour-p-row.seen i { background: #14B8A6; }
+.tour-p-row div { flex: 1; min-width: 0; }
+.tour-p-row b { display: block; font-size: 14.5px; }
+.tour-p-row small { display: block; font-size: 12px; color: #5B6B80; }
+.tour-p-row em { flex: none; font-style: normal; font-size: 12px; color: #5B6B80; }
+.tour-p-row.off { cursor: default; opacity: .5; }
+.tour-p-row.off:hover { background: #fff; border-color: #DCE3EC; }
+
+.tour-end-card { width: min(400px, calc(90vw / var(--ts, 1))); padding: 20px; text-align: center; }
+.tour-end-t { font-size: 17px; font-weight: 800; }
+.tour-end-n { margin-top: 6px; font-size: 14px; color: #33475F; }
+.tour-end-c { margin-top: 6px; font-size: 12.5px; color: #0E9F9A; min-height: 1.2em; }
+.tour-end-b { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+.tour-end-b button { padding: 8px 16px; border: 1px solid #C9D3E0; border-radius: 18px; background: #fff; color: #17325C; cursor: pointer; font: 700 13px inherit; font-family: inherit; }
+.tour-end-b button.main { border: 0; background: linear-gradient(135deg, #14B8A6, #1E40AF); color: #fff; }

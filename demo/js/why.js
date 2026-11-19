@@ -302,6 +302,6 @@
     setTimeout(() => b.remove(), 250);
   }
 
-  DM.why = { open, close, ITEMS, hubArt };
+  DM.why = { open, close, go, ITEMS, hubArt, get isOpen() { return !!ov; } };
   if (DM.shell && DM.shell.onToolbar) DM.shell.onToolbar((name) => { if (name === 'why') { open(); return true; } return false; });
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -163,6 +163,7 @@
     body.appendChild(root_);
     let destroyed = false, token = 0, timer = 0, lastToast = 0;
     let printing = false, paused = false, pending = null;
+    let printed = false;        // the results text is complete (read by the Auto Tour through player.state)
     const toast = (msg) => {
       const now = Date.now();
       if (now - lastToast < 1200) return;
@@ -397,7 +398,7 @@
       token++;
       const my = token;
       clearTimeout(timer);
-      printing = false; paused = false; pending = null;
+      printing = false; paused = false; pending = null; printed = false;
       results.textContent = '';
       let lines;
       let isError = false;
@@ -412,7 +413,7 @@
       let i = 0;
       const step = () => {
         if (destroyed || my !== token) return;
-        if (i >= lines.length) { printing = false; pending = null; return; }
+        if (i >= lines.length) { printing = false; pending = null; printed = true; return; }
         results.textContent += lines[i] + '\n';
         results.scrollTop = results.scrollHeight;     // the Tk box does not follow; the demo keeps the newest lines in view
         const ln = lines[i];
@@ -422,7 +423,7 @@
       if (isError) { results.textContent = lines[0] + '\n'; results.classList.add('err'); } else {
         results.classList.remove('err');
         printing = true;
-        pending = { step, rest: () => { while (i < lines.length) { results.textContent += lines[i++] + '\n'; } results.scrollTop = results.scrollHeight; printing = false; pending = null; } };
+        pending = { step, rest: () => { while (i < lines.length) { results.textContent += lines[i++] + '\n'; } results.scrollTop = results.scrollHeight; printing = false; pending = null; printed = true; } };
         step();
       }
     }
@@ -437,6 +438,7 @@
         if (printing) { clearTimeout(timer); paused = false; pending.rest(); } else calculate();
       },
       prev() {},
+      get state() { return { count: 1, index: printed ? 0 : -1, playing: printing && !paused, busy: printing }; },
     };
 
     return {

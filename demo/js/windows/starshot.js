@@ -1,7 +1,7 @@
 /* DosiMachine replica - Star Shot Analysis window ("Star Shot Analysis (DOSICARE Platform)").
    Layout follows the original maximized window (client area of the original capture, 1707 x 996);
    positions below are written in capture y (ss) and shifted by OFF (the 23 px title bar).
-   RUN ANALYSIS plays 4 steps: circular profile + peaks, image overlay (circle, numbered peaks, fitted
+   RUN ANALYSIS plays 5 steps: merging the exposures, circular profile + peaks, image overlay (circle, numbered peaks, fitted
    lines, angle labels), intersection plot (circles shrink into place), metrics table + verdict.
    All numbers are the baked results of the real run (DM_DATA.star). Tk 96 DPI: 9pt = 12px, 10pt = 13.33px;
    matplotlib 100 dpi: 1pt = 1.389px. */
@@ -552,7 +552,7 @@
     paintAll();
 
     return {
-      player: { toggle: runClick, next: () => player.next(), prev: () => player.prev() },   // Space = the RUN button
+      player: { toggle: runClick, next: () => player.next(), prev: () => player.prev(), get state() { return Object.assign({ count: steps.length }, player.state); }, },   // Space = the RUN button
       get ready() { return readyFlag && readyFrames; },
       destroy() {
         destroyed = true;

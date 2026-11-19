@@ -3,7 +3,8 @@
    bar is lit and outlined, and a bubble says to open a menu (blue-dot items open a real screen). Any click or key
    closes it, and a click on the menu bar still opens that menu. Shown after the registration popup (gate.js), or on
    load for a visitor who registered before. Inside the homepage on a phone the demo is shown scaled down
-   (index.html fitDemoFrame), so the bubble is enlarged there to stay readable. */
+   (index.html fitDemoFrame), so the bubble is enlarged there to stay readable.
+   The bubble also offers the Auto Tour (js/tour.js, user, 2026-11-19). */
 (function (root) {
   const KEY = 'dm_guide_v1';
   const seen = () => { try { return !!localStorage.getItem(KEY); } catch (e) { return true; } };
@@ -32,7 +33,9 @@
       '<div class="dmg-line">메뉴를 누르면 DosiMachine의 기능 목록이 펼쳐집니다.</div>' +
       '<div class="dmg-line"><span class="dmg-dot"></span><b>파란 점</b>이 붙은 항목은 실제 화면이 열립니다.</div>' +
       '<div class="dmg-ex">예: <b>Machine QA</b> → <b>Winston-Lutz</b></div>' +
-      '<button type="button" class="dmg-ok">알겠어요</button>';
+      '<div class="dmg-line">처음이시면 <b>둘러보기</b>가 대신 눌러서 보여 드립니다.</div>' +
+      '<div class="dmg-btns"><button type="button" class="dmg-tour">▶ 둘러보기 틀기</button>' +
+      '<button type="button" class="dmg-ok">알겠어요</button></div>';
     tip.style.left = Math.max(8, box.left + 12) + 'px';
     tip.style.top = (box.top + box.height + 12) + 'px';
 
@@ -42,6 +45,9 @@
     if (k > 0 && k < 0.8) tip.style.transform = 'scale(' + Math.min(2.6, 0.9 / k) + ')';
 
     back.append(hole, tip);
+    // the guide closes on any press (below); the Tour picker opens right after it
+    const tourBtn = tip.querySelector('.dmg-tour');
+    tourBtn.addEventListener('pointerdown', () => setTimeout(() => { if (root.DM.tour) root.DM.tour.open(); }, 0));
     document.body.appendChild(back);
     requestAnimationFrame(() => back.classList.add('show'));
 

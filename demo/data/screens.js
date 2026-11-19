@@ -339,7 +339,11 @@ window.DM_DATA["screens"] = {
  "RTPS > Transfer Data...": [
   {
    "file": "screens/transfer_data.png",
-   "tab": null
+   "tab": "RTPS Data Transfer"
+  },
+  {
+   "file": "screens/transfer_settings.png",
+   "tab": "Transfer Settings"
   }
  ],
  "RTPS > RTPS Setup...": [

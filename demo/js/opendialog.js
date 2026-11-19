@@ -1,5 +1,5 @@
 /* The Windows "열기" (Open) file dialog that File > Open and the toolbar open button show
-   (main.py:3944 open_file -> filedialog.askopenfilename). It lists the five beam-data sample files (two of them
+   (main.py:3944 open_file -> filedialog.askopenfilename). It lists the six beam-data sample files (two of them
    Sun Nuclear .snctxt exports, opened as they are) and the field image; choosing one opens it (beam file -> DM.profileview.open, field image -> DM.mainview.open).
 
    Keyboard while the dialog is open: it owns the keyboard. Up/Down move the selection, Enter opens, Esc closes;
@@ -17,7 +17,7 @@
     { label: 'Profile (*.csv *.asc *.asv *.mcc *.snctxt *.sncxml)', exts: ['csv', 'asc', 'asv', 'mcc', 'snctxt', 'sncxml'] },
     { label: 'All Files (*.*)', exts: null },
   ];
-  const TYPE_NAME = { csv: 'Microsoft Excel 쉼표로 구분된 값 파일', opab: 'OPAB 파일', mcc: 'MCC 파일', snctxt: 'SNCTXT 파일', dcm: 'DCM 파일' };
+  const TYPE_NAME = { csv: 'Microsoft Excel 쉼표로 구분된 값 파일', opab: 'OPAB 파일', mcc: 'MCC 파일', snctxt: 'SNCTXT 파일', asc: 'ASC 파일', dcm: 'DCM 파일' };
   const extOf = (n) => (n.split('.').pop() || '').toLowerCase();
   const fmtSize = (kb) => kb.toLocaleString('en-US') + ' KB';
 

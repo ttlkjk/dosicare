@@ -60,6 +60,7 @@
         const p = DM.menuPath(...path, it.label);
         const off = isOff(p, it);   // grey: nothing to show
         const row = el('div', 'dm-dd-item' + (off ? ' disabled' : canOpen(p, it) ? ' can-open' : ''));
+        row.itemLabel = it.label;   // for reveal() below
         row.appendChild(el('span', 'lbl', it.label));
         if (it.accel) row.appendChild(el('span', 'acc', it.accel));
         if (it.items) row.appendChild(el('span', 'arr', '▶'));
@@ -94,6 +95,7 @@
       const r = node.getBoundingClientRect();
       openDropdown(menu.items, [menu.label], 0, r.left, r.bottom, null, false);
     }
+    const tops = {};           // label -> { node, menu }
     DM.menuDef.forEach((menu) => {
       const node = el('div', 'dm-mb-item', menu.label);
       node.addEventListener('mousedown', (e) => {
@@ -102,7 +104,34 @@
       });
       node.addEventListener('mouseenter', () => { if (openTop && openTop !== node) openTopMenu(node, menu); });
       bar.appendChild(node);
+      tops[menu.label] = { node, menu };
     });
+    /* Auto Tour (js/tour.js, not in the original): open the menus along `labels` and return the element of the last
+       label - the top title, or its row in the dropdown. openLast also opens that label's own submenu. Nothing is
+       clicked; the caller clicks the returned row. Returns null when a label is not there. */
+    bar.reveal = (labels, openLast) => {
+      const t = tops[labels[0]];
+      if (!t) return null;
+      if (labels.length === 1 && !openLast) return t.node;
+      if (openTop !== t.node) openTopMenu(t.node, t.menu);
+      let items = t.menu.items, node = t.node;
+      for (let d = 1; d < labels.length; d++) {
+        const dd = chain[d - 1];
+        const it = items.find((x) => !x.separator && x.label === labels[d]);
+        const row = dd && [...dd.children].find((r) => r.itemLabel === labels[d]);
+        if (!it || !row) return null;
+        node = row;
+        const last = d === labels.length - 1;
+        if (it.items && (!last || openLast)) {
+          if (!(chain[d] && chain[d].parentItem === row)) {
+            const r = row.getBoundingClientRect();
+            openDropdown(it.items, labels.slice(0, d + 1), d, r.right - 2, r.top - 3, row, true);
+          }
+        } else closeFrom(d);
+        items = it.items || [];
+      }
+      return node;
+    };
     document.addEventListener('mousedown', (e) => { if (openTop && !e.target.closest('.dm-dd')) closeAll(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && openTop) { closeAll(); e.stopImmediatePropagation(); } }, true);
     window.addEventListener('blur', closeAll);
@@ -145,6 +174,7 @@
     { k: 'gridentry', name: 'grid_spacing', tip: '격자 간격 (cm) — 입력 후 Enter' },
     { k: 'cm' },
     { k: 'sym', name: 'point', g: '✛', gs: 15, t: 'Point', tip: 'Plan View에서 한 점의 선량·CT 값 읽기' },
+    { k: 'tour', name: 'tour', tip: 'Tour — 데모가 스스로 움직이며 설명합니다 (원본에는 없음)' },   // js/tour.js
     { k: 'why', name: 'why', tip: 'Why DosiMachine? — 소개 (강의용, 원본에는 없음)' },   // lecture-only, js/why.js
   ];
   const TB_WORKS = new Set(['open', 'add', 'close', 'profile_graph']);   // toolbar icons that do something (rest = toast)
@@ -194,6 +224,8 @@
         bar.appendChild(el('span', 'dm-tb-cm', 'cm')); return;
       } else if (d.k === 'why') {
         n = el('div', 'dm-tb-why'); n.append(el('span', 'g', '✦'), el('span', null, 'Why?'));
+      } else if (d.k === 'tour') {
+        n = el('div', 'dm-tb-tour'); n.append(el('span', 'g', '▶'), el('span', null, 'Tour'));
       }
       attach(n, d);
       n.addEventListener('click', () => fireTb(d.name));
@@ -355,9 +387,17 @@
       c.font = px(15) * Math.min(1, logoW / 420) * s + 'px "Segoe UI","Malgun Gothic",sans-serif'; c.fillStyle = '#555555';
       c.fillText('Medical Physics Quality Assurance Tool', bx, colTop + subRel);
       if (okH) c.drawImage(H, Math.round(bx - tw2 / 2), Math.round(colTop + subRel + 90 * kk - th2 / 2), tw2, th2);
-      b.style.left = bx + 'px'; b.style.top = Math.round(colTop + badgeRel) + 'px';
+      const tb = tourBadge();
+      tb.classList.add('on');
+      const PAIR_GAP = 10, bw0 = b.offsetWidth || 330, tw0 = tb.offsetWidth || 104;
+      const whyX = bx - (tw0 + PAIR_GAP) / 2 * s;                 // centre of the Why badge
+      b.style.left = Math.round(whyX) + 'px'; b.style.top = Math.round(colTop + badgeRel) + 'px';
       b.style.transformOrigin = 'top center';
       b.style.transform = s < 1 ? 'translate(-50%, 0) scale(' + s.toFixed(3) + ')' : '';
+      tb.style.height = BH0 + 'px';
+      tb.style.left = Math.round(whyX + (bw0 / 2 + PAIR_GAP) * s) + 'px'; tb.style.top = b.style.top;
+      tb.style.transformOrigin = 'top left';
+      tb.style.transform = s < 1 ? 'scale(' + s.toFixed(3) + ')' : '';
 
       // help lines: shrink with the group, but not below a readable size
       const hs = Math.max(0.75, s);
@@ -378,6 +418,7 @@
   function hideWelcome() {
     welcome = false;
     if (ui && ui.whyBadge) ui.whyBadge.classList.remove('on');
+    if (ui && ui.tourBadge) ui.tourBadge.classList.remove('on');
     if (ui && ui.hero) ui.hero.classList.remove('on');
   }
   function heroArt() {
@@ -398,6 +439,16 @@
       ui.imageCanvas.parentNode.appendChild(b);
     }
     return ui.whyBadge;
+  }
+  // Auto Tour badge next to the Why badge (not in the original): opens the chapter picker of js/tour.js
+  function tourBadge() {
+    if (!ui.tourBadge) {
+      const b = ui.tourBadge = el('button', 'dm-tour-badge');
+      b.append(el('span', 'g', '▶'), el('span', null, 'Tour'));
+      b.addEventListener('click', () => fireTb('tour'));
+      ui.imageCanvas.parentNode.appendChild(b);
+    }
+    return ui.tourBadge;
   }
 
   function fitImageCanvas() {
@@ -661,5 +712,6 @@
     ui() { return ui; },
     plotUtil: { niceTicks, fmtTick },
     closeMenus() { if (ui && ui.menubar.closeAll) ui.menubar.closeAll(); },
+    menu: { reveal(labels, openLast) { return ui && ui.menubar.reveal ? ui.menubar.reveal(labels, !!openLast) : null; } },
   };
 })(typeof window !== 'undefined' ? window : globalThis);
