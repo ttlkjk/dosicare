@@ -37,9 +37,11 @@
    (user, 2026-11-20: the black bar hid too much; a plain glass bar did not stand out) */
 .tour-bar { position: absolute; left: 50%; bottom: 14px; display: none; align-items: center; gap: 12px; pointer-events: auto;
   width: min(900px, calc(94vw / var(--ts, 1))); box-sizing: border-box; padding: 8px 10px 8px 18px; border-radius: 16px;
-  /* transparent (user, 2026-11-20): no strip at all; the letters carry a dark outline so they read on any screen */
-  background: transparent; border: 0; box-shadow: none; color: #fff;
-  text-shadow: 0 0 2px #0B1F3A, 0 0 2px #0B1F3A, 0 0 4px #0B1F3A, 0 1px 6px rgba(11, 31, 58, .9);
+  /* slightly see-through (user, 2026-11-20: fully transparent did not look good; the strip at 60 % instead of 90 %) */
+  background: linear-gradient(135deg, rgba(15, 148, 136, .6), rgba(30, 64, 175, .6));
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, .45); color: #fff; box-shadow: 0 8px 24px rgba(23, 50, 92, .25);
+  text-shadow: 0 1px 3px rgba(11, 31, 58, .7);
   transform: translateX(-50%) scale(var(--ts, 1)); transform-origin: bottom center; }
 .tour-bar.on { display: flex; }
 .tour-main { flex: 1; min-width: 0; }
@@ -48,10 +50,9 @@
 .tour-hint { display: none; margin-top: 3px; font-size: 12.5px; color: #FDE68A; }
 .tour-bar.paused .tour-hint { display: block; }
 .tour-ctl { display: flex; gap: 3px; flex: none; }
-.tour-btn { width: 32px; height: 32px; border: 0; border-radius: 50%; cursor: pointer; background: rgba(30, 64, 175, .78); color: #fff; text-shadow: none;
-  box-shadow: 0 2px 6px rgba(11, 31, 58, .35);
+.tour-btn { width: 32px; height: 32px; border: 0; border-radius: 50%; cursor: pointer; background: rgba(255, 255, 255, .2); color: #fff; text-shadow: none;
   font: 700 13px "Segoe UI Symbol", "Malgun Gothic", sans-serif; }
-.tour-btn:hover { background: rgba(15, 148, 136, .9); }
+.tour-btn:hover { background: rgba(255, 255, 255, .36); }
 .tour-btn.play { background: #F7D774; color: #17325C; }
 .tour-btn.snd.off { opacity: .45; text-decoration: line-through; }
 
